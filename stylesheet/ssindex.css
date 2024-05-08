@@ -1,0 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body::before {
+    content: "";
+    background-image: url("../images/back.jpeg");
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+body {
+    overflow-x:hidden;
+
+}
+header {
+    height: 200px;
+    width: 100vw;
+
+
+}
+
+header img {
+    width: 222px;
+    height: 223px;
+    margin-left: 20px;
+    margin-top: 25px;
+
+}
+
+header img:hover {
+    width: 300px;
+    height: 300px;
+
+}
+
+section {
+    background-color: rgba(138, 140, 143, 0.29);
+    width: 900px;
+    height: 600px;
+    margin-left: 25vw;
+    position:relative;
+    margin-top: 1px;
+    border-radius: 35px;
+
+}
+SECTION .c1 {
+    position:absolute;
+    right:20px;
+    top:10px;
+    font-size: 80px;
+    color:#EAE3DB;
+    direction: rtl;
+
+}
+
+SECTION .c2{
+    position:absolute;
+    left:180px;
+    top:150px;
+    width: 700px;
+
+}
+
+SECTION .c2 P
+{    font-size: 40px;
+margin-bottom: 10px;
+    margin-left: 250px;
+    color:#EAE3DB;
+}
+SECTION .c2 input{
+    margin-left:150px;
+    margin-top:15px;
+    height:29px;
+    width:290px;
+    font-size: 30px;
+direction: rtl;
+}
+
+
+
+SECTION .c3{
+    position:absolute;
+    left:180px;
+    top:200px;
+    width: 700px;
+    margin-top: 35px;
+}
+SECTION .c3 P
+{      font-size: 40px;
+    margin-left: 232px;
+    color:#EAE3DB;
+    margin-top: 37px;
+}
+SECTION .c3 input{
+    margin-left:150px;
+    margin-top:15px;
+    height:29px;
+    width:290px;
+    font-size: 30px;
+    direction: rtl;
+
+}
+
+SECTION .c5{
+    position:absolute;
+    left:0;
+    top:470px;
+    width: 870px;
+    margin-top: 55px;
+    font-size: 30px;
+    color:#EAE3DB;
+
+}
+SECTION .c5 .c4{
+    float:right;
+    height:39px;
+    width:250px;
+    background-color: #85f304;
+
+    font-size: 30px;
+    border-radius: 35px;
+
+}
+
+SECTION .c5 .c6{
+    float:left;
+    clear:left;
+    height:39px;
+    width:250px;
+    background-color: rgba(33, 91, 206, 0.96);
+margin-left: 28px;
+    font-size: 30px;
+border-radius: 35px;
+}
+SECTION .c5 p{
+    position:absolute;
+    left:430px;
+    font-size: 50px;
+bottom:-2px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+footer{
+    background-color: rgba(12, 59, 145, 0.81);
+    height:150px;
+    width: 100%;
+    margin-top: 100px;
+}
+footer p{
+    display:inline-block;
+    margin-top: 60px;
+    margin-left: 320px;
+    font-size: 24px;
+    position:relative;
+    left:-140px;
+    color:#EAE3DB;
+}
+footer p a {
+    color:#EAE3DB;
+
+}

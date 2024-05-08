@@ -1,0 +1,44 @@
+body {
+    margin:0;
+    padding:0;
+}
+body::before {
+    content: "";
+    background-color: rgba(33, 91, 206, 0.96);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+overflow: hidden;
+}
+form {
+    direction: rtl;
+    position: absolute;
+    top:90px;
+    width:50vw;
+    height:80vh;
+    background-image: url("../images/bs.jpg");
+margin-left:50vh;
+
+    margin-right:50vh;
+text-align: center;
+}
+form input {
+    width:300px;
+margin:10px;
+height:30px;
+}
+form label{
+    font-size: 35px;
+
+}
