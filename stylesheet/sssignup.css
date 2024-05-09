@@ -1,11 +1,11 @@
 body {
     margin:0;
     padding:0;
+
 }
 body::before {
     content: "";
-    background-color: rgba(33, 91, 206, 0.96);
-
+    background-image: url("../images/signupb.webp");
     position: fixed;
     top: 0;
     left: 0;
@@ -15,30 +15,198 @@ body::before {
     background-size: cover;
     background-repeat: no-repeat;
     z-index: -1;
+
 }
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-overflow: hidden;
+    overflow-x: hidden;
+
 }
+
+header {
+    height: 200px;
+    width: 100vw;
+
+}
+
+header img {
+    width: 172px;
+    height: 180px;
+    margin-left: 20px;
+    margin-top: 0;
+    float:left;
+    position: absolute;
+
+    left:10px;
+}
+
+
+header p {
+    display: inline-block;
+    margin-right: 5px;
+    text-align: right;
+    font-size: 75px;
+    position: absolute;
+    right:10px;
+    width:390px;
+    top:-50px;
+}
+
+
+
+
 form {
+    background-color: rgba(17, 41, 77, 0.65);
+    box-sizing: border-box;
     direction: rtl;
     position: absolute;
-    top:90px;
-    width:50vw;
-    height:80vh;
-    background-image: url("../images/bs.jpg");
-margin-left:50vh;
+    top:200px;
+    left:-300px;
+    width:90vw;
+    height:120vh;
+    margin-left:50vh;
 
     margin-right:50vh;
-text-align: center;
+    text-align: center;
 }
 form input {
     width:300px;
-margin:10px;
-height:30px;
+    margin:10px;
+    height:30px;
 }
 form label{
     font-size: 35px;
+    color:#EAE3DB;
+    width: 220px; /* Set the width as needed */
+    display: inline-block; /* Allow labels to have a fixed width */
+    text-align: right; /* Align text to the right for labels */
+    padding-right: 10px; /* Add some space between label and input */
 
+}
+option {font-size:25px; }
+input {
+    position: relative;
+    bottom:7px;
+
+
+}
+#childGender{
+    width:300px;
+    margin:10px;
+    height:34px;
+    font-size: 25px;
+}
+
+.input-group1{
+    position: absolute;
+    right:15px;
+    top:18px;
+    margin-top: 8px;
+
+}
+.input-group2
+{
+    position: absolute;
+    left:50px;
+    top:18px;
+    margin-top: 8px;
+
+}
+.input-group3{
+    position: absolute;
+    right:490px;
+    top:88px;
+    margin-top: 8px;
+
+}
+
+.input-group4{
+    position: absolute;
+    right:15px;
+    top:218px;
+    margin-top: 8px;
+
+}
+.input-group5
+{
+    position: absolute;
+    left:50px;
+    top:218px;
+    margin-top: 8px;
+
+}
+.input-group6{
+    position: absolute;
+    right:15px;
+    top:278px;
+    margin-top: 8px;
+
+}
+.input-group7
+{
+    position: absolute;
+    left:50px;
+    top:278px;
+    margin-top: 8px;
+
+}
+.input-group8{
+    position: absolute;
+    right:15px;
+    top:348px;
+    margin-top: 8px;
+
+}
+.input-group9
+{
+    position: absolute;
+    left:50px;
+    top:348px;
+    margin-top: 8px;
+
+}
+
+.input-group10{
+    position: absolute;
+    right:490px;
+    top:509px;
+    margin-top: 8px;
+
+}
+
+.c1{
+    position: absolute;
+    top:750px;
+    height: 55px;
+    background-color: rgb(185, 130, 66);
+    font-size: 35px;
+    color:#EAE3DB;
+    right:490px;
+
+}
+
+footer{
+    background-color: rgba(12, 59, 145, 0.81);
+    height:240px;
+    width: 100%;
+    margin-top: 900px;
+    position: absolute;
+    bottom:0;
+    top:300px;
+}
+footer p{
+    display:inline-block;
+    margin-top: 60px;
+    margin-left: 15px;
+    margin-right: 105px;
+    font-size: 24px;
+    color:#EAE3DB;
+    width: 500px;
+}
+footer p a {
+    color:#EAE3DB;
+
+}
+.tt{margin-left: 250px;
 }
