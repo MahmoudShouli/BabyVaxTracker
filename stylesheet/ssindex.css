@@ -28,16 +28,16 @@ header {
 }
 
 header img {
-    width: 222px;
-    height: 223px;
-    margin-left: 20px;
-    margin-top: 25px;
+    width: 170px;
+    height: 150px;
+    margin-left: 10px;
+    margin-top: 15px;
 
 }
 
 header img:hover {
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
 
 
 }
@@ -60,7 +60,6 @@ SECTION .c1 {
     top:10px;
     font-size: 80px;
     color:#EAE3DB;
-    direction: rtl;
 
 }
 
@@ -75,7 +74,7 @@ SECTION .c2{
 SECTION .c2 P
 {    font-size: 40px;
     margin-bottom: 10px;
-    margin-left: 250px;
+    margin-left: 150px;
     color:#EAE3DB;
 }
 SECTION .c2 input{
@@ -98,7 +97,7 @@ SECTION .c3{
 }
 SECTION .c3 P
 {      font-size: 40px;
-    margin-left: 232px;
+    margin-left: 150px;
     color:#EAE3DB;
     margin-top: 37px;
 }
