@@ -56,7 +56,7 @@ section {
 }
 SECTION .c1 {
     position:absolute;
-    right:20px;
+    right:580px;
     top:10px;
     font-size: 80px;
     color:#EAE3DB;
@@ -68,6 +68,7 @@ SECTION .c2{
     left:180px;
     top:150px;
     width: 700px;
+    direction: ltr;
 
 }
 

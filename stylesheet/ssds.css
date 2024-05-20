@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body::before {
+    content: "";
+    background-image: url("../images/t5.jpg");
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-position: center center;
+    background-size: contain;
+
+    z-index: -1;
+}
+body {
+    overflow-x:hidden;
+
+}
