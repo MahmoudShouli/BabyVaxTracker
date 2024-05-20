@@ -27,3 +27,31 @@ div {
     display: grid;
     place-items: center;
 }
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.calendar-table th, .calendar-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.calendar-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.calendar-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.calendar-table tbody tr:hover {
+    background-color: #ddd;
+}
+
+.calendar-table td {
+    height: 40px; /* Adjust the height as needed */
+}
