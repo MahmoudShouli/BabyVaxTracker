@@ -6,7 +6,7 @@
 
 body::before {
     content: "";
-    background-image: url("../images/t55.jpg");
+    background-image: url("../images/backsk.jpg");
     position: fixed;
     top: 0;
     left: 0;
