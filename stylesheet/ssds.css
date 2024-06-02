@@ -14,11 +14,34 @@ body::before {
     height: 100vh;
     background-position: center center;
     background-size: contain;
-background-repeat: no-repeat;
+/*background-repeat: no-repeat;*/
     background-color: rgba(155, 158, 163, 0.91);
     z-index: -1;
     opacity: 0.3;
 }
+
+header {
+    height: 200px;
+    width: 100vw;
+
+
+}
+
+header img {
+    width: 170px;
+    height: 150px;
+    margin-left: 10px;
+    margin-top: 15px;
+
+}
+
+header img:hover {
+    width: 250px;
+    height: 250px;
+
+
+}
+
 body {
     overflow-x:hidden;
 
@@ -28,9 +51,11 @@ div {
     place-items: center;
 }
 .calendar-table {
-    width: 100%;
+    width: 90%;
+    margin-left: 10px;
     border-collapse: collapse;
     margin-bottom: 20px;
+margin-top: 150px;
 }
 
 .calendar-table th, .calendar-table td {
@@ -56,4 +81,41 @@ div {
 
 .calendar-table td {
     height: 40px; /* Adjust the height as needed */
+}
+.d1 h1{
+
+    margin-bottom: -70px;
+
+}
+.cc1 {
+ margin-right: 30px;
+    float:right;
+    margin-top: 30px;
+height:50px;
+}
+select {
+    width: 150px;
+height: 25px;
+}
+.ftd1 p{
+    text-align: left;
+    width: 40vw;
+    margin-left: 20px;
+} .ftd2 p{
+      width: 30vw;
+
+  }
+
+.ftd3 p{
+
+    text-align: right;
+    width: 24vw;
+    margin-left: 20px;
+}
+footer{
+    height: 40px;
+    margin:0;
+    width:100vw;
+    margin-top: 50px;
+    background-color: rgba(201, 195, 185, 0.37);
 }
