@@ -4,11 +4,12 @@ $(document).ready(function(){
 ======================================*/ 	
 (function(){
 
+	
 	var map;
 	map = new GMaps({
 		el: '#myMap',
-		lat: 51.507351,
-		lng: -0.127758,
+		lat: 32.136116,
+		lng: 35.228749,
 		scrollwheel:false,
 		zoom: 15,
 		zoomControl : false,
@@ -19,7 +20,7 @@ $(document).ready(function(){
 		clickable: false
 	});
 
-	var image = 'img/map-marker.png';
+	var image = '../Resources/imgages/map-marker.png';
 	map.addMarker({
 		lat: 51.507351,
 		lng: -0.127758,
