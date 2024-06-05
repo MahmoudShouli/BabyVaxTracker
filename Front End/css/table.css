@@ -8,7 +8,7 @@
 
 body::before {
     content: "";
-    background-image: url("../images/backsk.jpg");
+    background-image: url("../../Resources/images/tbg.jpg");
     position: fixed;
     top: 0;
     left: 0;
@@ -245,4 +245,19 @@ footer {
 height: 100px;
     margin-top: 200px;
     background-color: rgba(237, 239, 245, 0.44);
+
+margin-bottom: 0;}
+.b {
+text-align: center;
+}
+.b button {
+margin-top: 30px;
+    width: 100px;
+    height: 50px;
+    margin-right: 100px;
+margin-left: 100px;
+}
+td:hover {
+    background-color: rgba(26, 118, 209, 0.11)
+!important; /* Change this color as needed */
 }
