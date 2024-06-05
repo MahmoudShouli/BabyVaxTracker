@@ -8,151 +8,158 @@
   <link rel="stylesheet" type="text/css" href="stylesheet/ssds.css">
 </head>
 <body>
-<header>
-<a href="index.html"><img src="images/logo.png" alt="this is the logo"></a>
+<header class="d-flex justify-content-between align-items-center py-3">
+  <a href="index.html"><img src="images/logo.png" alt="this is the logo"></a>
 
-<div class="cc1">
+  <div class="cc1">
+    <label for="employeeShift">Select Employee :</label> <br>
+    <select class="form-control" id="employeeShift" name="employeeShift">
+      <option value="off">dr.john</option>
+    </select>
+  </div>
+</header>
 
-  <label for="employeeShift">Select Employee :</label>
-  <select id="employeeShift" name="employeeShift">
 
-    <option value="off">dr.john</option>
-  </select>
 
+
+
+
+<div class="container">
+  <div class="w-95 w-md-75 w-lg-60 w-xl-55 mx-auto mb-6 ">
+   <h2 style="text-align:center; margin-bottom: 30px;
+"> Employee Shift Schedule</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="schedule-table">
+        <table class="table bg-white calendar-table">
+          <thead>
+          <tr>
+            <th>Day</th>
+            <th>7 AM</th>
+            <th>8 AM</th>
+            <th>9 AM</th>
+            <th>10 AM</th>
+            <th>11 AM</th>
+            <th>12 PM</th>
+            <th>1 PM</th>
+            <th>2 PM</th>
+            <th>3 PM</th>
+            <th>4 PM</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Sunday</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Monday</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tuesday</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Wednesday</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Thursday</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Friday</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Saturday</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
-  </header>
-<div class="d1">
-<h1>Employee Shift Schedule
-</h1>
-
-    <table class="calendar-table">
-  <thead>
-  <tr>
-    <th>Day</th>
-    <th>7 AM</th>
-    <th>8 AM</th>
-    <th>9 AM</th>
-    <th>10 AM</th>
-    <th>11 AM</th>
-    <th>12 PM</th>
-    <th>1 PM</th>
-    <th>2 PM</th>
-    <th>3 PM</th>
-    <th>4 PM</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td>Sunday</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Monday</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Tuesday</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Wednesday</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Thursday</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Friday</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-
-    <td>Saturday</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  </tbody>
-</table>
-</div>
-<footer >
-  <table>
-    <tr>
-
-      <td class="ftd1">    <p >&copy; 2024 BabyVaxTrack. All rights reserved.</p>
-      </td>
-      <td class="ftd2">    <p>Contact us at      <a href="mailto:prd@moh.ps">contact@prd@moh.ps</a></p>
-      </td>
-      <td class="ftd3">    <p class="tt">            Phone: +97022964183     </p>
-      </td>
 
 
-    </tr>
+<footer id="footer" class="footer">
 
-
-  </table>
+  <div class="copyright">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-12">
+        <div class="copyright-content text-center">
+          <p style="text-align: center ;margin-top:10px;font-size: 35px; " >© Copyright 2024  |  All Rights Reserved</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ End Copyright -->
 </footer>
 </body>
 </html>

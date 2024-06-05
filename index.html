@@ -5,9 +5,15 @@
     <title>BabyVaxTrack</title>
     <link rel="icon"type="image/x-icon" href="images/logo.png">
     <link rel="stylesheet" type="text/css" href="stylesheet/ssindex.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+    <!-- icofont CSS -->
+    <link rel="stylesheet" href="../css/icofont.css">
+
+
 </head>
 <body>
 
@@ -15,44 +21,122 @@
 
     <a href="index.html"><img src="images/logo.png" alt="this is the logo"></a>
 </header>
-<section>
-    <div CLASS="c1">
-        <p id="t1">SIGN IN</p>
-    </div>
-    <div class="c2">
-        <p>UserName :</p>
-        <input type="data" PLACEHOLDER="ادخل رقم هوية الاب او الام">
-    </div>
-    <div class="c3">
-        <p>Password :</p>
-        <input type="password" PLACEHOLDER="ادخل كلمة المرور">
-    </div>
-    <div class="c5">
-        <button class="c4">SIGN IN</button>
-        <p>OR</p>
-        <button class="c6
-" onclick="window.location.href='signup.html';">SIGN UP</button>
+<section class="vh-100">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-8 col-lg-6">
+                <div class="card" style="border-radius: 1rem; background-color: transparent; border: none;">
 
+                    <div class="card-body p-4 p-lg-5 text-black" style="background-color: rgba(255, 255, 255, 0.9); border-radius: 1rem;">
+
+                        <form>
+                            <h5 class="h3 fw-bold mb-5" style="letter-spacing: 1px;">Sign into your account</h5>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label" for="form2Example17">UserName</label>
+                                <input placeholder="ادخل رقم هوية الاب او الام" type="email" id="form2Example17" class="form-control form-control-lg" />
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label" for="form2Example27">Password</label>
+                                <input placeholder="ادخل كلمة المرور" type="password" id="form2Example27" class="form-control form-control-lg" />
+                            </div>
+
+                            <div class="pt-1 mb-4">
+                                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-dark btn-lg btn-block" type="button">Login</button>
+                            </div>
+
+                            <a class="small text-muted" href="resetpassword.html">Forgot password?</a>
+                            <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="signup.html" style="color: #393f81;">Register here</a></p>
+                            <a href="#!" class="small text-muted">Terms of use.</a>
+                            <a href="#!" class="small text-muted">Privacy policy</a>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-
 </section>
-<footer >
-    <table>
-        <tr>
-            <td class="ftd1">    <p >&copy; 2024 BabyVaxTrack. All rights reserved.</p>
-            </td>
-            <td class="ftd2">    <p>Contact us at      <a href="mailto:prd@moh.ps">contact@prd@moh.ps</a></p>
-            </td>
-            <td class="ftd3">    <p class="tt">            Phone: +97022964183     </p>
-            </td>
-
-
-        </tr>
-
-
-    </table>
+<!-- Footer Area -->
+<footer id="footer" class="footer ">
+    <!-- Footer Top -->
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="single-footer">
+                        <h2>Social Media</h2>
+                        <!-- Social -->
+                        <ul class="social">
+                            <li><a href=""><i class="icofont-facebook"></i></a></li>
+                            <li><a href="#"><i class="icofont-instagram"></i></a></li>
+                            <li><a href="#"><i class="icofont-twitter"></i></a></li>
+                        </ul>
+                        <!-- End Social -->
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="single-footer f-link">
+                        <h2>Quick Links</h2>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Consultation</a></li>
+                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="single-footer">
+                        <h2>Open Hours</h2>
+                        <ul class="time-sidual">
+                            <li class="day">Sunday - Friday <span>8.00 am - 4.00 pm</span></li>
+                            <li class="day">Friday <span>10.00 am - 2.00 pm</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="single-footer">
+                        <h2>Newsletter</h2>
+                        <p>subscribe to our newsletter to get all our news in your inbox</p>
+                        <form action="" method="get" target="_blank" class="newsletter-inner">
+                            <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
+                                   onblur="this.placeholder = 'Your email address'" required="" type="email">
+                            <button class="button"><i class="icofont icofont-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ End Footer Top -->
+    <!-- Copyright -->
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="copyright-content text-center">
+                        <p>© Copyright 2024  |  All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ End Copyright -->
 </footer>
+<!--/ End Footer Area -->
+
 
 </body>
 </html>
