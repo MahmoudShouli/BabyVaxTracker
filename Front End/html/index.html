@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title -->
-    <title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
+    <title>HomePage</title>
 
     <!-- Favicon -->
     <link rel="icon" href="../../Resources/images/favicon.png">
@@ -64,18 +64,17 @@
 
 
 <!-- Header Area -->
-<header class="header" >
+<header  class="header" >
     <!-- Topbar -->
-    <div class="topbar">
+    <div id = "header" class="topbar">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-5 col-12">
                     <!-- Contact -->
                     <ul class="top-link">
                         <li><a href="#about">About</a></li>
-                        <li><a href="#">Doctors</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="../html/table.html">Schedules</a></li>
+                        <li><a href="../html/signin.html">Sign In</a></li>
                     </ul>
                     <!-- End Contact -->
                 </div>
@@ -111,10 +110,9 @@
                         <div class="main-menu">
                             <nav class="navigation">
                                 <ul class="nav menu">
-                                    <li><a href="#">Home </a></li>
-                                    <li><a href="#">Doctors </a></li>
-                                    <li><a href="#">Services </a></li>
-                                    <li><a href="#">Feedback </a></li>
+                                    <li><a href="#header">Home </a></li>
+                                    <li><a href="#service">Services </a></li>
+                                    <li><a href="../html/feedback.html">Feedback </a></li>
                                     <li><a href="../html/contact.html">Contact Us</a></li>
                                 </ul>
                             </nav>
@@ -123,7 +121,7 @@
                     </div>
                     <div class="col-lg-2 col-12">
                         <div class="get-quote">
-                            <a href="#" class="btn">Book Appointment</a>
+                            <a href="../html/appointment.html" class="btn">Book Appointment</a>
                         </div>
                     </div>
                 </div>
@@ -146,7 +144,7 @@
                             <h1>We Provide The Best <span>Vaccines</span> For Your Babies!</h1>
                             <p>Look at the best and latest vaccines news for your babies health. </p>
                             <div class="button">
-                                <a href="#" class="btn">Learn More</a>
+                                <a href="#news" class="btn">Learn More</a>
                             </div>
                         </div>
                     </div>
@@ -163,7 +161,7 @@
                             <h1>Look At The <span>Schedules</span> And Book A Time That Suits You!</h1>
                             <p>We offer a flexible shcedule with different doctors, take a look and book! </p>
                             <div class="button">
-                                <a href="#" class="btn">Get Appointment</a>
+                                <a href="../html/appointment.html" class="btn">Get Appointment</a>
                             </div>
                         </div>
                     </div>
@@ -180,7 +178,7 @@
                             <h1>See What Other <span>People</span> Think!</h1>
                             <p>Scroll through the reviews and feedback of previous experiences. </p>
                             <div class="button">
-                                <a href="#" class="btn">Feedback and Reviews</a>
+                                <a href="../html/feedback.html" class="btn">Feedback and Reviews</a>
                             </div>
                         </div>
                     </div>
@@ -197,21 +195,7 @@
     <div class="container">
         <div class="schedule-inner">
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-12 ">
-                    <!-- single-schedule -->
-                    <div class="single-schedule first">
-                        <div class="inner">
-                            <div class="icon">
-                                <i class="fa fa-ambulance"></i>
-                            </div>
-                            <div class="single-content">
-                                <h4>Emergency Cases</h4>
-                                <p>If your baby's condition is very serious and can't wait, book VIP</p>
-                                <a href="#">GO<i class="fa fa-long-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="col-lg-4 col-md-12 col-12">
                     <!-- single-schedule -->
                     <div class="single-schedule last">
@@ -240,7 +224,7 @@
                             <div class="single-content">
                                 <h4>Doctors Timetable</h4>
                                 <p>Check when each doctor is available and when not</p>
-                                <a href="#">GO<i class="fa fa-long-arrow-right"></i></a>
+                                <a href="../html/table.html">GO<i class="fa fa-long-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -387,10 +371,10 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-12">
                 <div class="content">
-                    <h2>Do you need Emergency Medical Care? Call @ 0593021843</h2>
+                    <h2>Do you need Emergency Medical Care? Contact us. <br> -Put (EMERGENCY) in the message.</h2>
                     <p>If your baby needs immediate medical care, reach us!</p>
                     <div class="button">
-                        <a href="#" class="btn">Contact Now</a>
+                        <a href="../html/contact.html" class="btn">Contact Now</a>
                     </div>
                 </div>
             </div>
@@ -404,7 +388,7 @@
 
 
 <!-- Pricing Table -->
-<section class="pricing-table section">
+<section id="service" class="pricing-table section">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -436,7 +420,7 @@
                         <li><i class="icofont icofont-ui-check"></i>Reminders and Alerts</li><br><br>
                     </ul>
                     <div class="table-bottom">
-                        <a class="btn" href="#">Book Now</a>
+                        <a class="btn" href="../html/appointment.html">Book Now</a>
                     </div>
                     <!-- Table Bottom -->
                 </div>
@@ -462,7 +446,7 @@
                         <li><i class="icofont icofont-ui-check"></i>Growth and Development Monitoring</li><br>
                     </ul>
                         <div class="table-bottom">
-                            <a class="btn" href="#">Book Now</a>
+                            <a class="btn" href="../html/appointment.html">Book Now</a>
                         </div>
                         <!-- Table Bottom -->
                 </div>
@@ -487,7 +471,7 @@
                         <li><i class="icofont icofont-ui-check"></i>Reviews and Feedback</li><br><br><br><br>
                     </ul>
                     <div class="table-bottom">
-                        <a class="btn" href="#">Visit</a>
+                        <a class="btn" href="../html/feedback.html">Visit</a>
                     </div>
                     <!-- Table Bottom -->
                 </div>
@@ -501,7 +485,7 @@
 
 
 <!-- Start Blog Area -->
-<section class="blog section" id="blog">
+<section id="news" class="blog section" id="blog">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -656,16 +640,15 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+                                    <li><a href="#header"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+                                    <li><a href="#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+                                    <li><a href="#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
                                 </ul>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Consultation</a></li>
-                                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+                                    <li><a href="#news"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
+                                    <li><a href="../html/contact.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>
