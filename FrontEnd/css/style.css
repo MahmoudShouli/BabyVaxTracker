@@ -898,7 +898,7 @@ body{
 	display: block;
 	-webkit-transition: all 0.4s ease;
 	-moz-transition: all 0.4s ease;
-	transition: all 0.4s eas;
+	transition: all 0.4s ease;
 	display: block;
 	margin-bottom: 7px;
 }
@@ -1417,7 +1417,7 @@ body{
 	border-radius: 3px;
 	margin: 0 0 0 -52px;
 	margin-top: 49px;
-	box-sizing: ;
+
 }
 .testimonials .owl-dots .owl-dot {
 	display: inline-block;
@@ -1454,7 +1454,6 @@ body{
 ============================*/
 .departments .department-tab .nav{
 	margin-bottom: 30px;
-    background:transform;
 	position:relative;
 }
 .departments .department-tab .nav li{
@@ -2468,7 +2467,7 @@ body{
 	width: 85%;
 }
 .news-single .single-comments.left .body{
-	float: noene;
+	float: none;
 	width:100%;
 }
 .news-single .single-comments .comment-list {
@@ -2672,7 +2671,7 @@ body{
 }
 .appointment.single-page {
 	background: #fff;
-	padding-top: 100px 0;
+	padding-top: 100px;
 	padding: 0;
 	padding: 100px 0;
 }
@@ -4069,7 +4068,7 @@ body{
     opacity: 1;
     color: #fff !important;
 }
-.footer input::input-placeholder {
+.footer input::placeholder {
     opacity: 1;
     color: #fff !important;
 }
