@@ -30,14 +30,41 @@
                 <div class="card-body">
                     <h2 class="text-center">Registration Form <i class="fa-solid fa-user-plus"></i>
                     </h2>
-                    <form>
+                    <form action="register.php" method="POST">
+                        <div class="form-group">
+                            <label for="parentName">Parent's Name:</label>
+                            <input type="text" class="form-control" id="parentName" name="parentName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="parentEmail">Parent's Email:</label>
+                            <input type="email" class="form-control" id="parentEmail" name="parentEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="parentPhone">Parent's Phone:</label>
+                            <input type="tel" class="form-control" id="parentPhone" name="parentPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password:</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City:</label>
+                            <input type="text" class="form-control" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Parent's Gender:</label>
+                            <select class="form-control" id="gender" name="gender" required>
+                                <option value="father">Father</option>
+                                <option value="mother">Mother</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="childName">Child's Name:</label>
                             <input type="text" class="form-control" id="childName" name="childName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="childID">Child's ID:</label>
-                            <input type="text" class="form-control" id="childID" name="childID" required>
                         </div>
                         <div class="form-group">
                             <label for="childBirthDate">Child's Date of Birth:</label>
@@ -50,32 +77,8 @@
                                 <option value="female">Female</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="fatherName">Father's Name:</label>
-                            <input type="text" class="form-control" id="fatherName" name="fatherName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="fatherId">Father's ID:</label>
-                            <input type="text" class="form-control" id="fatherId" name="fatherId" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="fatherPhone">Father's Phone:</label>
-                            <input type="tel" class="form-control" id="fatherPhone" name="fatherPhone" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="motherName">Mother's Name:</label>
-                            <input type="text" class="form-control" id="motherName" name="motherName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="motherId">Mother's ID:</label>
-                            <input type="text" class="form-control" id="motherId" name="motherId" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="motherPhone">Mother's Phone:</label>
-                            <input type="tel" class="form-control" id="motherPhone" name="motherPhone" required>
-                        </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Register</button>
+                            <button type="submit" class="btn btn-primary"  >Register</button>
                         </div>
                     </form>
                 </div>
