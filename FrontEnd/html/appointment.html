@@ -52,7 +52,7 @@
         </div>
         <div class="row">
             <div class="col-lg-6 col-md-12 col-12">
-                <form class="form" action="#">
+                <form class="form" action="../../BackEnd/php/appointments.php" method="post">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="form-group">
@@ -71,27 +71,12 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="form-group">
-                                <div class="nice-select form-control wide" tabindex="0"><span class="current">Department</span>
-                                    <ul class="list">
-                                        <li data-value="1" class="option selected ">Department</li>
-                                        <li data-value="2" class="option">Cardiac Clinic</li>
-                                        <li data-value="3" class="option">Neurology</li>
-                                        <li data-value="4" class="option">Dentistry</li>
-                                        <li data-value="5" class="option">Gastroenterology</li>
-                                    </ul>
-                                </div>
+                                <input name="child" type="text" placeholder="Child">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="form-group">
-                                <div class="nice-select form-control wide" tabindex="0"><span class="current">Doctor</span>
-                                    <ul class="list">
-                                        <li data-value="1" class="option selected ">Doctor</li>
-                                        <li data-value="2" class="option">Dr. Akther Hossain</li>
-                                        <li data-value="3" class="option">Dr. Dery Alex</li>
-                                        <li data-value="4" class="option">Dr. Jovis Karon</li>
-                                    </ul>
-                                </div>
+                                <input name="doctor" type="text" placeholder="Doctor">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-12">
@@ -101,7 +86,7 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
-                                <textarea name="message" placeholder="Write Your Message Here....."></textarea>
+                                <textarea name="message" placeholder="More information....."></textarea>
                             </div>
                         </div>
                     </div>
@@ -114,7 +99,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7 col-md-8 col-12">
-                            <p>( We will be confirm by an Text Message )</p>
+                            <p>( We will confirm by a Text Message )</p>
                         </div>
                     </div>
                 </form>
@@ -161,8 +146,9 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="../html/index.html#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
+                                    <li><a href="../html/index.html#news"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
                                     <li><a href="../html/contact.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+                                    <li><a href="../html/schedules.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Schedules</a></li>
                                 </ul>
                             </div>
                         </div>
