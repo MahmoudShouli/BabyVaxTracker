@@ -8,7 +8,8 @@
     <link rel="icon" type="image/x-icon" href="../../Resources/images/logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/signup.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" /><body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
 
          <!-- Favicon -->
     <link rel="icon" href="../../Resources/images/favicon.png">
@@ -61,7 +62,7 @@
                 <div class="card-body">
                     <h2 class="text-center">Registration Form <i class="fa-solid fa-user-plus"></i>
                     </h2>
-                    <form action="register.php" method="POST">
+                    <form action="../../BackEnd/php/signup.php" method="POST" id="form">
                         <div class="form-group">
                             <label for="parentName">Parent's Name:</label>
                             <input type="text" class="form-control" id="parentName" name="parentName" required>
@@ -199,7 +200,83 @@
     <!--/ End Copyright -->
 </footer>
 <!--/ End Footer Area -->
+         <script>
+             document.getElementById("form").addEventListener("submit", function(event) {
+                 var parentName = document.getElementById("parentName").value.trim();
+                 var parentEmail = document.getElementById("parentEmail").value.trim();
+                 var parentPhone = document.getElementById("parentPhone").value.trim();
+                 var password = document.getElementById("password").value.trim();
+                 var confirmPassword = document.getElementById("confirmPassword").value.trim();
+                 var city = document.getElementById("city").value.trim();
+                 var childName = document.getElementById("childName").value.trim();
+                 var childBirthDate = new Date(document.getElementById("childBirthDate").value.trim());
+                 var childGender = document.getElementById("childGender").value.trim();
 
+                 // Check if all fields are filled
+                 if (!parentName || !parentEmail || !parentPhone || !password || !confirmPassword || !city || !childName || !childBirthDate || !childGender) {
+                     alert("Please fill in all fields");
+                     event.preventDefault();
+                     return;
+                 }
+                 // Check if parent's name contains digits
+                 if (/\d/.test(parentName)) {
+                     alert("Parent's name cannot contain digits");
+                     event.preventDefault();
+                     return;
+                 }
+// Check if city name contains digits
+                 if (/\d/.test(city)) {
+                     alert("City name cannot contain digits");
+                     event.preventDefault();
+                     return;
+                 }
+// Check if child's name contains digits
+                 if (/\d/.test(childName)) {
+                     alert("Child's name cannot contain digits");
+                     event.preventDefault();
+                     return;
+                 }
+
+// Check if phone number contains non-digit characters
+                 if (/\D/.test(parentPhone)) {
+                     alert("Phone number must contain only digits");
+                     event.preventDefault();
+                     return;
+                 }
+
+                 // Check if password and confirmPassword match
+                 if (password !== confirmPassword) {
+                     alert("Password and Confirm Password must match");
+                     event.preventDefault();
+                     return;
+                 }
+
+                 // Check if the child's birth date is the current date or a future date
+                 var currentDate = new Date();
+                 if (childBirthDate < currentDate) {
+                     alert("Child's birth date must be the current date or a future date");
+                     event.preventDefault();
+                     return;
+                 }
+
+                 // Check if parent's name has at least 2 names
+                 var parentNameParts = parentName.split(" ");
+                 if (parentNameParts.length < 2) {
+                     alert("Parent's name must have at least 2 names");
+                     event.preventDefault();
+                     return;
+                 }
+             });
+
+
+
+
+
+//    var form=document.getElementById('form');
+// form.addEventListener('submit',function (event){
+//     event.preventDefault();
+// })
+         </script>
 
 </body>
 </html>
