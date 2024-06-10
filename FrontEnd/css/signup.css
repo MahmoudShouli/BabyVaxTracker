@@ -1,7 +1,6 @@
 
 body::before {
     content: "";
-    /*background-image: url("../images/signupb.webp");*/
     background-color: rgba(0, 123, 255, 0.36);
     position: fixed;
     top: 0;
@@ -137,3 +136,45 @@ footer {
 
 
 /*}*/
+.error-message {
+    color: #ff3860;
+    font-size: 0.875em;
+    margin-top: 0.25em;
+    display: none;
+}
+.form-group input.error,
+.form-group select.error {
+    border-color: #ff3860;
+    box-shadow: 0 0 5px rgba(255, 56, 96, 0.5);
+}
+.form-group input.valid,
+.form-group select.valid {
+    border-color: #48c774;
+    box-shadow: 0 0 5px rgba(72, 199, 116, 0.5);
+}
+.form-group {
+    margin-bottom: 1em;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5em;
+}
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.5em;
+    font-size: 1em;
+}
+.text-center {
+    text-align: center;
+}
+.btn-primary {
+    background-color: #3273dc;
+    color: #fff;
+    border: none;
+    padding: 0.75em 1.5em;
+    font-size: 1em;
+    cursor: pointer;
+}
+.btn-primary:hover {
+    background-color: #2757a7;}
