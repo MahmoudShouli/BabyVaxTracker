@@ -6,6 +6,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Initialize error messages
+$error_msg = "";
+
 // Form data validation
 if (!empty($_POST['username']) && !empty($_POST['password'])) {
     // Get username (email or phone)
@@ -17,16 +20,28 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // User authenticated successfully
+        $conn->close();
+
         header("Location: ../../FrontEnd/html/index.html");
         exit();
     } else {
-        echo "Invalid username or password.";
+        $conn->close();
+
+        $error_msg= "Invalid username or password.";
+
+        header("Location: ../../FrontEnd/html/signin.html?error_msg=" . urlencode($error_msg));
+
+        exit();
     }
-} else {
-    echo "Please fill in all required fields.";
+} else {$conn->close();
+
+    $error_msg= "Please fill in all required fields.";
+    header("Location: ../../FrontEnd/html/signin.html?error_msg=" . urlencode($error_msg));
+
+
+    exit();
 }
 
-// Close the database connection
-$conn->close();
+
+
 ?>

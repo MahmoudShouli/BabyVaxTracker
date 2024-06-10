@@ -80,7 +80,11 @@
 
                             <div class="pt-1 mb-4">
                                 <button data-mdb-button-init data-mdb-ripple-init class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
-                            </div>
+                                <br>
+                                <div id="em" >
+
+                                </div>
+                                </div>
 
                             <a class="small text-muted" href="resetpassword.html">Forgot password?</a>
                             <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="../html/singup.html" style="color: #393f81;">Register here</a></p>
@@ -97,6 +101,20 @@
 
 
 
+
+
+</div>
+<script>
+    // Get the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Get the error message
+    const error_msg = urlParams.get('error_msg');
+
+    // Check if the error message is "Please fill in all required fields."
+        document.getElementById('em').innerText = error_msg;
+
+</script>
 
 
 
