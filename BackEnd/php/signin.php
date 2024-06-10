@@ -18,7 +18,8 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
 
     if ($result->num_rows > 0) {
         // User authenticated successfully
-        echo "Sign in successful!";
+        header("Location: ../../FrontEnd/html/index.html");
+        exit();
     } else {
         echo "Invalid username or password.";
     }
