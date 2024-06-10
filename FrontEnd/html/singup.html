@@ -10,6 +10,51 @@
     <link rel="stylesheet" type="text/css" href="../css/signup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <body>
+<style>
+    .error-message {
+        color: #ff3860;
+        font-size: 0.875em;
+        margin-top: 0.25em;
+        display: none;
+    }
+    .form-group input.error,
+    .form-group select.error {
+        border-color: #ff3860;
+        box-shadow: 0 0 5px rgba(255, 56, 96, 0.5);
+    }
+    .form-group input.valid,
+    .form-group select.valid {
+        border-color: #48c774;
+        box-shadow: 0 0 5px rgba(72, 199, 116, 0.5);
+    }
+    .form-group {
+        margin-bottom: 1em;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5em;
+    }
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 0.5em;
+        font-size: 1em;
+    }
+    .text-center {
+        text-align: center;
+    }
+    .btn-primary {
+        background-color: #3273dc;
+        color: #fff;
+        border: none;
+        padding: 0.75em 1.5em;
+        font-size: 1em;
+        cursor: pointer;
+    }
+    .btn-primary:hover {
+        background-color: #2757a7;}
+</style>
+
 
          <!-- Favicon -->
     <link rel="icon" href="../../Resources/images/favicon.png">
@@ -66,26 +111,32 @@
                         <div class="form-group">
                             <label for="parentName">Parent's Name:</label>
                             <input type="text" class="form-control" id="parentName" name="parentName" required>
+                            <div class="error-message" id="parentName-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="parentEmail">Parent's Email:</label>
                             <input type="email" class="form-control" id="parentEmail" name="parentEmail" required>
+                            <div class="error-message" id="parentEmail-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="parentPhone">Parent's Phone:</label>
                             <input type="tel" class="form-control" id="parentPhone" name="parentPhone" required>
+                            <div class="error-message" id="parentPhone-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="password">Password:</label>
                             <input type="password" class="form-control" id="password" name="password" required>
+                            <div class="error-message" id="password-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="confirmPassword">Confirm Password:</label>
                             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                            <div class="error-message" id="confirmPassword-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="city">City:</label>
                             <input type="text" class="form-control" id="city" name="city" required>
+                            <div class="error-message" id="city-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="gender">Parent's Gender:</label>
@@ -93,14 +144,17 @@
                                 <option value="father">Father</option>
                                 <option value="mother">Mother</option>
                             </select>
+                            <div class="error-message" id="gender-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="childName">Child's Name:</label>
                             <input type="text" class="form-control" id="childName" name="childName" required>
+                            <div class="error-message" id="childName-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="childBirthDate">Child's Date of Birth:</label>
                             <input type="date" class="form-control" id="childBirthDate" name="childBirthDate" required>
+                            <div class="error-message" id="childBirthDate-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="childGender">Child's Gender:</label>
@@ -108,12 +162,12 @@
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                             </select>
+                            <div class="error-message" id="childGender-error"></div>
                         </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary"  >Register</button>
+                            <button type="submit" class="btn btn-primary">Register</button>
                         </div>
-                    </form>
-                </div>
+                    </form>                </div>
             </div>
         </div>
     </div>
@@ -202,77 +256,112 @@
 <!--/ End Footer Area -->
          <script>
              document.getElementById("form").addEventListener("submit", function(event) {
-                 var parentName = document.getElementById("parentName").value.trim();
-                 var parentEmail = document.getElementById("parentEmail").value.trim();
-                 var parentPhone = document.getElementById("parentPhone").value.trim();
-                 var password = document.getElementById("password").value.trim();
-                 var confirmPassword = document.getElementById("confirmPassword").value.trim();
-                 var city = document.getElementById("city").value.trim();
-                 var childName = document.getElementById("childName").value.trim();
+                 var parentName = document.getElementById("parentName");
+                 var parentEmail = document.getElementById("parentEmail");
+                 var parentPhone = document.getElementById("parentPhone");
+                 var password = document.getElementById("password");
+                 var confirmPassword = document.getElementById("confirmPassword");
+                 var city = document.getElementById("city");
+                 var childName = document.getElementById("childName");
                  var childBirthDate = new Date(document.getElementById("childBirthDate").value.trim());
-                 var childGender = document.getElementById("childGender").value.trim();
+                 var childGender = document.getElementById("childGender");
+                 var isValid = true;
+
+                 function showError(input, message) {
+                     var errorElement = document.getElementById(input.id + "-error");
+                     errorElement.textContent = message;
+                     errorElement.style.display = "block";
+                     input.classList.add("error");
+                     input.classList.remove("valid");
+                     isValid = false;
+                 }
+
+                 function clearError(input) {
+                     var errorElement = document.getElementById(input.id + "-error");
+                     errorElement.style.display = "none";
+                     input.classList.remove("error");
+                     input.classList.add("valid");
+                 }
+
+                 function checkField(input, message) {
+                     if (!input.value.trim()) {
+                         showError(input, message);
+                     } else {
+                         clearError(input);
+                     }
+                 }
 
                  // Check if all fields are filled
-                 if (!parentName || !parentEmail || !parentPhone || !password || !confirmPassword || !city || !childName || !childBirthDate || !childGender) {
-                     alert("Please fill in all fields");
-                     event.preventDefault();
-                     return;
-                 }
+                 checkField(parentName, "Please enter parent's name");
+                 checkField(parentEmail, "Please enter parent's email");
+                 checkField(parentPhone, "Please enter parent's phone number");
+                 checkField(password, "Please enter a password");
+                 checkField(confirmPassword, "Please confirm your password");
+                 checkField(city, "Please enter a city");
+                 checkField(childName, "Please enter child's name");
+                 checkField(childGender, "Please select child's gender");
+
                  // Check if parent's name contains digits
-                 if (/\d/.test(parentName)) {
-                     alert("Parent's name cannot contain digits");
-                     event.preventDefault();
-                     return;
-                 }
-// Check if city name contains digits
-                 if (/\d/.test(city)) {
-                     alert("City name cannot contain digits");
-                     event.preventDefault();
-                     return;
-                 }
-// Check if child's name contains digits
-                 if (/\d/.test(childName)) {
-                     alert("Child's name cannot contain digits");
-                     event.preventDefault();
-                     return;
+                 if (/\d/.test(parentName.value)) {
+                     showError(parentName, "Parent's name cannot contain digits");
+                 } else {
+                     clearError(parentName);
                  }
 
-// Check if phone number contains non-digit characters
-                 if (/\D/.test(parentPhone)) {
-                     alert("Phone number must contain only digits");
-                     event.preventDefault();
-                     return;
+                 // Check if city name contains digits
+                 if (/\d/.test(city.value)) {
+                     showError(city, "City name cannot contain digits");
+                 } else {
+                     clearError(city);
+                 }
+
+                 // Check if child's name contains digits
+                 if (/\d/.test(childName.value)) {
+                     showError(childName, "Child's name cannot contain digits");
+                 } else {
+                     clearError(childName);
+                 }
+
+                 // Check if phone number contains non-digit characters
+                 if (/\D/.test(parentPhone.value)) {
+                     showError(parentPhone, "Phone number must contain only digits");
+                 } else {
+                     clearError(parentPhone);
                  }
 
                  // Check if password and confirmPassword match
-                 if (password !== confirmPassword) {
-                     alert("Password and Confirm Password must match");
-                     event.preventDefault();
-                     return;
+                 if (password.value !== confirmPassword.value) {
+                     showError(confirmPassword, "Password and Confirm Password must match");
+                 } else {
+                     clearError(confirmPassword);
                  }
 
                  // Check if the child's birth date is the current date or a future date
                  var currentDate = new Date();
+                 currentDate.setHours(0, 0, 0, 0); // Normalize to start of the day
                  if (childBirthDate < currentDate) {
-                     alert("Child's birth date must be the current date or a future date");
-                     event.preventDefault();
-                     return;
+                     showError(document.getElementById("childBirthDate"), "Child's birth date must be the current date or a future date");
+                 } else {
+                     clearError(document.getElementById("childBirthDate"));
                  }
 
                  // Check if parent's name has at least 2 names
-                 var parentNameParts = parentName.split(" ");
+                 var parentNameParts = parentName.value.split(" ");
                  if (parentNameParts.length < 2) {
-                     alert("Parent's name must have at least 2 names");
+                     showError(parentName, "Parent's name must have at least 2 names");
+                 } else {
+                     clearError(parentName);
+                 }
+
+                 if (!isValid) {
                      event.preventDefault();
-                     return;
                  }
              });
 
 
 
 
-
-//    var form=document.getElementById('form');
+             //    var form=document.getElementById('form');
 // form.addEventListener('submit',function (event){
 //     event.preventDefault();
 // })

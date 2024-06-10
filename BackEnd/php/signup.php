@@ -11,5 +11,4 @@ exit; // Ensure that no other code is executed after the redirect
 //    echo $resRow->name;
 //    echo "<br>";
 //}
-echo 'ali turabi love bmw m3';
 ?>
