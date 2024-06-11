@@ -54,34 +54,98 @@
             <div class="col-lg-6 col-md-12 col-12">
                 <form class="form" action="../../BackEnd/php/appointments.php" method="post">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-12">
-                            <div class="form-group">
-                                <input name="name" type="text" placeholder="Name">
-                            </div>
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <p style="font-size: 22px;">choose The Child:</p>
+                            <select  style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="child" name="child">
+                                <?php
+                                require_once '../../BackEnd/php/db_config.php';
+session_start();
+                                $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                                // Check the connection
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
+
+                                // Fetch the user ID based on the email or phone in $_SESSION['USER']
+                                $userIdentifier = $_SESSION['USER'];
+                                $sqlUser = "SELECT ID FROM users WHERE email = '$userIdentifier' OR phone = '$userIdentifier'";
+                                $resultUser = $conn->query($sqlUser);
+
+                                // Check if query executed successfully
+                                if ($resultUser === false) {
+                                    die("Error executing query: " . $conn->error);
+                                }
+
+                                if ($resultUser->num_rows > 0) {
+                                    $rowUser = $resultUser->fetch_assoc();
+                                    $userID = $rowUser['ID'];
+
+                                    // Fetch children's names based on the user's ID
+                                    $sqlChildren = "SELECT name FROM children WHERE userID = '$userID'";
+                                    $resultChildren = $conn->query($sqlChildren);
+
+                                    // Check if query executed successfully
+                                    if ($resultChildren === false) {
+                                        die("Error executing query: " . $conn->error);
+                                    }
+
+                                    if ($resultChildren->num_rows > 0) {
+                                        while ($rowChildren = $resultChildren->fetch_assoc()) {
+                                            echo "<option>".$rowChildren['name'] . "</option>";
+                                        }
+                                    } else {
+                                        echo "<option value=''>No children found</option>";
+                                    }
+                                } else {
+                                    echo "<option value=''>User not found</option>";
+                                }
+
+                                $conn->close();
+                                ?>
+                            </select>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-12">
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <p style="font-size: 22px;">choose The Doctor:</p>
+
                             <div class="form-group">
-                                <input name="email" type="email" placeholder="Email">
-                            </div>
+
+                                <select style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="employeeShift" name="doctor">
+                                    <?php
+                require_once '../../BackEnd/php/db_config.php';
+
+                $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                // Check the connection
+                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                    }
+
+                                    // Fetch doctors data from the doctors table
+                                    $sql = "SELECT name FROM doctors";
+                                    $result = $conn->query($sql);
+
+                                    // Check if query executed successfully
+                                    if ($result === false) {
+                                    die("Error executing query: " . $conn->error);
+                                    }
+
+                                    if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                    echo "<option>".$row['name'] . "</option>";
+                                    }
+                                    } else {
+                                    echo "<option value=''>No doctors available</option>";
+                                    }
+
+                                    $conn->close();
+                                    ?>
+                                </select>                            </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-12">
+                        <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
-                                <input name="phone" type="text" placeholder="Phone">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-12">
-                            <div class="form-group">
-                                <input name="child" type="text" placeholder="Child">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-12">
-                            <div class="form-group">
-                                <input name="doctor" type="text" placeholder="Doctor">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-12">
-                            <div class="form-group">
-                                <input type="text" placeholder="Day:Hour am/pm" id="datepicker">
+                                <p style="font-size: 22px;">choose The Date:</p>
+
+                                <input style="margin-bottom: 19px;margin-top: 12px;" type="text" placeholder="Day:Hour am/pm" id="datepicker">
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-12">
