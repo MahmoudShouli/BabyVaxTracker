@@ -69,25 +69,55 @@ if ($conn->connect_error) {
     <link rel="stylesheet" href="../css/responsive.css">
     <style>
         .available {
-            background-color: green;
+            background-color: rgba(0, 128, 0, 0.38);
         }
         .unavailable {
-            background-color: red;
+            background-color: rgba(255, 0, 0, 0.41);
         }
     </style>
 </head>
 <body>
 <header class="d-flex justify-content-between align-items-center py-3">
-    <a href="signin.php"><img src="../../Resources/images/logo.png" alt="this is the logo"></a>
+    <a href="index.html"><img src="../../Resources/images/logo.png" alt="this is the logo"></a>
 
-    <div class="cc1">
-        <label for="employeeShift">Select Employee :</label> <br>
-        <select class="form-control" id="employeeShift" name="employeeShift">
-            <option value="off">dr.john</option>
-        </select>
+    <div class="cc1" style="position:relative; right:800px;">
+        <form action ="../../BackEnd/php/schedules.php" method="post">
+            <label for="employeeShift">Select Doctor :</label> <br>
+            <select class="form-control" id="employeeShift" name="employeeShift">
+                <?php
+                require_once '../../BackEnd/php/db_config.php';
+
+                $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                // Check the connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                // Fetch doctors data from the doctors table
+                $sql = "SELECT name FROM doctors";
+                $result = $conn->query($sql);
+
+                // Check if query executed successfully
+                if ($result === false) {
+                    die("Error executing query: " . $conn->error);
+                }
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option>" ."dr.". $row['name'] . "</option>";
+                    }
+                } else {
+                    echo "<option value=''>No doctors available</option>";
+                }
+
+                $conn->close();
+                ?>
+            </select><br><br>
+            <button type="submit" class="btn" style="margin-top: -25px !important;">Show Schedule </button>
+        </form>
     </div>
-</header>
 
+</header>
 
 
 
@@ -193,7 +223,11 @@ if ($conn->connect_error) {
         </div>
     </div>
 </div>
-
+<div class="col-lg-2 col-12">
+    <div class="get-quote" style="position:relative; left:50vw; margin-top: 20px; ">
+        <a href="../html/appointment.html" class="btn">Book Appointment</a>
+    </div>
+</div>
 <script>
     // Availability data fetched by PHP
     const availabilityData = <?php echo json_encode($availabilityData); ?>;
@@ -298,3 +332,4 @@ if ($conn->connect_error) {
 <!--/ End Footer Area -->
 </body>
 </html>
+{day}={0.001010101
