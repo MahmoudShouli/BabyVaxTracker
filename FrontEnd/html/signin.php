@@ -91,7 +91,7 @@ if($_SESSION['message'] === "You already sign in "){
                     <div class="card-body p-4 p-lg-5 text-black" style="background-color: rgba(255, 255, 255, 0.9); border-radius: 1rem;">
 
                         <form  action="../../BackEnd/php/signin.php" method="POST" id="form">
-                            <h5 class="h3 fw-bold mb-5" style="letter-spacing: 1px;">Sign into your account</h5>
+                            <h5 class="h3 fw-bold mb-5" style="letter-spacing: 1px;">Sign in to your account</h5>
 
                             <div data-mdb-input-init class="form-outline mb-4">
                                 <label class="form-label" for="form2Example17">UserName</label>
@@ -112,7 +112,7 @@ if($_SESSION['message'] === "You already sign in "){
                                 </div>
 
                             <a class="small text-muted" href="resetpassword.html">Forgot password?</a>
-                            <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="../html/singup.html" style="color: #393f81;">Register here</a></p>
+                            <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="../html/signup.html" style="color: #393f81;">Register here</a></p>
                             <a href="#!" class="small text-muted">Terms of use.</a>
                             <a href="#!" class="small text-muted">Privacy policy</a>
                         </form>

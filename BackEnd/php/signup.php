@@ -52,6 +52,6 @@ if (!empty($_POST['parentName']) && !empty($_POST['parentEmail']) && !empty($_PO
 // Close the database connection
 $conn->close();
 
-header("Location: ../../FrontEnd/html/index.html");
+header("Location: ../../FrontEnd/html/index.php");
 exit; // Ensure that no other code is executed after the redirect
 ?>

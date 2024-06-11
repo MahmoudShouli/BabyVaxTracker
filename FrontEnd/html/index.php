@@ -138,7 +138,7 @@ else {
                                 <ul class="nav menu">
                                     <li><a href="#header">Home </a></li>
                                     <li><a href="#service">Services </a></li>
-                                    <li><a href="../html/feedback.html">Feedback </a></li>
+                                    <li><a href="feedback.php">Feedback </a></li>
                                     <li><a href="../html/contact.html">Contact Us</a></li>
                                 </ul>
                             </nav>
@@ -204,7 +204,7 @@ else {
                             <h1>See What Other <span>People</span> Think!</h1>
                             <p>Scroll through the reviews and feedback of previous experiences. </p>
                             <div class="button">
-                                <a href="../html/feedback.html" class="btn">Feedback and Reviews</a>
+                                <a href="feedback.php" class="btn">Feedback and Reviews</a>
                             </div>
                         </div>
                     </div>
@@ -497,7 +497,7 @@ else {
                         <li><i class="icofont icofont-ui-check"></i>Reviews and Feedback</li><br><br><br><br>
                     </ul>
                     <div class="table-bottom">
-                        <a class="btn" href="../html/feedback.html">Visit</a>
+                        <a class="btn" href="feedback.php">Visit</a>
                     </div>
                     <!-- Table Bottom -->
                 </div>
