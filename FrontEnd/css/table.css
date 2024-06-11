@@ -8,7 +8,6 @@
 
 body::before {
     content: "";
-    background-image: url("../images/backsk.jpg");
     position: fixed;
     top: 0;
     left: 0;
@@ -37,7 +36,7 @@ header img:hover {
 }
 header {margin-bottom: 80px;}
 .cc1{
-    float:right;
+    float:none;
     margin-right: 50px;
     margin-top: 100px;
     font-size: 30px;
@@ -239,10 +238,22 @@ td {
     border: #1A76D1 1px solid !important;
 
 }
+
+td.available {
+   color: limegreen;
+}
+
+td.booked {
+    color: red;
+}
 footer {
     width: 100%;
     color: #1A76D1;
 height: 100px;
     margin-top: 200px;
     background-color: rgba(237, 239, 245, 0.44);
+}
+th {
+    text-align: left !important;
+
 }

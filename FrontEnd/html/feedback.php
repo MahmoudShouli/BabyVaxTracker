@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>W3.CSS Template</title>
+<title>Posts</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -77,6 +77,42 @@ i.fa {margin-right: 0px !important;}
   <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
 </div>
 
+
+
+<?php
+
+    require_once "../../BackEnd/php/db_connect.php";
+
+    global $conn;
+
+    session_start();
+
+    if (isset($_SESSION['USER'])) {
+        $current_user = $_SESSION['USER']; # now current_user has the email of the current signed-in user
+
+    } else {
+        echo "No user is currently signed in.";
+    }
+
+
+    $query = " SELECT u.user_name, u.city, u.photo FROM users u  WHERE u.email = ?";
+
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $current_user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    $user_name = $row['user_name'];
+    $city = $row['city'];
+    $photo_url = $row['photo'];
+
+    echo $photo_url
+
+?>
+
+
 <!-- Page Container -->
 <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
   <!-- The Grid -->
@@ -87,11 +123,33 @@ i.fa {margin-right: 0px !important;}
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
          <h4 class="w3-center">My Profile</h4>
-         <p class="w3-center"><img id="profilepic" src="../../Resources/images/avatar.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <p class="w3-center">
+
+             <?php
+                if(empty($photo_url)) {
+                    echo "<form id = 'uploadForm' action='../../BackEnd/php/update_photo.php' method='post' enctype='multipart/form-data'>";
+                    echo "<label for='profilePicUpload' class='w3-button w3-theme' style='margin-right: 10px'>Upload Profile Picture</label>";
+                    echo "<input type='file' name = 'fileToUpload' id='profilePicUpload' style='display: none;'>";
+                    echo "<img id='profilepic' src='../../Resources/images/profilepicanony.png' class='w3-circle' style='height:106px;width:106px' alt='Avatar'>";
+                    echo "<input type='submit' name = 'submit' id='submit' value='Update'>";
+                    echo "</form>";
+                }
+                else {
+                    echo "<img id='profilepic' src=$photo_url class='w3-circle' style='height:106px;width:106px' alt='Avatar'>";
+
+
+
+                }
+             ?>
+
+         </p>
          <hr>
-         <p id="username"><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>Mahmoud Shouli</p>
-         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> Nablus, Palestine</p>
-         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> 3/16/2002</p>
+            <?php
+            echo "<p id='username'><i class='fa fa-pencil fa-fw w3-margin-right w3-text-theme'></i>".$user_name."</p>";
+            echo "<p><i class='fa fa-home fa-fw w3-margin-right w3-text-theme'></i>".$city." , Palestine</p>";
+            echo "<p><i class='fa fa-envelope fa-fw w3-margin-right w3-text-theme'></i> ".$current_user."</p>";
+            ?>
+
         </div>
       </div>
       <br>
@@ -114,47 +172,103 @@ i.fa {margin-right: 0px !important;}
         <div class="w3-col m12">
           <div class="w3-card w3-round w3-white">
             <div class="w3-container w3-padding">
+              <form action ="../../BackEnd/php/posts.php" method="post">
               <h6 class="w3-opacity">Share your thoughts...</h6><br>
-              <p contenteditable="true" class="w3-border w3-padding" id="postarea"></p><br>
-              <button type="button" class="w3-button w3-theme" onclick="post()"><i class="fa fa-pencil"></i>  Post</button> 
+               <textarea name="postContent" class="w3-border w3-padding" id="postarea"></textarea><br>
+               <button  class="w3-button w3-theme"><i class="fa fa-pencil"></i> Post</button>
+              </form>
             </div>
           </div>
         </div>
       </div>
-      
-      <div  class="w3-container w3-card w3-white w3-round w3-margin"><br>
-        <img src="../../Resources/images/ali.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">1 min</span>
-        <h4>Ali Turabi</h4><br>
-        <hr class="w3-clear">
-        <p>I highly recommend it, they took good care of my children.</p>
-          <div class="w3-row-padding" style="margin:0 -16px">
-            
-            <div class="w3-half">
-              
-            </div>
-        </div>
-        <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom" onclick="likePost(this)"><i class="fa fa-thumbs-up"></i><span id="likeCounter">  0</span>  Like</button> 
-      </div>
-      
-      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-        <img src="../../Resources/images/nabeel.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">16 min</span>
-        <h4>Nabeel Jammous</h4><br>
-        <hr class="w3-clear">
-        <p>I really liked the prices!</p>
-        <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button> 
 
-      </div>  
+        <?php
+            $query_posts = "SELECT *  FROM posts";
 
-      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-        <img src="../../Resources/images/saleh.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">32 min</span>
-        <h4>Saleh Sawalha</h4><br>
-        <hr class="w3-clear">
-        <p>I really loved how clean the center is.</p>
-        <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button> 
-      </div> 
+            $stmt_posts = $conn->prepare($query_posts);
+            $stmt_posts->execute();
+            $result_posts = $stmt_posts->get_result();
+
+            for($i=0; $i < $result_posts->num_rows; $i++) {
+                $row_posts = $result_posts->fetch_assoc();
+                $id = $row_posts['ID'];
+                $content = $row_posts['content'];
+                $likes = $row_posts['likes_count'];
+                $time_posted = $row_posts['time_posted_at'];
+                $userID = $row_posts['userID'];
+
+
+                $current_time = date('H:i:s');
+
+                list($past_hours, $past_minutes, $past_seconds) = explode(':', $time_posted);
+                $past_seconds_total = $past_hours * 3600 + $past_minutes * 60 + $past_seconds;
+
+                list($current_hours, $current_minutes, $current_seconds) = explode(':', $current_time);
+                $current_seconds_total = $current_hours * 3600 + $current_minutes * 60 + $current_seconds;
+
+                // Calculate the difference in seconds
+                $difference_seconds = $current_seconds_total - $past_seconds_total;
+
+                // Convert the difference back to hours and minutes
+                $difference_hours = floor($difference_seconds / 3600);
+                $difference_minutes = floor(($difference_seconds % 3600) / 60);
+
+                //Store the result in the desired format
+
+                if($difference_hours == 0 && $difference_minutes ==0)
+                    $timestamp = "just now!";
+
+
+                elseif($difference_hours == 0 && $difference_minutes !=0)
+                    $timestamp = "$difference_minutes minutes ago";
+
+                else
+                    $timestamp = "$difference_hours hours $difference_minutes minutes ago";
+
+
+                $query_user = "SELECT u.photo, u.user_name  FROM users u 
+                          WHERE u.ID = ?";
+
+                $stmt_user = $conn->prepare($query_user);
+                $stmt_user->bind_param("i", $userID);
+                $stmt_user->execute();
+                $result_user = $stmt_user->get_result();
+                $row_user = $result_user->fetch_assoc();
+
+                $photo = $row_user['photo'];
+                $userName = $row_user['user_name'];
+
+                echo "
+                <script>
+                var post = `
+                    <div class='w3-container w3-card w3-white w3-round w3-margin'><br>
+                        <img src=$photo alt='Avatar' class='w3-left w3-circle w3-margin-right' style='width:60px'>
+                        <span class='w3-right w3-opacity'>$timestamp</span>
+                        <h4>$userName</h4><br>
+                        <hr class='w3-clear'>
+                        <p style='margin-bottom:5px; margin-top:-15px'>$content</p>
+                        <form action = '../../BackEnd/php/like.php' method = 'post'>
+                        <button value = $id name='likeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span>  $likes</span> Like</button>
+                        </form>
+                    </div>
+                `;
+                
+                var postsContainer = document.getElementById('postContainer');
+                postsContainer.insertAdjacentHTML('afterbegin', post);
+                postsContainer.children[1].after(postsContainer.children[0]);
+                </script>
+                ";
+
+
+
+
+
+
+            }
+        ?>
+      
+
+
       
     <!-- End Middle Column -->
     </div>
@@ -162,19 +276,6 @@ i.fa {margin-right: 0px !important;}
     <!-- Right Column -->
     <div class="w3-col m2"> 
       <div class="w3-card w3-round w3-white w3-center">
-        <div class="w3-container">
-          <p>Friend Request</p>
-          <img src="../../Resources/images/mahmoudjaw.png" alt="Avatar" style="width:40%" class="w3-center w3-circle w3-margin-bottom"><br>
-          <span>Mahmoud Jawabreh</span>
-          <div class="w3-row w3-opacity">
-            <div class="w3-half">
-              <button class="w3-button w3-block w3-green w3-section" title="Accept"><i class="fa fa-check"></i></button>
-            </div>
-            <div class="w3-half">
-              <button class="w3-button w3-block w3-red w3-section" title="Decline"><i class="fa fa-remove"></i></button>
-            </div>
-          </div>
-        </div>
       </div>
       <br>
       
@@ -217,14 +318,14 @@ i.fa {margin-right: 0px !important;}
                       <div class="row">
                           <div class="col-lg-6 col-md-6 col-12">
                             <ul>
-                              <li><a href="../html/index.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                              <li><a href="../html/index.html#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                              <li><a href="../html/index.html#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+                              <li><a href="../html/index.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+                              <li><a href="../html/index.php#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+                              <li><a href="../html/index.php#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
                           </ul>
                       </div>
                       <div class="col-lg-6 col-md-6 col-12">
                           <ul>
-                              <li><a href="../html/index.html#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
+                              <li><a href="../html/index.php#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
                               <li><a href="../html/contact.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
                           </ul>
                           </div>
@@ -270,6 +371,36 @@ i.fa {margin-right: 0px !important;}
   <!--/ End Copyright -->
 </footer>
 <!--/ End Footer Area -->
+
+
+<script>
+    document.getElementById('fileToUpload').addEventListener('change', function(event) {
+        document.getElementById('uploadForm').submit();
+    });
+</script>
+
+<script>
+    // Function to reload the page without scrolling to top
+    function reloadPageWithoutScrolling() {
+        // Get the current scroll position
+        var scrollPos = window.scrollY || window.scrollTop || document.getElementsByTagName("html")[0].scrollTop;
+
+        // Reload the page
+        window.location.href = window.location.href.split('?')[0] + "?scrollPos=" + scrollPos;
+    }
+
+    // Call the reload function every 1 minute
+    setInterval(reloadPageWithoutScrolling, 60000); // 60000 milliseconds = 1 minute
+
+    // Restore scroll position after page reload
+    window.onload = function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var scrollPos = urlParams.get('scrollPos');
+        if (scrollPos !== null) {
+            window.scrollTo(0, parseInt(scrollPos));
+        }
+    };
+</script>
 
  
 <script src = "../js/feedback.js">

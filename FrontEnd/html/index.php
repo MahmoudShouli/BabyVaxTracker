@@ -44,7 +44,23 @@
 
 </head>
 <body>
+<?php
+session_start();
+// Check if the user is logged in
+if (!isset($_SESSION['USER']) || !isset($_SESSION['ROLE']) || $_SESSION['ROLE'] !== '2'){
 
+//ali turabi
+    $_SESSION['message'] = "Please sign in first";
+    header("Location: ../../FrontEnd/html/signin.php");
+    exit();
+}
+else {
+    $_SESSION['message'] = "You already sign in ";
+
+
+}
+
+?>
 <!-- Preloader -->
 <div class="preloader">
     <div class="loader">
@@ -73,16 +89,26 @@
                     <!-- Contact -->
                     <ul class="top-link">
                         <li><a href="#about">About</a></li>
-                        <li><a href="../html/table.html">Schedules</a></li>
-                        <li><a href="../html/signin.html">Sign In</a></li>
+                        <li><a href="schedules.html">Schedules</a></li>
+                        <li><a href="../../BackEnd/php/tosignout.php">Sign OUT</a></li>
                     </ul>
                     <!-- End Contact -->
                 </div>
                 <div class="col-lg-6 col-md-7 col-12">
                     <!-- Top Contact -->
-                    <ul class="top-contact">
-                        <li><i class="fa fa-phone"></i>0593021843</li>
-                        <li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">babyvaxtracker-support@gmail.com</a></li>
+                    <ul class="top-contact" style="font-size:14px;  ">
+                        <?php
+                        if (isset($_SESSION['USER'])) {
+                            $var =$_SESSION['USER'];
+                            echo "                        <li><i >Hi, $var</i></li>";
+                        } else {
+                            echo "                        <li><i>Hi, Guest</i></li>";
+                        }
+                        ?>
+
+
+                        <!--                        <li><i class="fa fa-phone"></i>0593021843</li>-->
+<!--                        <li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">babyvaxtracker-support@gmail.com</a></li>-->
                     </ul>
                     <!-- End Top Contact -->
                 </div>
@@ -98,7 +124,7 @@
                     <div class="col-lg-3 col-md-3 col-12">
                         <!-- Start Logo -->
                         <div class="logo">
-                            <a href="../html/index.html"><img src="../../Resources/images/logo.png" alt="#"></a>
+                            <a href="../html/signin.php"><img src="../../Resources/images/logo.png" alt="#"></a>
                         </div>
                         <!-- End Logo -->
                         <!-- Mobile Nav -->
@@ -112,7 +138,7 @@
                                 <ul class="nav menu">
                                     <li><a href="#header">Home </a></li>
                                     <li><a href="#service">Services </a></li>
-                                    <li><a href="../html/feedback.html">Feedback </a></li>
+                                    <li><a href="feedback.php">Feedback </a></li>
                                     <li><a href="../html/contact.html">Contact Us</a></li>
                                 </ul>
                             </nav>
@@ -178,7 +204,7 @@
                             <h1>See What Other <span>People</span> Think!</h1>
                             <p>Scroll through the reviews and feedback of previous experiences. </p>
                             <div class="button">
-                                <a href="../html/feedback.html" class="btn">Feedback and Reviews</a>
+                                <a href="feedback.php" class="btn">Feedback and Reviews</a>
                             </div>
                         </div>
                     </div>
@@ -224,7 +250,7 @@
                             <div class="single-content">
                                 <h4>Doctors Timetable</h4>
                                 <p>Check when each doctor is available and when not</p>
-                                <a href="../html/table.html">GO<i class="fa fa-long-arrow-right"></i></a>
+                                <a href="schedules.html">GO<i class="fa fa-long-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -471,7 +497,7 @@
                         <li><i class="icofont icofont-ui-check"></i>Reviews and Feedback</li><br><br><br><br>
                     </ul>
                     <div class="table-bottom">
-                        <a class="btn" href="../html/feedback.html">Visit</a>
+                        <a class="btn" href="feedback.php">Visit</a>
                     </div>
                     <!-- Table Bottom -->
                 </div>

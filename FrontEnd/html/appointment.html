@@ -1,18 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Language" content="ar">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BabyVaxTrack</title>
-    <link rel="icon" type="image/x-icon" href="../../Resources/images/logo.png">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/signup.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" /><body>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 
-         <!-- Favicon -->
+    <!-- Favicon -->
     <link rel="icon" href="../../Resources/images/favicon.png">
-
+		
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
@@ -34,89 +31,88 @@
     <link rel="stylesheet" href="../css/animate.min.css">
     <!-- Magnific Popup CSS -->
     <link rel="stylesheet" href="../css/magnific-popup.css">
-
-    <!-- Medipro CSS -->
+  
+    
     <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
 
-<header style="margin-bottom: 30px;">
-
-    <a href="index.html"><img src="../../Resources/images/logo.png" alt="this is the logo"></a>
-</header>
-
-
-
-
-
-
-
-
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="text-center">Registration Form <i class="fa-solid fa-user-plus"></i>
-                    </h2>
-                    <form>
-                        <div class="form-group">
-                            <label for="childName">Child's Name:</label>
-                            <input type="text" class="form-control" id="childName" name="childName" required>
+<!-- Start Appointment -->
+<section class="appointment">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>We Are Always Ready to Help You. Book An Appointment</h2>
+                    <img src="../../Resources/images/section-img.png" alt="#">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-12">
+                <form class="form" action="../../BackEnd/php/schedules.php" method="post">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="form-group">
+                                <input name="name" type="text" placeholder="Name">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="childID">Child's ID:</label>
-                            <input type="text" class="form-control" id="childID" name="childID" required>
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="form-group">
+                                <input name="email" type="email" placeholder="Email">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="childBirthDate">Child's Date of Birth:</label>
-                            <input type="date" class="form-control" id="childBirthDate" name="childBirthDate" required>
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="form-group">
+                                <input name="phone" type="text" placeholder="Phone">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="childGender">Child's Gender:</label>
-                            <select class="form-control" id="childGender" name="childGender" required>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="form-group">
+                                <input name="child" type="text" placeholder="Child">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="fatherName">Father's Name:</label>
-                            <input type="text" class="form-control" id="fatherName" name="fatherName" required>
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="form-group">
+                                <input name="doctor" type="text" placeholder="Doctor">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="fatherId">Father's ID:</label>
-                            <input type="text" class="form-control" id="fatherId" name="fatherId" required>
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="form-group">
+                                <input type="text" placeholder="Date (Day:Hour am/pm)" id="datepicker">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="fatherPhone">Father's Phone:</label>
-                            <input type="tel" class="form-control" id="fatherPhone" name="fatherPhone" required>
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group">
+                                <textarea name="message" placeholder="More information....."></textarea>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="motherName">Mother's Name:</label>
-                            <input type="text" class="form-control" id="motherName" name="motherName" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 col-md-4 col-12">
+                            <div class="form-group">
+                                <div class="button">
+                                    <button type="submit" class="btn">Book An Appointment</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="motherId">Mother's ID:</label>
-                            <input type="text" class="form-control" id="motherId" name="motherId" required>
+                        <div class="col-lg-7 col-md-8 col-12">
+                            <p>( We will confirm by a Text Message )</p>
                         </div>
-                        <div class="form-group">
-                            <label for="motherPhone">Mother's Phone:</label>
-                            <input type="tel" class="form-control" id="motherPhone" name="motherPhone" required>
-                        </div>
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Register</button>
-                        </div>
-                    </form>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6 col-md-12 ">
+                <div class="appointment-image">
+                    <img src="../../Resources/images/contact-img.png" alt="#">
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
-
+</section>
+<!-- End Appointment -->
 
 
 <!-- Footer Area -->
@@ -143,15 +139,16 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="../html/index.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                                    <li><a href="../html/index.html#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                                    <li><a href="../html/index.html#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+                                    <li><a href="../html/index.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+                                    <li><a href="../html/index.php#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+                                    <li><a href="../html/index.php#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
                                 </ul>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="../html/index.html#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
+                                    <li><a href="../html/index.php#news"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
                                     <li><a href="../html/contact.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+                                    <li><a href="../html/schedules.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Schedules</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -196,7 +193,5 @@
     <!--/ End Copyright -->
 </footer>
 <!--/ End Footer Area -->
-
-
 </body>
 </html>
