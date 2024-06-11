@@ -8,16 +8,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if Sarah's ID exists in the doctors table
-$result = $conn->query("SELECT ID FROM doctors WHERE ID = 2");
+// Check if Ali's ID exists in the doctors table
+$result = $conn->query("SELECT ID FROM doctors WHERE ID = 5");
 
 if ($result->num_rows == 0) {
-    // Sarah's ID does not exist, insert Sarah as a new doctor
-    $conn->query("INSERT INTO doctors (ID, name, email) VALUES (2, 'Sarah', 'sarah@gmail.com')");
+    // Ali's ID does not exist, insert Ali as a new doctor
+    $conn->query("INSERT INTO doctors (ID, name, email) VALUES (5, 'Ali', 'ali@gmail.com')");
 }
 
-// Insert availability data for Doctor Sarah
-$id = 46; // Assuming this is the first availability record for Sarah
+// Insert availability data for Doctor Ali
+$id = 181; // Assuming this is the first availability record for Ali
 for ($day = 0; $day <= 4; $day++) { // Sunday (0) to Thursday (4)
     for ($hour = 8; $hour <= 16; $hour++) { // 8 AM to 4 PM
         $dayName = date('l', strtotime('Sunday +'.$day.' days'));
@@ -26,7 +26,7 @@ for ($day = 0; $day <= 4; $day++) { // Sunday (0) to Thursday (4)
         $isAvailable = 1; // Assuming all slots are initially available
 
         $sql = "INSERT INTO doctor_dates (id, day, hour, am_or_pm, isAvailable, doctorID) 
-                VALUES ('$id', '$dayName', '$hourFormat', '$amOrPm', '$isAvailable', 2)";
+                VALUES ('$id', '$dayName', '$hourFormat', '$amOrPm', '$isAvailable', 5)";
 
         if ($conn->query($sql) !== TRUE) {
             echo "Error: " . $sql . "<br>" . $conn->error;

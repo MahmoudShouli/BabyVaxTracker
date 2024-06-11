@@ -8,31 +8,31 @@
 
 
     // bring the value of id from the selec
-if(isset($_POST['submit'])){
-    $doctorName = $_POST['employeeShift'];
-    switch ($doctorName) {
-        case 'Sarah':
-            $doctorID = 2;
-            break;
-        case 'Taima':
-            $doctorID = 1;
-            break;
-        case 'Lama':
-            $doctorID = 3;
-            break;
-        case 'Ali':
-            $doctorID = 4;
-            break;
-        case 'Mahmoud':
-            $doctorID = 5;
-            break;
-        default:
-            // Handle the case where an invalid option is selected
-            break;
-    }
+    if(isset($_POST['submit'])){
+        $doctorName = $_POST['employeeShift'];
+        switch ($doctorName) {
+            case 'Sarah':
+                $doctorID = 2;
+                break;
+            case 'Taima':
+                $doctorID = 1;
+                break;
+            case 'Lama':
+                $doctorID = 3;
+                break;
+            case 'Ali':
+                $doctorID = 4;
+                break;
+            case 'Mahmoud':
+                $doctorID = 5;
+                break;
+            default:
+                // Handle the case where an invalid option is selected
+                break;
+        }
 //echo "<h1>".$doctorID."</h1>";
 
-}
+    }
 
 
 

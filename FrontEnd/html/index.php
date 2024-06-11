@@ -89,7 +89,7 @@ else {
                     <!-- Contact -->
                     <ul class="top-link">
                         <li><a href="#about">About</a></li>
-                        <li><a href="schedules.php">Schedules</a></li>
+                        <li><a href="CTable.php">Schedules</a></li>
                         <li><a href="../../BackEnd/php/tosignout.php">Sign OUT</a></li>
                     </ul>
                     <!-- End Contact -->
@@ -250,7 +250,7 @@ else {
                             <div class="single-content">
                                 <h4>Doctors Timetable</h4>
                                 <p>Check when each doctor is available and when not</p>
-                                <a href="schedules.php">GO<i class="fa fa-long-arrow-right"></i></a>
+                                <a href="CTable.php">GO<i class="fa fa-long-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
