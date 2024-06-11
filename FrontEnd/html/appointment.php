@@ -202,9 +202,9 @@
         }
 
         // Validate date format
-        var dateRegex = /^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday):([8-9]|1[0-1]) (Am|Pm)$/i;
+        var dateRegex = /^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday):((8|9|10|11) Am|12 Pm|1 Pm|2 Pm|3 Pm|4 Pm)$/i;
         if (!dateRegex.test(date)) {
-            alert('Please enter a date in the format "Day:Hour Am/Pm" and the hour should be from 8 Am to 4 Pm');
+            alert('Please enter a date in the format "Day:Hour Am/Pm" and the hour should be from 8 Am to 4 Pm for Am and from 12 Pm to 4 Pm for Pm.');
             return false;
         }
 
