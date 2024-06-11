@@ -1,5 +1,7 @@
 <?php
 require_once '../../BackEnd/php/db_config.php';
+session_start();
+
 $conn = @new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 // Check the connection
 if ($conn->connect_error) {
@@ -20,23 +22,29 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        $conn->close();
+        $row = $result->fetch_assoc();
 
-        header("Location: ../../FrontEnd/html/index.html");
-        exit();
+$_SESSION['USER']=$username;
+$_SESSION['ROLE']=$row['roleID'];
+        $conn->close();
+//echo $_SESSION['USER'];
+//echo $_SESSION['ROLE'];
+
+        header("Location: ../../FrontEnd/html/index.php");
+       exit();
     } else {
         $conn->close();
 
         $error_msg= "Invalid username or password.";
 
-        header("Location: ../../FrontEnd/html/signin.html?error_msg=" . urlencode($error_msg));
+        header("Location: ../../FrontEnd/html/signin.php?error_msg=" . urlencode($error_msg));
 
         exit();
     }
 } else {$conn->close();
 
     $error_msg= "Please fill in all required fields.";
-    header("Location: ../../FrontEnd/html/signin.html?error_msg=" . urlencode($error_msg));
+    header("Location: ../../FrontEnd/html/signin.php?error_msg=" . urlencode($error_msg));
 
 
     exit();
