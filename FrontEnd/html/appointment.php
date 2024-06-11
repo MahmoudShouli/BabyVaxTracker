@@ -179,6 +179,44 @@ session_start();
 <!-- End Appointment -->
 
 
+<script>
+    function validateForm() {
+        var child = document.getElementById('child').value;
+        var doctor = document.getElementById('employeeShift').value;
+        var date = document.getElementById('datepicker').value;
+        var message = document.getElementsByName('message')[0].value;
+
+        if (child.trim() == '') {
+            alert('Please select a child.');
+            return false;
+        }
+
+        if (doctor.trim() == '') {
+            alert('Please select a doctor.');
+            return false;
+        }
+
+        if (date.trim() == '') {
+            alert('Please enter a date.');
+            return false;
+        }
+
+        // Validate date format
+        var dateRegex = /^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday):([8-9]|1[0-1]) (Am|Pm)$/i;
+        if (!dateRegex.test(date)) {
+            alert('Please enter a date in the format "Day:Hour Am/Pm" and the hour should be from 8 Am to 4 Pm');
+            return false;
+        }
+
+        if (message.trim() == '') {
+            alert('Please enter a description.');
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
 
 <!-- Footer Area -->
 <footer id="footer" class="footer ">

@@ -147,7 +147,7 @@ else {
                     </div>
                     <div class="col-lg-2 col-12">
                         <div class="get-quote">
-                            <a href="../html/appointment.html" class="btn">Book Appointment</a>
+                            <a href="../html/appointment.php" class="btn">Book Appointment</a>
                         </div>
                     </div>
                 </div>
@@ -187,7 +187,7 @@ else {
                             <h1>Look At The <span>Schedules</span> And Book A Time That Suits You!</h1>
                             <p>We offer a flexible shcedule with different doctors, take a look and book! </p>
                             <div class="button">
-                                <a href="../html/appointment.html" class="btn">Get Appointment</a>
+                                <a href="../html/appointment.php" class="btn">Get Appointment</a>
                             </div>
                         </div>
                     </div>
@@ -446,7 +446,7 @@ else {
                         <li><i class="icofont icofont-ui-check"></i>Reminders and Alerts</li><br><br>
                     </ul>
                     <div class="table-bottom">
-                        <a class="btn" href="../html/appointment.html">Book Now</a>
+                        <a class="btn" href="../html/appointment.php">Book Now</a>
                     </div>
                     <!-- Table Bottom -->
                 </div>
@@ -472,7 +472,7 @@ else {
                         <li><i class="icofont icofont-ui-check"></i>Growth and Development Monitoring</li><br>
                     </ul>
                         <div class="table-bottom">
-                            <a class="btn" href="../html/appointment.html">Book Now</a>
+                            <a class="btn" href="../html/appointment.php">Book Now</a>
                         </div>
                         <!-- Table Bottom -->
                 </div>

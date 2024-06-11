@@ -46,6 +46,8 @@ function getRowIndexForHour($hour)
             return 8;
             break;
         default:
+            exit();
+
             // Handle the case where x doesn't match any case
             return null;
 
@@ -73,6 +75,8 @@ if (isset($_POST['child']) && isset($_POST['doctor']) && isset($_POST['date'])&&
             $doctorId = 5;
             break;
         default:
+            exit();
+
             // Handle the case where an invalid option is selected
             break;
     }
@@ -96,8 +100,10 @@ if (isset($_POST['child']) && isset($_POST['doctor']) && isset($_POST['date'])&&
                 return 37;
                 break;
             default:
+                exit();
                 return 100;
-                break;
+
+
         }
 
     }
@@ -166,8 +172,8 @@ $message=$_POST['message'];
     $description = $message;
 
 // Prepare and bind
-    $stmt = $conn->prepare("INSERT INTO appointments (dateID, doctorID, childID, type, description) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiiss", $dateID, $doctorID, $childID, $type, $description);
+    //$stmt = $conn->prepare("INSERT INTO appointments (dateID, doctorID, childID, type, description) VALUES (?, ?, ?, ?, ?)");
+   // $stmt->bind_param("iiiss", $dateID, $doctorID, $childID, $type, $description);
 
 // Execute the statement
     if ($stmt->execute()) {
@@ -194,13 +200,6 @@ if ($stmtUpdate->execute()) {
 
 // Close the statement
 $stmtUpdate->close();
-
-
-
-
-
-
-
 
 }
 ?>
