@@ -1,8 +1,9 @@
 <?php
+session_start();
 // Enable error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
+$childid=1;
 // Remove session_start() if not needed
 
 $doctorId = 1;
@@ -52,8 +53,8 @@ function getRowIndexForHour($hour)
 
 
 
-// Retrieve the selected doctor's ID from the database
-if (isset($_POST['child']) && isset($_POST['doctor']) && isset($_POST['date'])) {
+// Retrieve the selected doctor's ID from the database message
+if (isset($_POST['child']) && isset($_POST['doctor']) && isset($_POST['date'])&& isset($_POST['message'])) {
     $doctorName = $_POST['doctor'];
     switch ($doctorName) {
         case 'Sarah':
@@ -124,7 +125,78 @@ if (isset($_POST['child']) && isset($_POST['doctor']) && isset($_POST['date'])) 
     //($day, $hour);
 
     //echo "<h1>" . "The row index to be affected is: " . $finalIndex . "</h1>";
+
     //  echo "<h1>"."ali loves taima " ."</h1>";
+
+
+
+// to get the id of the children :
+    $userIdentifier = $_SESSION['USER'];
+    $sqlUser = "SELECT ID FROM users WHERE email = '$userIdentifier' OR phone = '$userIdentifier'";
+    $resultUser = $conn->query($sqlUser);
+if ($resultUser->num_rows > 0) {
+    $rowUser = $resultUser->fetch_assoc();
+    $userID = $rowUser['ID'];
+    $childName=$_POST['child'];
+    // Fetch children's names based on the user's ID
+    $stmt = $conn->prepare("SELECT id FROM children WHERE userID = ? AND name = ?");
+    $stmt->bind_param("is", $userID, $childName);
+
+// Execute the statement
+    $stmt->execute();
+
+// Get the result
+    $resultChildren = $stmt->get_result();
+
+    if ($resultChildren->num_rows > 0) {
+        // Output data of each row
+        while ($row = $resultChildren->fetch_assoc()) {
+            $childid=$row['id'];
+        }
+    } else {
+        echo "No child found with the specified name.";
+    }}
+
+$message=$_POST['message'];
+// so now i have $row["id"] it's the id of the child ,$doctorId,$finalIndex,$message
+    $type = 'vaccine';
+    $dateID = $finalIndex;
+    $doctorID = $doctorId;
+    $childID =  $childid;
+    $description = $message;
+
+// Prepare and bind
+    $stmt = $conn->prepare("INSERT INTO appointments (dateID, doctorID, childID, type, description) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiiss", $dateID, $doctorID, $childID, $type, $description);
+
+// Execute the statement
+    if ($stmt->execute()) {
+        echo "New appointment record created successfully.";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+
+// Assuming you already have the necessary variables set
+    $finalIndex = $finalIndex; // Your finalIndex value
+
+// Update the row in the doctor_dates table
+$sqlUpdate = "UPDATE doctor_dates SET isAvailable = '2' WHERE id = ?";
+$stmtUpdate = $conn->prepare($sqlUpdate);
+$stmtUpdate->bind_param("i", $finalIndex);
+
+// Execute the statement
+if ($stmtUpdate->execute()) {
+    echo "Row updated successfully.";
+} else {
+    echo "Error updating row: " . $stmtUpdate->error;
+}
+
+// Close the statement
+$stmtUpdate->close();
+
+
+
 
 
 
