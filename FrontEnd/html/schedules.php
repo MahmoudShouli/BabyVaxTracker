@@ -2,34 +2,49 @@
 <html lang="en">
 <head>
     <?php
-require_once '../../BackEnd/php/db_config.php';
+    require_once '../../BackEnd/php/db_config.php';
 
-$conn = @new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    $conn = @new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    // Check the connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
+
+    // Define the doctorID (you can set this dynamically based on your requirements)
+    $doctorID = 2; // Example, you can set this dynamically
 
     // Fetch availability data from doctor_dates table
     $sql = "SELECT day, GROUP_CONCAT(isAvailable ORDER BY hour SEPARATOR ',') AS hours
-    FROM doctor_dates
-    WHERE doctorID = 1
-    GROUP BY day
-    ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')";
+FROM doctor_dates
+WHERE doctorID = ?
+GROUP BY day
+ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')";
 
-    $result = $conn->query($sql);
+    // Prepare the SQL statement
+    $stmt = $conn->prepare($sql);
+
+    // Bind the doctorID parameter
+    $stmt->bind_param("i", $doctorID);
+
+    // Execute the SQL statement
+    $stmt->execute();
+
+    // Get the result
+    $result = $stmt->get_result();
 
     $availabilityData = array();
     if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-    $availabilityData[] = array(
-    'day' => $row['day'],
-    'hours' => explode(',', $row['hours'])
-    );
-    }
+        while ($row = $result->fetch_assoc()) {
+            $availabilityData[] = array(
+                'day' => $row['day'],
+                'hours' => explode(',', $row['hours'])
+            );
+        }
     }
 
+    $stmt->close();
     $conn->close();
+
     ?>
 
     <meta charset="utf-8">
@@ -81,7 +96,7 @@ if ($conn->connect_error) {
     <a href="index.html"><img src="../../Resources/images/logo.png" alt="this is the logo"></a>
 
     <div class="cc1" style="position:relative; right:800px;">
-        <form action ="../../BackEnd/php/schedules.php" method="post">
+        <form action ="../../FrontEnd/html/schedules.php" method="post">
             <label for="employeeShift">Select Doctor :</label> <br>
             <select class="form-control" id="employeeShift" name="employeeShift">
                 <?php
