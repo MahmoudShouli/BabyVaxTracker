@@ -128,72 +128,80 @@ if (isset($_POST['child']) && isset($_POST['doctor']) && isset($_POST['date'])&&
 
     //  echo "<h1>"."ali loves taima " ."</h1>";
 
+// Check if isAvailable is 1
+    $sqlCheck = "SELECT isAvailable FROM doctor_dates WHERE id = ?";
+    $stmtCheck = $conn->prepare($sqlCheck);
+    $stmtCheck->bind_param("i", $finalIndex);
 
+    if ($stmtCheck->execute()) {
+        $result = $stmtCheck->get_result();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            if ($row['isAvailable'] == '1') {
 
-// to get the id of the children :
-    $userIdentifier = $_SESSION['USER'];
-    $sqlUser = "SELECT ID FROM users WHERE email = '$userIdentifier' OR phone = '$userIdentifier'";
-    $resultUser = $conn->query($sqlUser);
-    if ($resultUser->num_rows > 0) {
-        $rowUser = $resultUser->fetch_assoc();
-        $userID = $rowUser['ID'];
-        $childName=$_POST['child'];
-        // Fetch children's names based on the user's ID
-        $stmt = $conn->prepare("SELECT id FROM children WHERE userID = ? AND name = ?");
-        $stmt->bind_param("is", $userID, $childName);
+                $userIdentifier = $_SESSION['USER'];
+                $sqlUser = "SELECT ID FROM users WHERE email = '$userIdentifier' OR phone = '$userIdentifier'";
+                $resultUser = $conn->query($sqlUser);
+                if ($resultUser->num_rows > 0) {
+                    $rowUser = $resultUser->fetch_assoc();
+                    $userID = $rowUser['ID'];
+                    $childName=$_POST['child'];
+                    // Fetch children's names based on the user's ID
+                    $stmt = $conn->prepare("SELECT id FROM children WHERE userID = ? AND name = ?");
+                    $stmt->bind_param("is", $userID, $childName);
 
 // Execute the statement
-        $stmt->execute();
+                    $stmt->execute();
 
 // Get the result
-        $resultChildren = $stmt->get_result();
+                    $resultChildren = $stmt->get_result();
 
-        if ($resultChildren->num_rows > 0) {
-            // Output data of each row
-            while ($row = $resultChildren->fetch_assoc()) {
-                $childid=$row['id'];
-            }
-        } else {
-            echo "No child found with the specified name.";
-        }}
+                    if ($resultChildren->num_rows > 0) {
+                        // Output data of each row
+                        while ($row = $resultChildren->fetch_assoc()) {
+                            $childid=$row['id'];
+                        }
+                    } else {
+                        echo "No child found with the specified name.";
+                    }}
 
-    $message=$_POST['message'];
+                $message=$_POST['message'];
 // so now i have $row["id"] it's the id of the child ,$doctorId,$finalIndex,$message
-    $type = 'vaccine';
-    $dateID = $finalIndex;
-    $doctorID = $doctorId;
-    $childID =  $childid;
-    $description = $message;
+                $type = 'vaccine';
+                $dateID = $finalIndex;
+                $doctorID = $doctorId;
+                $childID =  $childid;
+                $description = $message;
 
 // Prepare and bind
-    $stmt = $conn->prepare("INSERT INTO appointments (dateID, doctorID, childID, type, description) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiiss", $dateID, $doctorID, $childID, $type, $description);
+                $stmt = $conn->prepare("INSERT INTO appointments (dateID, doctorID, childID, type, description) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param("iiiss", $dateID, $doctorID, $childID, $type, $description);
 
 // Execute the statement
-    if ($stmt->execute()) {
-        echo "New appointment record created successfully.";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
+                if ($stmt->execute()) {
+                    echo "New appointment record created successfully.";
+                } else {
+                    echo "Error: " . $stmt->error;
+                }
 
 
 // Assuming you already have the necessary variables set
-    $finalIndex = $finalIndex; // Your finalIndex value
+                $finalIndex = $finalIndex; // Your finalIndex value
 
 // Update the row in the doctor_dates table
-    $sqlUpdate = "UPDATE doctor_dates SET isAvailable = '2' WHERE id = ?";
-    $stmtUpdate = $conn->prepare($sqlUpdate);
-    $stmtUpdate->bind_param("i", $finalIndex);
+                $sqlUpdate = "UPDATE doctor_dates SET isAvailable = '2' WHERE id = ?";
+                $stmtUpdate = $conn->prepare($sqlUpdate);
+                $stmtUpdate->bind_param("i", $finalIndex);
 
 // Execute the statement
-    if ($stmtUpdate->execute()) {
-        echo "Row updated successfully.";
-    } else {
-        echo "Error updating row: " . $stmtUpdate->error;
-    }
+                if ($stmtUpdate->execute()) {
+                    echo "Row updated successfully.";
+                } else {
+                    echo "Error updating row: " . $stmtUpdate->error;
+                }
 
 // Close the statement
-    $stmtUpdate->close();
+                $stmtUpdate->close();
 
 
 
@@ -202,5 +210,29 @@ if (isset($_POST['child']) && isset($_POST['doctor']) && isset($_POST['date'])&&
 
 
 
-}
+
+
+
+
+
+
+                echo "book successfully.";
+                } else {
+                    echo "Choose other Date " ;
+                }
+
+                // Close the statement
+            } else {
+                echo "the date is already booked.";
+            }
+        }
+    }
+
+
+
+
+
+
+
+
 ?>
