@@ -9,7 +9,7 @@
 
     <!-- Favicon -->
     <link rel="icon" href="../../Resources/images/favicon.png">
-		
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
@@ -31,11 +31,11 @@
     <link rel="stylesheet" href="../css/animate.min.css">
     <!-- Magnific Popup CSS -->
     <link rel="stylesheet" href="../css/magnific-popup.css">
-  
-    
+
+
     <link rel="stylesheet" href="../css/normalize.css">
-        <link rel="stylesheet" href="../css/style.css">
-        <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
 
@@ -59,7 +59,7 @@
                             <select  style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="child" name="child">
                                 <?php
                                 require_once '../../BackEnd/php/db_config.php';
-session_start();
+                                session_start();
                                 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
                                 // Check the connection
                                 if ($conn->connect_error) {
@@ -112,12 +112,12 @@ session_start();
 
                                 <select style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="employeeShift" name="doctor">
                                     <?php
-                require_once '../../BackEnd/php/db_config.php';
+                                    require_once '../../BackEnd/php/db_config.php';
 
-                $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-                // Check the connection
-                if ($conn->connect_error) {
-                                    die("Connection failed: " . $conn->connect_error);
+                                    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                                    // Check the connection
+                                    if ($conn->connect_error) {
+                                        die("Connection failed: " . $conn->connect_error);
                                     }
 
                                     // Fetch doctors data from the doctors table
@@ -126,15 +126,15 @@ session_start();
 
                                     // Check if query executed successfully
                                     if ($result === false) {
-                                    die("Error executing query: " . $conn->error);
+                                        die("Error executing query: " . $conn->error);
                                     }
 
                                     if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                    echo "<option>".$row['name'] . "</option>";
-                                    }
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<option>".$row['name'] . "</option>";
+                                        }
                                     } else {
-                                    echo "<option value=''>No doctors available</option>";
+                                        echo "<option value=''>No doctors available</option>";
                                     }
 
                                     $conn->close();
