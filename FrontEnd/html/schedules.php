@@ -4,6 +4,36 @@
     <?php
     require_once '../../BackEnd/php/db_config.php';
 
+    $doctorID =null;
+
+
+    // bring the value of id from the selec
+if(isset($_POST['submit'])){
+    $doctorID = ($_POST['employeeShift'] == 'Sarah') ? 2 : 1;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //mmmm
     $conn = @new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     // Check the connection
     if ($conn->connect_error) {
@@ -11,7 +41,6 @@
     }
 
     // Define the doctorID (you can set this dynamically based on your requirements)
-    $doctorID = 2; // Example, you can set this dynamically
 
     // Fetch availability data from doctor_dates table
     $sql = "SELECT day, GROUP_CONCAT(isAvailable ORDER BY hour SEPARATOR ',') AS hours
@@ -119,7 +148,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                        echo "<option>" ."dr.". $row['name'] . "</option>";
+                        echo "<option>".$row['name'] . "</option>";
                     }
                 } else {
                     echo "<option value=''>No doctors available</option>";
@@ -128,7 +157,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                 $conn->close();
                 ?>
             </select><br><br>
-            <button type="submit" class="btn" style="margin-top: -25px !important;">Show Schedule </button>
+            <button name="submit" type="submit" class="btn" style="margin-top: -25px !important;">Show Schedule </button>
         </form>
     </div>
 
