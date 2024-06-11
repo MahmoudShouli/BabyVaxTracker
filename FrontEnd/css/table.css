@@ -245,3 +245,7 @@ height: 100px;
     margin-top: 200px;
     background-color: rgba(237, 239, 245, 0.44);
 }
+th {
+    text-align: left !important;
+
+}

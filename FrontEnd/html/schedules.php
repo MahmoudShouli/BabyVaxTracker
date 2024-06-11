@@ -1,6 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <?php
+require_once '../../BackEnd/php/db_config.php';
+
+$conn = @new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Fetch availability data from doctor_dates table
+    $sql = "SELECT day, GROUP_CONCAT(isAvailable ORDER BY hour SEPARATOR ',') AS hours
+    FROM doctor_dates
+    WHERE doctorID = 1
+    GROUP BY day
+    ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')";
+
+    $result = $conn->query($sql);
+
+    $availabilityData = array();
+    if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+    $availabilityData[] = array(
+    'day' => $row['day'],
+    'hours' => explode(',', $row['hours'])
+    );
+    }
+    }
+
+    $conn->close();
+    ?>
+
     <meta charset="utf-8">
     <meta http-equiv="Content-Language" content="ar">
     <title>BabyVaxTrack</title>
@@ -36,6 +67,14 @@
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .available {
+            background-color: green;
+        }
+        .unavailable {
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
 <header class="d-flex justify-content-between align-items-center py-3">
@@ -80,93 +119,72 @@
                     <tbody>
                     <tr>
                         <td>Sunday</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
                     </tr>
                     <tr>
                         <td>Monday</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
                     </tr>
                     <tr>
                         <td>Tuesday</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
                     </tr>
                     <tr>
                         <td>Wednesday</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
                     </tr>
                     <tr>
                         <td>Thursday</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
+                        <td class="availability-cell"></td>
                     </tr>
                     <tr>
                         <td>Friday</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td colspan="12" style="font-size: 25px;">There is no work today</td>
 
                     </tr>
                     <tr>
                         <td>Saturday</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td colspan="12" style="font-size: 25px;">There is no work today</td>
 
                     </tr>
                     </tbody>
@@ -175,6 +193,30 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Availability data fetched by PHP
+    const availabilityData = <?php echo json_encode($availabilityData); ?>;
+
+    // Function to update cell background color based on availability
+    function updateAvailability() {
+        const cells = document.querySelectorAll('.availability-cell');
+
+        cells.forEach((cell, index) => {
+            const availability = availabilityData[Math.floor(index / 9)].hours[index % 9];
+            if (availability == 1) {
+                cell.classList.remove('unavailable');
+                cell.classList.add('available');
+            } else {
+                cell.classList.remove('available');
+                cell.classList.add('unavailable');
+            }
+        });
+    }
+
+    // Initial update
+    updateAvailability();
+</script>
 
 
 <!-- Footer Area -->
