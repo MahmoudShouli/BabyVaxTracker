@@ -52,7 +52,7 @@
         </div>
         <div class="row">
             <div class="col-lg-6 col-md-12 col-12">
-                <form class="form" action="../../BackEnd/php/appointments.php" method="post">
+                <form id='form' class="form" action="../../BackEnd/php/appointments.php" method="post" onsubmit="return validateForm()">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-12">
                             <p style="font-size: 22px;">choose The Child:</p>
@@ -145,7 +145,7 @@ session_start();
                             <div class="form-group">
                                 <p style="font-size: 22px;">choose The Date:</p>
 
-                                <input style="margin-bottom: 19px;margin-top: 12px;" type="text" placeholder="Day:Hour am/pm" id="datepicker">
+                                <input name='date' style="margin-bottom: 19px;margin-top: 12px;" type="text" placeholder="Day:Hour am/pm" id="datepicker">
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-12">
@@ -177,6 +177,7 @@ session_start();
     </div>
 </section>
 <!-- End Appointment -->
+
 
 
 <!-- Footer Area -->
