@@ -89,8 +89,10 @@ else {
                     <!-- Contact -->
                     <ul class="top-link">
                         <li><a href="#about">About</a></li>
-                        <li><a href="CTable.php">Schedules</a></li>
+                        <li><a href="../../FrontEnd/html/CTable.php">Schedules</a></li>
+                        <li><a href="../../FrontEnd/html/booking.php">Booking Details</a></li>
                         <li><a href="../../BackEnd/php/tosignout.php">Sign OUT</a></li>
+
                     </ul>
                     <!-- End Contact -->
                 </div>

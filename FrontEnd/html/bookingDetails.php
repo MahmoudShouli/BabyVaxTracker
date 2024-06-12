@@ -19,13 +19,10 @@ $sqlDoctors = "SELECT ID, name FROM doctors";
 $resultDoctors = $conn->query($sqlDoctors);
 $doctorNames = [];
 if ($resultDoctors === false) {
-    die("Error fetching doctors: " . $conn->error);
-} elseif ($resultDoctors->num_rows > 0) {
-    while ($row = $resultDoctors->fetch_assoc()) {
-        $doctorNames[$row['ID']] = $row['name'];
-    }
-} else {
-    echo "No doctors found.";
+    setSessionMessageAndRedirect("Error fetching doctors: " . $conn->error, "../../FrontEnd/html/errorPage.php");
+}
+while ($row = $resultDoctors->fetch_assoc()) {
+    $doctorNames[$row['ID']] = $row['name'];
 }
 
 // Fetch child names
@@ -33,39 +30,36 @@ $sqlChildren = "SELECT id, name FROM children";
 $resultChildren = $conn->query($sqlChildren);
 $childNames = [];
 if ($resultChildren === false) {
-    die("Error fetching children: " . $conn->error);
-} elseif ($resultChildren->num_rows > 0) {
-    while ($row = $resultChildren->fetch_assoc()) {
-        $childNames[$row['id']] = $row['name'];
-    }
-} else {
-    echo "No children found.";
+    setSessionMessageAndRedirect("Error fetching children: " . $conn->error, "../../FrontEnd/html/errorPage.php");
+}
+while ($row = $resultChildren->fetch_assoc()) {
+    $childNames[$row['id']] = $row['name'];
 }
 
 // Fetch data from the doctor_dates table where id equals $_SESSION['CID']
 $sqlDoctorDates = "SELECT * FROM doctor_dates WHERE id = ?";
 $stmtDoctorDates = $conn->prepare($sqlDoctorDates);
 if ($stmtDoctorDates === false) {
-    die("Error preparing statement: " . $conn->error);
+    setSessionMessageAndRedirect("Error preparing statement: " . $conn->error, "../../FrontEnd/html/errorPage.php");
 }
 $stmtDoctorDates->bind_param("i", $cid);
 $stmtDoctorDates->execute();
 $resultDoctorDates = $stmtDoctorDates->get_result();
 if ($resultDoctorDates === false) {
-    die("Error executing statement: " . $stmtDoctorDates->error);
+    setSessionMessageAndRedirect("Error executing statement: " . $stmtDoctorDates->error, "../../FrontEnd/html/errorPage.php");
 }
 
 // Fetch data from the appointments table where dateID equals $_SESSION['CID']
 $sqlAppointments = "SELECT * FROM appointments WHERE dateID = ?";
 $stmtAppointments = $conn->prepare($sqlAppointments);
 if ($stmtAppointments === false) {
-    die("Error preparing statement: " . $conn->error);
+    setSessionMessageAndRedirect("Error preparing statement: " . $conn->error, "../../FrontEnd/html/errorPage.php");
 }
 $stmtAppointments->bind_param("i", $cid);
 $stmtAppointments->execute();
 $resultAppointments = $stmtAppointments->get_result();
 if ($resultAppointments === false) {
-    die("Error executing statement: " . $stmtAppointments->error);
+    setSessionMessageAndRedirect("Error executing statement: " . $stmtAppointments->error, "../../FrontEnd/html/errorPage.php");
 }
 
 if (isset($_POST['subdel'])) {
@@ -77,40 +71,22 @@ if (isset($_POST['subdel'])) {
             $sqlDeleteAppointment = "DELETE FROM appointments WHERE ID = ?";
             $stmtDeleteAppointment = $conn->prepare($sqlDeleteAppointment);
             if ($stmtDeleteAppointment === false) {
-                die("Error preparing statement: " . $conn->error);
+                setSessionMessageAndRedirect("Error preparing statement: " . $conn->error, "../../FrontEnd/html/errorPage.php");
             }
             $stmtDeleteAppointment->bind_param("i", $idToDelete);
 
             // Execute the statement
             if ($stmtDeleteAppointment->execute()) {
-                echo "Record with ID $idToDelete deleted successfully.";
+                setSessionMessageAndRedirect("Record with ID $idToDelete deleted successfully.", "../../FrontEnd/html/booking.php");
             } else {
-                echo "Error deleting record: " . $stmtDeleteAppointment->error;
+                setSessionMessageAndRedirect("Error deleting record: " . $stmtDeleteAppointment->error, "../../FrontEnd/html/errorPage.php");
             }
 
             // Close the statement
             $stmtDeleteAppointment->close();
-
-            // Prepare the SQL UPDATE statement
-            $sqlUpdateAvailability = "UPDATE doctor_dates SET isAvailable = 1 WHERE id = ?";
-            $stmtUpdateAvailability = $conn->prepare($sqlUpdateAvailability);
-            if ($stmtUpdateAvailability === false) {
-                die("Error preparing statement: " . $conn->error);
-            }
-            $stmtUpdateAvailability->bind_param("i", $cid);
-
-            // Execute the statement
-            if ($stmtUpdateAvailability->execute()) {
-                echo "Record with ID $cid updated successfully.";
-            } else {
-                echo "Error updating record: " . $stmtUpdateAvailability->error;
-            }
-
-            // Close the statement
-            $stmtUpdateAvailability->close();
         }
     } else {
-        echo "No appointments found to delete.";
+        setSessionMessageAndRedirect("No appointments found to delete.", "../../FrontEnd/html/booking.php");
     }
 
     if (isset($stmtDeleteAppointment) && $stmtDeleteAppointment instanceof mysqli_stmt) {
@@ -118,6 +94,14 @@ if (isset($_POST['subdel'])) {
     }
 
     $conn->close();
+}
+
+function setSessionMessageAndRedirect($message, $redirectPage)
+{
+    $_SESSION['message'] = $message;
+    $_SESSION['redirect_page'] = $redirectPage;
+    header("Location: ../../BackEnd/php/display_message.php");
+    exit();
 }
 ?>
 
@@ -317,9 +301,6 @@ if (isset($_POST['subdel'])) {
     <!--/ End Header Inner -->
 </header>
 <!-- End Header Area -->
-
-
-
 
 
 

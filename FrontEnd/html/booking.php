@@ -1,24 +1,22 @@
 <?php
 session_start();
 
-
 require_once '../../BackEnd/php/db_config.php';
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
 if (isset($_POST['childrenSelect'])) {
-
-
     $selectedOption = $_POST['childrenSelect'];
-    // Parse the selected option to extract childName, appointmentDay, and appointmentHour
-    list($childName, $appointmentDay, $appointmentHour) = explode(': ', $selectedOption);
+    $selectedParts = explode(': ', $selectedOption);
+    if (count($selectedParts) < 3) {
+        setSessionMessageAndRedirect("Invalid selection format.", "../../FrontEnd/html/appointment.php");
+    }
+    list($childName, $appointmentDay, $appointmentHour) = $selectedParts;
 
     $username = $_SESSION['USER'];
 
-    // Fetch user ID based on email or phone
     $sqlUser = "SELECT ID FROM users WHERE email = ? OR phone = ?";
     $stmtUser = $conn->prepare($sqlUser);
     $stmtUser->bind_param("ss", $username, $username);
@@ -29,7 +27,6 @@ if (isset($_POST['childrenSelect'])) {
         $rowUser = $resultUser->fetch_assoc();
         $userID = $rowUser['ID'];
 
-        // Fetch the ID from the doctor_dates table based on the selected option and user ID
         $sqlDoctorDateID = "
             SELECT doctor_dates.id
             FROM doctor_dates
@@ -45,32 +42,27 @@ if (isset($_POST['childrenSelect'])) {
         if ($resultDoctorDateID->num_rows > 0) {
             $rowDoctorDateID = $resultDoctorDateID->fetch_assoc();
             $doctorDateID = $rowDoctorDateID['id'];
-
-            // Store the ID in $_SESSION['CID']
             $_SESSION['CID'] = $doctorDateID;
             header("Location: ../../FrontEnd/html/bookingDetails.php");
             exit();
 
         } else {
-            echo "Doctor date not found for the selected child and appointment time.";
+            setSessionMessageAndRedirect("Doctor date not found for the selected child and appointment time.", "../../FrontEnd/html/booking.php");
         }
     } else {
-        echo "User not found.";
+        setSessionMessageAndRedirect("User not found.", "../../FrontEnd/html/booking.php");
     }
 
     $conn->close();
 }
 
-
-
-//if(isset($_POST['submit1']))
-//{
-//
-//}
-
-
-
-
+function setSessionMessageAndRedirect($message, $redirectPage)
+{
+    $_SESSION['message'] = $message;
+    $_SESSION['redirect_page'] = $redirectPage;
+    header("Location: ../../BackEnd/php/display_message.php");
+    exit();
+}
 ?>
 
 
