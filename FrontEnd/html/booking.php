@@ -48,7 +48,9 @@ if (isset($_POST['childrenSelect'])) {
 
             // Store the ID in $_SESSION['CID']
             $_SESSION['CID'] = $doctorDateID;
-            echo "<h1>" . $doctorDateID . "</h1>";
+            header("Location: ../../FrontEnd/html/bookingDetails.php");
+            exit();
+
         } else {
             echo "Doctor date not found for the selected child and appointment time.";
         }
