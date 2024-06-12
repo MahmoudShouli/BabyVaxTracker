@@ -182,18 +182,6 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
     </div>
 
 </header>
-<?php
-session_start();
-
-    echo "<h1>" .  $_SESSION['CID'] . "</h1>";
-
-
-
-
-
-
-
-?>
 
 
 

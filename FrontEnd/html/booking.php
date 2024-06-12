@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -9,6 +8,26 @@ if ($conn->connect_error) {
 }
 
 $cid = $_SESSION['CID'];
+
+// Fetch doctor names
+$sqlDoctors = "SELECT ID, name FROM doctors";
+$resultDoctors = $conn->query($sqlDoctors);
+$doctorNames = [];
+if ($resultDoctors->num_rows > 0) {
+    while ($row = $resultDoctors->fetch_assoc()) {
+        $doctorNames[$row['ID']] = $row['name'];
+    }
+}
+
+// Fetch child names
+$sqlChildren = "SELECT id, name FROM children";
+$resultChildren = $conn->query($sqlChildren);
+$childNames = [];
+if ($resultChildren->num_rows > 0) {
+    while ($row = $resultChildren->fetch_assoc()) {
+        $childNames[$row['id']] = $row['name'];
+    }
+}
 
 // Fetch data from the doctor_dates table where id equals $_SESSION['CID']
 $sqlDoctorDates = "SELECT * FROM doctor_dates WHERE id = ?";
@@ -25,8 +44,6 @@ $stmtAppointments->execute();
 $resultAppointments = $stmtAppointments->get_result();
 
 ?>
-
-
 
 
 
@@ -108,6 +125,38 @@ $resultAppointments = $stmtAppointments->get_result();
             padding: 5px 10px;
         }
     </style>
+    <style>
+        .styled-button {
+            display: block;
+            margin: 0 auto;
+            font-size: 20px;
+            width: 200px;
+            height: 50px;
+            margin-bottom: 25px;
+            background-color: #f44336; /* Red background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition effects */
+        }
+
+        .styled-button:hover {
+            background-color: #d32f2f; /* Darker red on hover */
+            transform: translateY(-2px); /* Slightly lift the button */
+        }
+
+        .styled-button:active {
+            background-color: #c62828; /* Even darker red when pressed */
+            transform: translateY(0); /* Return to original position when pressed */
+        }
+
+        .styled-button:focus {
+            outline: none; /* Remove outline */
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.3); /* Red focus ring */
+        }
+    </style>
+
 </head>
 <body>
 
@@ -192,9 +241,83 @@ $resultAppointments = $stmtAppointments->get_result();
     <!--/ End Header Inner -->
 </header>
 <!-- End Header Area -->
+
+<div class="cc1" style="position:relative;left :45vw;">
+
+    <form action ="../../FrontEnd/html/CTable.php" method="post">
+        <label for="childrenSelect">Select Child and Appointment Day:</label> <br>
+        <select  class="form-control" id="childrenSelect" name="childrenSelect">
+            <?php
+            require_once '../../BackEnd/php/db_config.php';
+
+            $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            // Check the connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            $username = $_SESSION['USER'];
+
+            // Fetch user ID based on email or phone
+            $sqlUser = "SELECT ID FROM users WHERE email = ? OR phone = ?";
+            $stmtUser = $conn->prepare($sqlUser);
+            $stmtUser->bind_param("ss", $username, $username);
+            $stmtUser->execute();
+            $resultUser = $stmtUser->get_result();
+
+            if ($resultUser->num_rows > 0) {
+                $rowUser = $resultUser->fetch_assoc();
+                $userID = $rowUser['ID'];
+
+                // Fetch children and their appointments based on user ID
+                $sqlChildrenAppointments = "
+                    SELECT children.name AS childName, appointments.dateID, doctor_dates.day AS appointmentDay
+                    FROM children
+                    LEFT JOIN appointments ON children.id = appointments.childID
+                    LEFT JOIN doctor_dates ON appointments.dateID = doctor_dates.id
+                    WHERE children.userID = ?
+                ";
+                $stmtChildrenAppointments = $conn->prepare($sqlChildrenAppointments);
+                $stmtChildrenAppointments->bind_param("i", $userID);
+                $stmtChildrenAppointments->execute();
+                $resultChildrenAppointments = $stmtChildrenAppointments->get_result();
+
+                if ($resultChildrenAppointments->num_rows > 0) {
+                    while ($row = $resultChildrenAppointments->fetch_assoc()) {
+                        $childName = $row['childName'];
+                        $appointmentDay = $row['appointmentDay'];
+
+                        echo "<option value='{$childName}: {$appointmentDay}'>{$childName} - {$appointmentDay}</option>";
+                    }
+                } else {
+                    echo "<option value=''>No appointments available</option>";
+                }
+            } else {
+                echo "<option value=''>No children found for this user</option>";
+            }
+
+            $conn->close();
+            ?>
+        </select><br><br>
+        <br>
+        <br>
+        <button name="submit" type="submit" class="btn" style="margin-top: -25px !important;">Show Schedule</button>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!--*******************************************************************-->
-
-
 <h1>Appointments</h1>
 <table>
     <thead>
@@ -202,7 +325,7 @@ $resultAppointments = $stmtAppointments->get_result();
 <!--        <th>ID</th>-->
 <!--        <th>Date ID</th>-->
         <th>Doctor Name</th>
-        <th>Child ID</th>
+        <th>Child Name</th>
         <th>Type</th>
         <th>Description</th>
         <th>Actions</th>
@@ -212,10 +335,10 @@ $resultAppointments = $stmtAppointments->get_result();
     <?php if ($resultAppointments->num_rows > 0): ?>
         <?php while ($row = $resultAppointments->fetch_assoc()): ?>
             <tr>
-                <td><?php echo $row['ID']; ?></td>
-                <td><?php echo $row['dateID']; ?></td>
-                <td><?php echo $row['doctorID']; ?></td>
-                <td><?php echo $row['childID']; ?></td>
+<!--                <td>--><?php //echo $row['ID']; ?><!--</td>-->
+<!--                <td>--><?php //echo $row['dateID']; ?><!--</td>-->
+                <td><?php echo isset($doctorNames[$row['doctorID']]) ? $doctorNames[$row['doctorID']] : 'Unknown'; ?></td>
+                <td><?php echo isset($childNames[$row['childID']]) ? $childNames[$row['childID']] : 'Unknown'; ?></td>
                 <td><?php echo $row['type']; ?></td>
                 <td><?php echo $row['description']; ?></td>
                 <td class="actions">
@@ -223,9 +346,7 @@ $resultAppointments = $stmtAppointments->get_result();
                         <input type="hidden" name="id" value="<?php echo $row['ID']; ?>">
                         <button type="submit">Edit</button>
                     </form>
-                    <form method="POST" action="delete_appointment.php" style="display:inline;">
-                        <input type="hidden" name="id" value="<?php echo $row['ID']; ?>">
-                        <button type="submit">Delete</button>
+
                     </form>
                 </td>
             </tr>
@@ -242,12 +363,12 @@ $resultAppointments = $stmtAppointments->get_result();
 <table>
     <thead>
     <tr>
-        <th>ID</th>
+<!--        <th>ID</th>-->
         <th>Day</th>
         <th>Hour</th>
         <th>AM/PM</th>
-        <th>Is Available</th>
-        <th>Doctor ID</th>
+<!--        <th>Is Available</th>-->
+        <th>Doctor Name</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -255,21 +376,18 @@ $resultAppointments = $stmtAppointments->get_result();
     <?php if ($resultDoctorDates->num_rows > 0): ?>
         <?php while ($row = $resultDoctorDates->fetch_assoc()): ?>
             <tr>
-                <td><?php echo $row['id']; ?></td>
+<!--                <td>--><?php //echo $row['id']; ?><!--</td>-->
                 <td><?php echo $row['day']; ?></td>
                 <td><?php echo $row['hour']; ?></td>
                 <td><?php echo $row['am_or_pm']; ?></td>
-                <td><?php echo $row['isAvailable']; ?></td>
-                <td><?php echo $row['doctorID']; ?></td>
+<!--                <td>--><?php //echo $row['isAvailable']; ?><!--</td>-->
+                <td><?php echo isset($doctorNames[$row['doctorID']]) ? $doctorNames[$row['doctorID']] : 'Unknown'; ?></td>
                 <td class="actions">
                     <form method="POST" action="edit_doctor_date.php" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                         <button type="submit">Edit</button>
                     </form>
-                    <form method="POST" action="delete_doctor_date.php" style="display:inline;">
-                        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                        <button type="submit">Delete</button>
-                    </form>
+
                 </td>
             </tr>
         <?php endwhile; ?>
@@ -281,13 +399,10 @@ $resultAppointments = $stmtAppointments->get_result();
     </tbody>
 </table>
 
-
-
-
-
-
-
-
+<form method="POST" action="delete_appointment.php" >
+    <input type="hidden" name="id" value="<?php echo $row['ID']; ?>">
+    <button id="db" class="styled-button" type="submit">Delete</button>
+</form>
 
 
 <!--//**********************************************************-->
