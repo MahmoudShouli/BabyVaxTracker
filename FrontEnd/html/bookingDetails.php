@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+// Check if CID is set in the session
+if (!isset($_SESSION['CID'])) {
+    die("Error: No CID set in the session.");
+}
+
 require_once '../../BackEnd/php/db_config.php';
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($conn->connect_error) {
@@ -13,35 +18,55 @@ $cid = $_SESSION['CID'];
 $sqlDoctors = "SELECT ID, name FROM doctors";
 $resultDoctors = $conn->query($sqlDoctors);
 $doctorNames = [];
-if ($resultDoctors->num_rows > 0) {
+if ($resultDoctors === false) {
+    die("Error fetching doctors: " . $conn->error);
+} elseif ($resultDoctors->num_rows > 0) {
     while ($row = $resultDoctors->fetch_assoc()) {
         $doctorNames[$row['ID']] = $row['name'];
     }
+} else {
+    echo "No doctors found.";
 }
 
 // Fetch child names
 $sqlChildren = "SELECT id, name FROM children";
 $resultChildren = $conn->query($sqlChildren);
 $childNames = [];
-if ($resultChildren->num_rows > 0) {
+if ($resultChildren === false) {
+    die("Error fetching children: " . $conn->error);
+} elseif ($resultChildren->num_rows > 0) {
     while ($row = $resultChildren->fetch_assoc()) {
         $childNames[$row['id']] = $row['name'];
     }
+} else {
+    echo "No children found.";
 }
 
 // Fetch data from the doctor_dates table where id equals $_SESSION['CID']
 $sqlDoctorDates = "SELECT * FROM doctor_dates WHERE id = ?";
 $stmtDoctorDates = $conn->prepare($sqlDoctorDates);
+if ($stmtDoctorDates === false) {
+    die("Error preparing statement: " . $conn->error);
+}
 $stmtDoctorDates->bind_param("i", $cid);
 $stmtDoctorDates->execute();
 $resultDoctorDates = $stmtDoctorDates->get_result();
+if ($resultDoctorDates === false) {
+    die("Error executing statement: " . $stmtDoctorDates->error);
+}
 
 // Fetch data from the appointments table where dateID equals $_SESSION['CID']
 $sqlAppointments = "SELECT * FROM appointments WHERE dateID = ?";
 $stmtAppointments = $conn->prepare($sqlAppointments);
+if ($stmtAppointments === false) {
+    die("Error preparing statement: " . $conn->error);
+}
 $stmtAppointments->bind_param("i", $cid);
 $stmtAppointments->execute();
 $resultAppointments = $stmtAppointments->get_result();
+if ($resultAppointments === false) {
+    die("Error executing statement: " . $stmtAppointments->error);
+}
 
 if (isset($_POST['subdel'])) {
     if ($resultAppointments->num_rows > 0) {
@@ -51,34 +76,47 @@ if (isset($_POST['subdel'])) {
             // Prepare the SQL DELETE statement
             $sqlDeleteAppointment = "DELETE FROM appointments WHERE ID = ?";
             $stmtDeleteAppointment = $conn->prepare($sqlDeleteAppointment);
+            if ($stmtDeleteAppointment === false) {
+                die("Error preparing statement: " . $conn->error);
+            }
             $stmtDeleteAppointment->bind_param("i", $idToDelete);
 
             // Execute the statement
             if ($stmtDeleteAppointment->execute()) {
                 echo "Record with ID $idToDelete deleted successfully.";
             } else {
-                echo "Error deleting record: " . $conn->error;
+                echo "Error deleting record: " . $stmtDeleteAppointment->error;
             }
+
+            // Close the statement
+            $stmtDeleteAppointment->close();
 
             // Prepare the SQL UPDATE statement
             $sqlUpdateAvailability = "UPDATE doctor_dates SET isAvailable = 1 WHERE id = ?";
             $stmtUpdateAvailability = $conn->prepare($sqlUpdateAvailability);
+            if ($stmtUpdateAvailability === false) {
+                die("Error preparing statement: " . $conn->error);
+            }
             $stmtUpdateAvailability->bind_param("i", $cid);
 
             // Execute the statement
             if ($stmtUpdateAvailability->execute()) {
                 echo "Record with ID $cid updated successfully.";
             } else {
-                echo "Error updating record: " . $conn->error;
+                echo "Error updating record: " . $stmtUpdateAvailability->error;
             }
 
+            // Close the statement
             $stmtUpdateAvailability->close();
         }
     } else {
         echo "No appointments found to delete.";
     }
 
-    $stmtDeleteAppointment->close();
+    if (isset($stmtDeleteAppointment) && $stmtDeleteAppointment instanceof mysqli_stmt) {
+        $stmtDeleteAppointment->close();
+    }
+
     $conn->close();
 }
 ?>
