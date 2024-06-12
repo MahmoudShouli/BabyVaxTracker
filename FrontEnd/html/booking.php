@@ -9,14 +9,62 @@ if ($conn->connect_error) {
 }
 
 
+if (isset($_POST['childrenSelect'])) {
 
 
+    $selectedOption = $_POST['childrenSelect'];
+    // Parse the selected option to extract childName, appointmentDay, and appointmentHour
+    list($childName, $appointmentDay, $appointmentHour) = explode(': ', $selectedOption);
 
+    $username = $_SESSION['USER'];
 
-if(isset($_POST['submit1']))
-{
+    // Fetch user ID based on email or phone
+    $sqlUser = "SELECT ID FROM users WHERE email = ? OR phone = ?";
+    $stmtUser = $conn->prepare($sqlUser);
+    $stmtUser->bind_param("ss", $username, $username);
+    $stmtUser->execute();
+    $resultUser = $stmtUser->get_result();
 
+    if ($resultUser->num_rows > 0) {
+        $rowUser = $resultUser->fetch_assoc();
+        $userID = $rowUser['ID'];
+
+        // Fetch the ID from the doctor_dates table based on the selected option and user ID
+        $sqlDoctorDateID = "
+            SELECT doctor_dates.id
+            FROM doctor_dates
+            LEFT JOIN appointments ON doctor_dates.id = appointments.dateID
+            LEFT JOIN children ON appointments.childID = children.id
+            WHERE doctor_dates.day = ? AND doctor_dates.hour = ? AND children.name = ? AND children.userID = ?
+        ";
+        $stmtDoctorDateID = $conn->prepare($sqlDoctorDateID);
+        $stmtDoctorDateID->bind_param("sssi", $appointmentDay, $appointmentHour, $childName, $userID);
+        $stmtDoctorDateID->execute();
+        $resultDoctorDateID = $stmtDoctorDateID->get_result();
+
+        if ($resultDoctorDateID->num_rows > 0) {
+            $rowDoctorDateID = $resultDoctorDateID->fetch_assoc();
+            $doctorDateID = $rowDoctorDateID['id'];
+
+            // Store the ID in $_SESSION['CID']
+            $_SESSION['CID'] = $doctorDateID;
+            echo "<h1>" . $doctorDateID . "</h1>";
+        } else {
+            echo "Doctor date not found for the selected child and appointment time.";
+        }
+    } else {
+        echo "User not found.";
+    }
+
+    $conn->close();
 }
+
+
+
+//if(isset($_POST['submit1']))
+//{
+//
+//}
 
 
 
@@ -222,9 +270,9 @@ if(isset($_POST['submit1']))
 
 <div class="cc1" style="position:relative;left :45vw;">
 
-    <form action ="../../FrontEnd/html/bookingDetails.php" method="post">
+    <form id="bookingForm" action="../../FrontEnd/html/booking.php" method="post">
         <label for="childrenSelect">Select Child and Appointment Day:</label> <br>
-        <select  class="form-control" id="childrenSelect" name="childrenSelect">
+        <select class="form-control" id="childrenSelect" name="childrenSelect">
             <?php
             require_once '../../BackEnd/php/db_config.php';
 
@@ -284,7 +332,12 @@ if(isset($_POST['submit1']))
         <button name="submit1" type="submit" class="btn" style="margin-top: -25px !important;">Show Schedule</button>
     </form>
 </div>
-
+<script>
+    // Submit the form when an option is selected
+    document.getElementById('childrenSelect').addEventListener('change', function() {
+        document.getElementById('bookingForm').submit();
+    });
+</script>
 
 
 
