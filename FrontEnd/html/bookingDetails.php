@@ -58,6 +58,7 @@ if ($stmtAppointments === false) {
 $stmtAppointments->bind_param("i", $cid);
 $stmtAppointments->execute();
 $resultAppointments = $stmtAppointments->get_result();
+
 if ($resultAppointments === false) {
     setSessionMessageAndRedirect("Error executing statement: " . $stmtAppointments->error, "../../FrontEnd/html/errorPage.php");
 }
@@ -77,7 +78,19 @@ if (isset($_POST['subdel'])) {
 
             // Execute the statement
             if ($stmtDeleteAppointment->execute()) {
-                setSessionMessageAndRedirect("Record with ID $idToDelete deleted successfully.", "../../FrontEnd/html/booking.php");
+                // Update isAvailable to 1 in the doctor_dates table
+                $sqlUpdateAvailability = "UPDATE doctor_dates SET isAvailable = 1 WHERE id = ?";
+                $stmtUpdateAvailability = $conn->prepare($sqlUpdateAvailability);
+                if ($stmtUpdateAvailability === false) {
+                    setSessionMessageAndRedirect("Error preparing update statement: " . $conn->error, "../../FrontEnd/html/errorPage.php");
+                }
+                $stmtUpdateAvailability->bind_param("i", $_SESSION['CID']);
+                if ($stmtUpdateAvailability->execute()) {
+                    setSessionMessageAndRedirect("Record with ID $idToDelete deleted successfully. Doctor availability updated.", "../../FrontEnd/html/booking.php");
+                } else {
+                    setSessionMessageAndRedirect("Error updating doctor availability: " . $stmtUpdateAvailability->error, "../../FrontEnd/html/errorPage.php");
+                }
+                $stmtUpdateAvailability->close();
             } else {
                 setSessionMessageAndRedirect("Error deleting record: " . $stmtDeleteAppointment->error, "../../FrontEnd/html/errorPage.php");
             }
@@ -95,6 +108,7 @@ if (isset($_POST['subdel'])) {
 
     $conn->close();
 }
+
 
 function setSessionMessageAndRedirect($message, $redirectPage)
 {
@@ -322,7 +336,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
         <th>Child Name</th>
         <th>Type</th>
         <th>Description</th>
-        <th>Actions</th>
+<!--        <th>Actions</th>-->
     </tr>
     </thead>
     <tbody>
@@ -335,14 +349,14 @@ function setSessionMessageAndRedirect($message, $redirectPage)
                 <td><?php echo isset($childNames[$row['childID']]) ? $childNames[$row['childID']] : 'Unknown'; ?></td>
                 <td><?php echo $row['type']; ?></td>
                 <td><?php echo $row['description']; ?></td>
-                <td class="actions">
-                    <form method="POST" action="edit_appointment.php" style="display:inline;">
-                        <input type="hidden" name="id" value="<?php echo $row['ID']; ?>">
-                        <button type="submit">Edit</button>
-                    </form>
-
-                    </form>
-                </td>
+<!--                <td class="actions">-->
+<!--                    <form method="POST" action="edit_appointment.php" style="display:inline;">-->
+<!--                        <input type="hidden" name="id" value="--><?php //echo $row['ID']; ?><!--">-->
+<!--                        <button type="submit">Edit</button>-->
+<!--                    </form>-->
+<!---->
+<!--                    </form>-->
+<!--                </td>-->
             </tr>
         <?php endwhile; ?>
     <?php else: ?>
@@ -352,7 +366,6 @@ function setSessionMessageAndRedirect($message, $redirectPage)
     <?php endif; ?>
     </tbody>
 </table>
-
 <h1>Doctor Dates</h1>
 <table>
     <thead>
@@ -362,8 +375,8 @@ function setSessionMessageAndRedirect($message, $redirectPage)
         <th>Hour</th>
         <th>AM/PM</th>
         <!--        <th>Is Available</th>-->
-        <th>Doctor Name</th>
-        <th>Actions</th>
+<!--        <th>Doctor Name</th>-->
+<!--        <th>Actions</th>-->
     </tr>
     </thead>
     <tbody>
@@ -375,14 +388,14 @@ function setSessionMessageAndRedirect($message, $redirectPage)
                 <td><?php echo $row['hour']; ?></td>
                 <td><?php echo $row['am_or_pm']; ?></td>
                 <!--                <td>--><?php //echo $row['isAvailable']; ?><!--</td>-->
-                <td><?php echo isset($doctorNames[$row['doctorID']]) ? $doctorNames[$row['doctorID']] : 'Unknown'; ?></td>
-                <td class="actions">
-                    <form method="POST" action="edit_doctor_date.php" style="display:inline;">
-                        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                        <button type="submit">Edit</button>
-                    </form>
-
-                </td>
+<!--                <td>--><?php //echo isset($doctorNames[$row['doctorID']]) ? $doctorNames[$row['doctorID']] : 'Unknown'; ?><!--</td>-->
+<!--                <td class="actions">-->
+<!--                    <form method="POST" action="edit_doctor_date.php" style="display:inline;">-->
+<!--                        <input type="hidden" name="id" value="--><?php //echo $row['id']; ?><!--">-->
+<!--                        <button type="submit">Edit</button>-->
+<!--                    </form>-->
+<!---->
+<!--                </td>-->
             </tr>
         <?php endwhile; ?>
     <?php else: ?>
@@ -397,6 +410,135 @@ function setSessionMessageAndRedirect($message, $redirectPage)
     <input type="hidden" name="id" value="<?php echo $row['ID']; ?>">
     <button name="subdel" id="db" class="styled-button" type="submit">Delete</button>
 </form>
+    <button onclick="showEditForm()" name="update" id="db" style="background-color: #1a76d1" class="styled-button" type="submit">Update</button>
+
+
+<!--//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+<!-- Edit Appointment Form -->
+<div id="editForm"  style="display: none;margin-left: 45vw;" class="row">
+    <div class="col-lg-6 col-md-12 col-12">
+        <form id='form' class="form" action="../../BackEnd/php/updateAppointment.php" method="post" onsubmit="return validateForm()">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <p style="font-size: 22px;">Choose The Child:</p>
+                    <select style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="child" name="child" required>
+                        <option value="" selected disabled>Select a child</option>
+                        <?php
+                        require_once '../../BackEnd/php/db_config.php';
+                        session_start();
+                        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
+
+                        $userIdentifier = $_SESSION['USER'];
+                        $sqlUser = "SELECT ID FROM users WHERE email = ? OR phone = ?";
+                        $stmt = $conn->prepare($sqlUser);
+                        $stmt->bind_param("ss", $userIdentifier, $userIdentifier);
+                        $stmt->execute();
+                        $resultUser = $stmt->get_result();
+
+                        if ($resultUser === false) {
+                            die("Error executing query: " . $conn->error);
+                        }
+
+                        if ($resultUser->num_rows > 0) {
+                            $rowUser = $resultUser->fetch_assoc();
+                            $userID = $rowUser['ID'];
+
+                            $sqlChildren = "SELECT name FROM children WHERE userID = ?";
+                            $stmt = $conn->prepare($sqlChildren);
+                            $stmt->bind_param("i", $userID);
+                            $stmt->execute();
+                            $resultChildren = $stmt->get_result();
+
+                            if ($resultChildren === false) {
+                                die("Error executing query: " . $conn->error);
+                            }
+
+                            if ($resultChildren->num_rows > 0) {
+                                while ($rowChildren = $resultChildren->fetch_assoc()) {
+                                    echo "<option>".$rowChildren['name'] . "</option>";
+                                }
+                            } else {
+                                echo "<option value=''>No children found</option>";
+                            }
+                        } else {
+                            echo "<option value=''>User not found</option>";
+                        }
+
+                        $conn->close();
+                        ?>
+                    </select>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-12">
+                    <p style="font-size: 22px;">Choose The Doctor:</p>
+                    <select style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="employeeShift" name="doctor" required>
+                        <option value="" selected disabled>Select a doctor</option>
+                        <?php
+                        require_once '../../BackEnd/php/db_config.php';
+
+                        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
+
+                        $sql = "SELECT name FROM doctors";
+                        $result = $conn->query($sql);
+
+                        if ($result === false) {
+                            die("Error executing query: " . $conn->error);
+                        }
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<option>".$row['name'] . "</option>";
+                            }
+                        } else {
+                            echo "<option value=''>No doctors available</option>";
+                        }
+
+                        $conn->close();
+                        ?>
+                    </select>
+                </div>
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="form-group">
+                        <p style="font-size: 22px;">Choose The Date:</p>
+                        <input  name='date' style="margin-bottom: 19px;margin-top: 12px;" type="text" placeholder="Day:Hour am/pm"  required>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="form-group">
+                        <textarea name="message" placeholder="More information....."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 col-md-4 col-12">
+                    <div class="form-group">
+                        <div class="button">
+                            <button name="subupd" type="submit" class="btn">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-8 col-12">
+                    <p>( We will confirm by a Text Message )</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function showEditForm() {
+        document.getElementById('editForm').style.display = 'block';
+        // You can add code here to populate the form fields with the appointment data
+    }
+</script>
+
+<!--//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+
 
 
 <!--//**********************************************************-->
