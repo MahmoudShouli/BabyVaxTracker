@@ -43,6 +43,44 @@ $stmtAppointments->bind_param("i", $cid);
 $stmtAppointments->execute();
 $resultAppointments = $stmtAppointments->get_result();
 
+if (isset($_POST['subdel'])) {
+    if ($resultAppointments->num_rows > 0) {
+        while ($row = $resultAppointments->fetch_assoc()) {
+            $idToDelete = $row['ID'];  // Get the ID to delete
+
+            // Prepare the SQL DELETE statement
+            $sqlDeleteAppointment = "DELETE FROM appointments WHERE ID = ?";
+            $stmtDeleteAppointment = $conn->prepare($sqlDeleteAppointment);
+            $stmtDeleteAppointment->bind_param("i", $idToDelete);
+
+            // Execute the statement
+            if ($stmtDeleteAppointment->execute()) {
+                echo "Record with ID $idToDelete deleted successfully.";
+            } else {
+                echo "Error deleting record: " . $conn->error;
+            }
+
+            // Prepare the SQL UPDATE statement
+            $sqlUpdateAvailability = "UPDATE doctor_dates SET isAvailable = 1 WHERE id = ?";
+            $stmtUpdateAvailability = $conn->prepare($sqlUpdateAvailability);
+            $stmtUpdateAvailability->bind_param("i", $cid);
+
+            // Execute the statement
+            if ($stmtUpdateAvailability->execute()) {
+                echo "Record with ID $cid updated successfully.";
+            } else {
+                echo "Error updating record: " . $conn->error;
+            }
+
+            $stmtUpdateAvailability->close();
+        }
+    } else {
+        echo "No appointments found to delete.";
+    }
+
+    $stmtDeleteAppointment->close();
+    $conn->close();
+}
 ?>
 
 
@@ -336,9 +374,9 @@ $resultAppointments = $stmtAppointments->get_result();
     </tbody>
 </table>
 
-<form method="POST" action="delete_appointment.php" >
+<form method="POST" action="../../FrontEnd/html/bookingDetails.php" >
     <input type="hidden" name="id" value="<?php echo $row['ID']; ?>">
-    <button id="db" class="styled-button" type="submit">Delete</button>
+    <button name="subdel" id="db" class="styled-button" type="submit">Delete</button>
 </form>
 
 
