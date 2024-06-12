@@ -1,13 +1,11 @@
 <?php
 session_start();
-
 // Enable error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $childid = 1;
 $doctorId = 1;
-
 require_once '../../BackEnd/php/db_config.php';
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($conn->connect_error) {
@@ -61,7 +59,7 @@ if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message']))
     $hour = $matches[1];
 
     $finalIndex = getRowIndexForDay($day) + (($doctorId - 1) * 45) + getRowIndexForHour($hour);
-
+    $_SESSION['CID']=$finalIndex;
     $sqlCheck = "SELECT isAvailable FROM doctor_dates WHERE id = ?";
     $stmtCheck = $conn->prepare($sqlCheck);
     $stmtCheck->bind_param("i", $finalIndex);
@@ -87,7 +85,7 @@ if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message']))
                         $row = $resultChildren->fetch_assoc();
                         $childid = $row['id'];
                     } else {
-                        showMessageAndRedirect("No child found with the specified name.", "errorPage.php");
+                        setSessionMessageAndRedirect("No child found with the specified name.", "errorPage.php");
                     }
                 }
 
@@ -107,28 +105,31 @@ if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message']))
                     $stmtUpdate->bind_param("i", $finalIndex);
 
                     if ($stmtUpdate->execute()) {
-                        showMessageAndRedirect("New appointment record created successfully.", "../../FrontEnd/html/CTable.php");
+                        setSessionMessageAndRedirect("New appointment record created successfully.", "../../FrontEnd/html/CTable.php");
+
+
+
 
                     } else {
-                        showMessageAndRedirect("There is conflict " . $stmtUpdate->error, "../../FrontEnd/html/appointment.php");
+                        setSessionMessageAndRedirect("Error updating row: " . $stmtUpdate->error, "../../FrontEnd/html/appointment.php");
                     }
+                } else {
+                    setSessionMessageAndRedirect("Error: " . $stmt->error, "../../FrontEnd/html/appointment.php");
                 }
             } else {
-                showMessageAndRedirect("The date is already booked.", "../../FrontEnd/html/appointment.php");
+                setSessionMessageAndRedirect("The date is already booked.", "../../FrontEnd/html/appointment.php");
             }
         } else {
-            showMessageAndRedirect("The date is not available.", "../../FrontEnd/html/appointment.php");
+            setSessionMessageAndRedirect("The date is not available.", "../../FrontEnd/html/appointment.php");
         }
     }
 }
 
-function showMessageAndRedirect($message, $redirectPage)
+function setSessionMessageAndRedirect($message, $redirectPage)
 {
-    echo "<div style='padding: 20px; border: 1px solid #ccc; margin: 20px; font-size: 18px; background-color: #f9f9f9;'>
-            <p>$message</p>
-            <p>You will be redirected shortly...</p>
-          </div>";
-    header("refresh:5;url=$redirectPage");
+    $_SESSION['message'] = $message;
+    $_SESSION['redirect_page'] = $redirectPage;
+    header("Location: ../../BackEnd/php/display_message.php");
     exit();
 }
 ?>

@@ -145,7 +145,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
     <a href="../../FrontEnd/html/index.php"><img src="../../Resources/images/logo.png" alt="this is the logo"></a>
 
     <div class="cc1" style="position:relative; right:800px;">
-        <form action ="../../FrontEnd/html/schedules.php" method="post">
+        <form action ="../../FrontEnd/html/CTable.php" method="post">
             <label for="employeeShift">Select Doctor :</label> <br>
             <select class="form-control" id="employeeShift" name="employeeShift">
                 <?php
@@ -182,8 +182,18 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
     </div>
 
 </header>
+<?php
+session_start();
+
+    echo "<h1>" .  $_SESSION['CID'] . "</h1>";
 
 
+
+
+
+
+
+?>
 
 
 
