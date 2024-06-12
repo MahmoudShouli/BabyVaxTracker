@@ -134,22 +134,22 @@ if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message']))
                     $stmtUpdate->bind_param("i", $finalIndex);
 
                     if ($stmtUpdate->execute()) {
-                        setSessionMessageAndRedirect("New appointment record created successfully.", "../../FrontEnd/html/CTable.php");
+                        setSessionMessageAndRedirect("New appointment record created successfully.", "../../FrontEnd/html/booking.php");
 
 
 
 
                     } else {
-                        setSessionMessageAndRedirect("Error updating row: " . $stmtUpdate->error, "../../FrontEnd/html/appointment.php");
+                        setSessionMessageAndRedirect("Error updating row: " . $stmtUpdate->error, "../../FrontEnd/html/bookingDetails.php");
                     }
                 } else {
-                    setSessionMessageAndRedirect("Error: " . $stmt->error, "../../FrontEnd/html/appointment.php");
+                    setSessionMessageAndRedirect("Error: " . $stmt->error, "../../FrontEnd/html/bookingDetails.php");
                 }
             } else {
-                setSessionMessageAndRedirect("The date is already booked.", "../../FrontEnd/html/appointment.php");
+                setSessionMessageAndRedirect("The date is already booked.", "../../FrontEnd/html/bookingDetails.php");
             }
         } else {
-            setSessionMessageAndRedirect("The date is not available.", "../../FrontEnd/html/appointment.php");
+            setSessionMessageAndRedirect("The date is not available.", "../../FrontEnd/html/bookingDetails.php");
         }
     }
 }
