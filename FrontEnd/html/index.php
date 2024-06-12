@@ -91,6 +91,7 @@ else {
                         <li><a href="#about">About</a></li>
                         <li><a href="../../FrontEnd/html/CTable.php">Schedules</a></li>
                         <li><a href="../../FrontEnd/html/booking.php">Booking Details</a></li>
+                        <li><a href="../../FrontEnd/html/addchildren.php">Add children</a></li>
                         <li><a href="../../BackEnd/php/tosignout.php">Sign OUT</a></li>
 
                     </ul>
