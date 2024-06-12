@@ -1,25 +1,47 @@
 <?php
 session_start();
 
-
 require_once '../../BackEnd/php/db_config.php';
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+$cid = $_SESSION['CID'];
 
-
-
-
-
-if(isset($_POST['submit1']))
-{
-
+// Fetch doctor names
+$sqlDoctors = "SELECT ID, name FROM doctors";
+$resultDoctors = $conn->query($sqlDoctors);
+$doctorNames = [];
+if ($resultDoctors->num_rows > 0) {
+    while ($row = $resultDoctors->fetch_assoc()) {
+        $doctorNames[$row['ID']] = $row['name'];
+    }
 }
 
+// Fetch child names
+$sqlChildren = "SELECT id, name FROM children";
+$resultChildren = $conn->query($sqlChildren);
+$childNames = [];
+if ($resultChildren->num_rows > 0) {
+    while ($row = $resultChildren->fetch_assoc()) {
+        $childNames[$row['id']] = $row['name'];
+    }
+}
 
+// Fetch data from the doctor_dates table where id equals $_SESSION['CID']
+$sqlDoctorDates = "SELECT * FROM doctor_dates WHERE id = ?";
+$stmtDoctorDates = $conn->prepare($sqlDoctorDates);
+$stmtDoctorDates->bind_param("i", $cid);
+$stmtDoctorDates->execute();
+$resultDoctorDates = $stmtDoctorDates->get_result();
 
+// Fetch data from the appointments table where dateID equals $_SESSION['CID']
+$sqlAppointments = "SELECT * FROM appointments WHERE dateID = ?";
+$stmtAppointments = $conn->prepare($sqlAppointments);
+$stmtAppointments->bind_param("i", $cid);
+$stmtAppointments->execute();
+$resultAppointments = $stmtAppointments->get_result();
 
 ?>
 
@@ -220,70 +242,6 @@ if(isset($_POST['submit1']))
 </header>
 <!-- End Header Area -->
 
-<div class="cc1" style="position:relative;left :45vw;">
-
-    <form action ="../../FrontEnd/html/bookingDetails.php" method="post">
-        <label for="childrenSelect">Select Child and Appointment Day:</label> <br>
-        <select  class="form-control" id="childrenSelect" name="childrenSelect">
-            <?php
-            require_once '../../BackEnd/php/db_config.php';
-
-            $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-            // Check the connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            $username = $_SESSION['USER'];
-
-            // Fetch user ID based on email or phone
-            $sqlUser = "SELECT ID FROM users WHERE email = ? OR phone = ?";
-            $stmtUser = $conn->prepare($sqlUser);
-            $stmtUser->bind_param("ss", $username, $username);
-            $stmtUser->execute();
-            $resultUser = $stmtUser->get_result();
-
-            if ($resultUser->num_rows > 0) {
-                $rowUser = $resultUser->fetch_assoc();
-                $userID = $rowUser['ID'];
-
-                // Fetch children and their appointments based on user ID
-                $sqlChildrenAppointments = "
-        SELECT children.name AS childName, appointments.dateID, doctor_dates.day AS appointmentDay, doctor_dates.hour AS appointmentHour
-        FROM children
-        LEFT JOIN appointments ON children.id = appointments.childID
-        LEFT JOIN doctor_dates ON appointments.dateID = doctor_dates.id
-        WHERE children.userID = ? AND appointments.dateID IS NOT NULL
-    ";
-                $stmtChildrenAppointments = $conn->prepare($sqlChildrenAppointments);
-                $stmtChildrenAppointments->bind_param("i", $userID);
-                $stmtChildrenAppointments->execute();
-                $resultChildrenAppointments = $stmtChildrenAppointments->get_result();
-
-                if ($resultChildrenAppointments->num_rows > 0) {
-                    while ($row = $resultChildrenAppointments->fetch_assoc()) {
-                        $childName = $row['childName'];
-                        $appointmentDay = $row['appointmentDay'];
-                        $hour = $row['appointmentHour'];
-
-                        echo "<option value='{$childName}: {$appointmentDay}: {$hour}'>{$childName} - {$appointmentDay} {$hour}</option>";
-                    }
-                } else {
-                    echo "<option value=''>No appointments available</option>";
-                }
-
-            } else {
-                echo "<option value=''>No children found for this user</option>";
-            }
-
-            $conn->close();
-            ?>
-        </select><br><br>
-        <br>
-        <br>
-        <button name="submit1" type="submit" class="btn" style="margin-top: -25px !important;">Show Schedule</button>
-    </form>
-</div>
 
 
 
@@ -297,6 +255,92 @@ if(isset($_POST['submit1']))
 
 
 <!--*******************************************************************-->
+<h1>Appointments</h1>
+<table>
+    <thead>
+    <tr>
+        <!--        <th>ID</th>-->
+        <!--        <th>Date ID</th>-->
+        <th>Doctor Name</th>
+        <th>Child Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if ($resultAppointments->num_rows > 0): ?>
+        <?php while ($row = $resultAppointments->fetch_assoc()): ?>
+            <tr>
+                <!--                <td>--><?php //echo $row['ID']; ?><!--</td>-->
+                <!--                <td>--><?php //echo $row['dateID']; ?><!--</td>-->
+                <td><?php echo isset($doctorNames[$row['doctorID']]) ? $doctorNames[$row['doctorID']] : 'Unknown'; ?></td>
+                <td><?php echo isset($childNames[$row['childID']]) ? $childNames[$row['childID']] : 'Unknown'; ?></td>
+                <td><?php echo $row['type']; ?></td>
+                <td><?php echo $row['description']; ?></td>
+                <td class="actions">
+                    <form method="POST" action="edit_appointment.php" style="display:inline;">
+                        <input type="hidden" name="id" value="<?php echo $row['ID']; ?>">
+                        <button type="submit">Edit</button>
+                    </form>
+
+                    </form>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="7">No appointments found</td>
+        </tr>
+    <?php endif; ?>
+    </tbody>
+</table>
+
+<h1>Doctor Dates</h1>
+<table>
+    <thead>
+    <tr>
+        <!--        <th>ID</th>-->
+        <th>Day</th>
+        <th>Hour</th>
+        <th>AM/PM</th>
+        <!--        <th>Is Available</th>-->
+        <th>Doctor Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if ($resultDoctorDates->num_rows > 0): ?>
+        <?php while ($row = $resultDoctorDates->fetch_assoc()): ?>
+            <tr>
+                <!--                <td>--><?php //echo $row['id']; ?><!--</td>-->
+                <td><?php echo $row['day']; ?></td>
+                <td><?php echo $row['hour']; ?></td>
+                <td><?php echo $row['am_or_pm']; ?></td>
+                <!--                <td>--><?php //echo $row['isAvailable']; ?><!--</td>-->
+                <td><?php echo isset($doctorNames[$row['doctorID']]) ? $doctorNames[$row['doctorID']] : 'Unknown'; ?></td>
+                <td class="actions">
+                    <form method="POST" action="edit_doctor_date.php" style="display:inline;">
+                        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                        <button type="submit">Edit</button>
+                    </form>
+
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="7">No doctor dates found</td>
+        </tr>
+    <?php endif; ?>
+    </tbody>
+</table>
+
+<form method="POST" action="delete_appointment.php" >
+    <input type="hidden" name="id" value="<?php echo $row['ID']; ?>">
+    <button id="db" class="styled-button" type="submit">Delete</button>
+</form>
+
 
 <!--//**********************************************************-->
 <!-- Footer Area -->
