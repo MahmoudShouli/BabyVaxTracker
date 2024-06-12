@@ -324,7 +324,6 @@ function setSessionMessageAndRedirect($message, $redirectPage)
 
 
 
-
 <!--*******************************************************************-->
 <h1>Appointments</h1>
 <table>
@@ -343,8 +342,9 @@ function setSessionMessageAndRedirect($message, $redirectPage)
     <?php if ($resultAppointments->num_rows > 0): ?>
         <?php while ($row = $resultAppointments->fetch_assoc()): ?>
             <tr>
-                <!--                <td>--><?php //echo $row['ID']; ?><!--</td>-->
-                <!--                <td>--><?php //echo $row['dateID']; ?><!--</td>-->
+
+<!--                <td>   --><?php //echo $row['ID']; ?><!--</td>-->
+                <?php     $_SESSION['appID'] =  $row['ID']; ?>
                 <td><?php echo isset($doctorNames[$row['doctorID']]) ? $doctorNames[$row['doctorID']] : 'Unknown'; ?></td>
                 <td><?php echo isset($childNames[$row['childID']]) ? $childNames[$row['childID']] : 'Unknown'; ?></td>
                 <td><?php echo $row['type']; ?></td>
@@ -415,7 +415,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
 
 <!--//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
 <!-- Edit Appointment Form -->
-<div id="editForm"  style="display: none;margin-left: 45vw;" class="row">
+<div id="editForm"  style="display: none;margin-left: 45vw;" class="row" >
     <div class="col-lg-6 col-md-12 col-12">
         <form id='form' class="form" action="../../BackEnd/php/updateAppointment.php" method="post" onsubmit="return validateForm()">
             <div class="row">
@@ -506,7 +506,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
                 <div class="col-lg-12 col-md-12 col-12">
                     <div class="form-group">
                         <p style="font-size: 22px;">Choose The Date:</p>
-                        <input  name='date' style="margin-bottom: 19px;margin-top: 12px;" type="text" placeholder="Day:Hour am/pm"  required>
+                        <input id="datepicker" name='date' style="margin-bottom: 19px;margin-top: 12px;" type="text" placeholder="Day:Hour am/pm"  required>
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-12">
@@ -530,6 +530,44 @@ function setSessionMessageAndRedirect($message, $redirectPage)
         </form>
     </div>
 </div>
+<script>
+    function validateForm() {
+        var child = document.getElementById('child').value;
+        var doctor = document.getElementById('employeeShift').value;
+        var date = document.getElementById('datepicker').value; // Changed to 'datepicker'
+        var message = document.getElementsByName('message')[0].value;
+
+        if (child.trim() == '') {
+            alert('Please select a child.');
+            return false;
+        }
+
+        if (doctor.trim() == '') {
+            alert('Please select a doctor.');
+            return false;
+        }
+
+        if (date.trim() == '') {
+            alert('Please enter a date.');
+            return false;
+        }
+
+        // Validate date format
+        var dateRegex = /^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday):((8|9|10|11) Am|12 Pm|1 Pm|2 Pm|3 Pm|4 Pm)$/i;
+        if (!dateRegex.test(date)) {
+            alert('Please enter a date in the format "Day:Hour Am/Pm" and the hour should be from 8 Am to 4 Pm for Am and from 12 Pm to 4 Pm for Pm.');
+            return false;
+        }
+
+        if (message.trim() == '') {
+            alert('Please enter a description.');
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
 <script>
     function showEditForm() {
         document.getElementById('editForm').style.display = 'block';
