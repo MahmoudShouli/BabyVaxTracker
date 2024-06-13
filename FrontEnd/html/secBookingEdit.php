@@ -53,7 +53,40 @@ if (isset( $_POST['doctor'], $_POST['date'], $_POST['status'])) {
 
     $finalIndex = getRowIndexForDay($day) + (($doctorId - 1) * 45) + getRowIndexForHour($hour);
     $status= $_POST['status'];
+//*****
+// Check if isAvailable is 2
+    $sqlCheckAvailability = "SELECT isAvailable FROM doctor_dates WHERE id = ?";
+    $stmtCheckAvailability = $conn->prepare($sqlCheckAvailability);
+    $stmtCheckAvailability->bind_param("i", $finalIndex);
+    $stmtCheckAvailability->execute();
+    $resultCheckAvailability = $stmtCheckAvailability->get_result();
 
+    if ($resultCheckAvailability->num_rows > 0) {
+        $row = $resultCheckAvailability->fetch_assoc();
+        if ($row['isAvailable'] == 2) {
+            // Delete the row in the appointments table where dateID matches $finalIndex
+            $sqlDeleteAppointment = "DELETE FROM appointments WHERE dateID = ?";
+            $stmtDeleteAppointment = $conn->prepare($sqlDeleteAppointment);
+            $stmtDeleteAppointment->bind_param("i", $finalIndex);
+            $stmtDeleteAppointment->execute();
+
+            if ($stmtDeleteAppointment->affected_rows > 0) {
+                echo "Appointment deleted successfully.";
+            } else {
+                echo "No matching appointment found to delete.";
+            }
+        } else {
+            echo "The value of isAvailable is not 2.";
+        }
+    } else {
+        echo "No matching record found in doctor_date.";
+    }
+
+    $stmtCheckAvailability->close();
+
+
+
+    //**********
     $sqlUpdate = "UPDATE doctor_dates SET isAvailable = ? WHERE id = ?";
     $stmtUpdate = $conn->prepare($sqlUpdate);
     $stmtUpdate->bind_param("ii", $status, $finalIndex);
