@@ -248,13 +248,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
                             </nav>
                         </div>
                         <!--/ End Main Menu -->
-                    </div>
-                    <div class="col-lg-2 col-12">
-                        <div class="get-quote">
-                            <a href="appointment.html" class="btn">Book Appointment</a>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -305,15 +299,9 @@ function setSessionMessageAndRedirect($message, $redirectPage)
         </select><br><br>
         <br>
         <br>
-        <button name="submit1" type="submit" class="btn" style="margin-top: -25px !important;">Show Schedule</button>
     </form>
 </div>
-<script>
-    // Submit the form when an option is selected
-    document.getElementById('childrenSelect').addEventListener('change', function() {
-        document.getElementById('bookingForm').submit();
-    });
-</script>
+
 
 
 
