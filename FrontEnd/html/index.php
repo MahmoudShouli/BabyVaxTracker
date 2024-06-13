@@ -141,7 +141,7 @@ else {
                                 <ul class="nav menu">
                                     <li><a href="#header">Home </a></li>
                                     <li><a href="#service">Services </a></li>
-                                    <li><a href="../html/feedback.html">Feedback </a></li>
+                                    <li><a href="../html/feedback.php">Feedback </a></li>
                                     <li><a href="../html/contact.html">Contact Us</a></li>
                                 </ul>
                             </nav>
