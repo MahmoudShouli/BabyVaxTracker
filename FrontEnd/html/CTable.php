@@ -181,9 +181,6 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
         .available {
             background-color: rgba(0, 128, 0, 0.38);
         }
-        .unavailable {
-            background-color: rgba(255, 0, 0, 0.41);
-        }
 
         .schedule-table table {
             width: 100%;
@@ -200,10 +197,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                 background-color: #d4edda;
                 color: #155724;
             }
-        .unavailable {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
+
 
     </style>
 </head>
@@ -375,11 +369,21 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
             if (availability == 1) {
                 cell.textContent = 'Unbooked';
                 cell.classList.remove('unavailable');
+                cell.classList.remove('booked');
                 cell.classList.add('available');
-            } else {
-                cell.textContent = 'booked';
+                cell.style.backgroundColor = ''; // Reset background color
+            } else if (availability == 2) {
+                cell.textContent = 'Booked';
                 cell.classList.remove('available');
+                cell.classList.remove('unavailable');
+                cell.classList.add('booked');
+                cell.style.backgroundColor = 'rgba(255, 0, 0, 0.41)';
+            } else if (availability == 3) {
+                cell.textContent = 'Unavailable';
+                cell.classList.remove('available');
+                cell.classList.remove('booked');
                 cell.classList.add('unavailable');
+                cell.style.backgroundColor = 'rgba(255, 0, 0, 0.41)';
             }
         });
     }

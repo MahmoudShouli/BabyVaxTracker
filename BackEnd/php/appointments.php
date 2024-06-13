@@ -111,8 +111,10 @@ if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message'], 
                 } else {
                     setSessionMessageAndRedirect("Error: " . $stmt->error, "../../FrontEnd/html/appointment.php");
                 }
-            } else {
+            } if ($row['isAvailable'] == '2') {
                 setSessionMessageAndRedirect("The date is already booked.", "../../FrontEnd/html/appointment.php");
+            }else{
+                setSessionMessageAndRedirect("The date is not available.", "../../FrontEnd/html/appointment.php");
             }
         } else {
             setSessionMessageAndRedirect("The date is not available.", "../../FrontEnd/html/appointment.php");
