@@ -55,8 +55,8 @@
                 <form id='form' class="form" action="../../BackEnd/php/appointments.php" method="post" onsubmit="return validateForm()">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-12">
-                            <p style="font-size: 22px;">choose The Child:</p>
-                            <select  style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="child" name="child">
+                            <p style="font-size: 22px;">Choose The Child:</p>
+                            <select style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="child" name="child">
                                 <?php
                                 require_once '../../BackEnd/php/db_config.php';
                                 session_start();
@@ -101,16 +101,13 @@
                                 }
 
                                 $conn->close();
-
                                 ?>
                             </select>
                         </div>
 
                         <div class="col-lg-12 col-md-12 col-12">
-                            <p style="font-size: 22px;">choose The Doctor:</p>
-
+                            <p style="font-size: 22px;">Choose The Doctor:</p>
                             <div class="form-group">
-
                                 <select style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="employeeShift" name="doctor">
                                     <?php
                                     require_once '../../BackEnd/php/db_config.php';
@@ -140,21 +137,34 @@
 
                                     $conn->close();
                                     ?>
-                                </select>                            </div>
+                                </select>
+                            </div>
                         </div>
+
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
-                                <p style="font-size: 22px;">choose The Date:</p>
-
+                                <p style="font-size: 22px;">Choose The Date:</p>
                                 <input name='date' style="margin-bottom: 19px;margin-top: 12px;" type="text" placeholder="Day:Hour am/pm" id="datepicker">
                             </div>
                         </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group">
+                                <p style="font-size: 22px;">Select Appointment Type:</p>
+                                <select style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="appointmentType" name="type">
+                                    <option value="vaccine">Vaccine</option>
+                                    <option value="severe_complication">Severe Complication</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
                                 <textarea name="message" placeholder="More information....."></textarea>
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-lg-5 col-md-4 col-12">
                             <div class="form-group">

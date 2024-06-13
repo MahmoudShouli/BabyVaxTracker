@@ -4,8 +4,6 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$childid = 1;
-$doctorId = 1;
 require_once '../../BackEnd/php/db_config.php';
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($conn->connect_error) {
@@ -41,7 +39,7 @@ function getRowIndexForDay($day)
     }
 }
 
-if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message'])) {
+if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message'], $_POST['type'])) {
     $doctorName = $_POST['doctor'];
     switch ($doctorName) {
         case 'Sarah': $doctorId = 2; break;
@@ -59,7 +57,8 @@ if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message']))
     $hour = $matches[1];
 
     $finalIndex = getRowIndexForDay($day) + (($doctorId - 1) * 45) + getRowIndexForHour($hour);
-    $_SESSION['CID']=$finalIndex;
+    $_SESSION['CID'] = $finalIndex;
+
     $sqlCheck = "SELECT isAvailable FROM doctor_dates WHERE id = ?";
     $stmtCheck = $conn->prepare($sqlCheck);
     $stmtCheck->bind_param("i", $finalIndex);
@@ -90,7 +89,7 @@ if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message']))
                 }
 
                 $message = $_POST['message'];
-                $type = 'vaccine';
+                $type = $_POST['type'];  // Get the type from the form
                 $dateID = $finalIndex;
                 $doctorID = $doctorId;
                 $childID = $childid;
@@ -106,10 +105,6 @@ if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message']))
 
                     if ($stmtUpdate->execute()) {
                         setSessionMessageAndRedirect("New appointment record created successfully.", "../../FrontEnd/html/CTable.php");
-
-
-
-
                     } else {
                         setSessionMessageAndRedirect("Error updating row: " . $stmtUpdate->error, "../../FrontEnd/html/appointment.php");
                     }

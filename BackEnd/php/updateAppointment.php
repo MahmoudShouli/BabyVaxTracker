@@ -3,8 +3,8 @@ session_start();
 // Enable error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-//*************************************************************
 
+//*************************************************************
 $sessionID = $_SESSION['CID'];
 $appointmentID = $_SESSION['appID'];
 require_once '../../BackEnd/php/db_config.php';
@@ -35,11 +35,6 @@ if ($stmtUpdateDoctorDates->execute() === FALSE) {
 //*************************************************************
 $childid = 1;
 $doctorId = 1;
-require_once '../../BackEnd/php/db_config.php';
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 // Define the function to get the row index for the day
 function getRowIndexForHour($hour)
@@ -135,10 +130,6 @@ if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message']))
 
                     if ($stmtUpdate->execute()) {
                         setSessionMessageAndRedirect("New appointment record created successfully.", "../../FrontEnd/html/booking.php");
-
-
-
-
                     } else {
                         setSessionMessageAndRedirect("Error updating row: " . $stmtUpdate->error, "../../FrontEnd/html/bookingDetails.php");
                     }

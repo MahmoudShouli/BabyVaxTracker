@@ -86,7 +86,7 @@ if (isset($_POST['subdel'])) {
                 }
                 $stmtUpdateAvailability->bind_param("i", $_SESSION['CID']);
                 if ($stmtUpdateAvailability->execute()) {
-                    setSessionMessageAndRedirect("Record with ID $idToDelete deleted successfully. Doctor availability updated.", "../../FrontEnd/html/booking.php");
+                    setSessionMessageAndRedirect("Record deleted successfully.", "../../FrontEnd/html/booking.php");
                 } else {
                     setSessionMessageAndRedirect("Error updating doctor availability: " . $stmtUpdateAvailability->error, "../../FrontEnd/html/errorPage.php");
                 }
@@ -507,6 +507,15 @@ function setSessionMessageAndRedirect($message, $redirectPage)
                     <div class="form-group">
                         <p style="font-size: 22px;">Choose The Date:</p>
                         <input id="datepicker" name='date' style="margin-bottom: 19px;margin-top: 12px;" type="text" placeholder="Day:Hour am/pm"  required>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="form-group">
+                        <p style="font-size: 22px;margin-bottom: 10px;">Select Appointment Type:</p>
+                        <select style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="appointmentType" name="type">
+                            <option value="vaccine">Vaccine</option>
+                            <option value="severe_complication">Severe Complication</option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-12">
