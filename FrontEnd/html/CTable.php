@@ -359,7 +359,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 </div>
 <div class="col-lg-2 col-12">
     <div class="get-quote" style="position:relative; left:50vw; margin-top: 20px; ">
-        <a href="../html/appointment.html" class="btn">Book Appointment</a>
+        <a href="../html/appointment.php" class="btn">Book Appointment</a>
     </div>
 </div>
 <script>
@@ -373,11 +373,11 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
         cells.forEach((cell, index) => {
             const availability = availabilityData[Math.floor(index / 9)].hours[index % 9];
             if (availability == 1) {
-                cell.textContent = 'Booked';
+                cell.textContent = 'Unbooked';
                 cell.classList.remove('unavailable');
                 cell.classList.add('available');
             } else {
-                cell.textContent = 'Unbooked';
+                cell.textContent = 'booked';
                 cell.classList.remove('available');
                 cell.classList.add('unavailable');
             }
