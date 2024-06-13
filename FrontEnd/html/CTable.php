@@ -132,57 +132,115 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
     <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .header-logo img {
+            max-width: 120px;
+        }
+        .form-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 500px;
+            padding: 20px;
+        }
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+        }
+        .form-container select, .form-container button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+
+        }
+        .form-container button {
+            background-color: #4a90e2;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-container button:hover {
+            background-color: #357ab8;
+        }
+
         .available {
             background-color: rgba(0, 128, 0, 0.38);
         }
         .unavailable {
             background-color: rgba(255, 0, 0, 0.41);
         }
+
+        .schedule-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .schedule-table th, .schedule-table td {
+            padding: 10px;
+            text-align: center;
+        }
+        .schedule-table th {
+            background-color: #4a90e2;
+            color: white;
+        }   .available {
+                background-color: #d4edda;
+                color: #155724;
+            }
+        .unavailable {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
     </style>
 </head>
 <body>
-<header class="d-flex justify-content-between align-items-center py-3">
-    <a href="../../FrontEnd/html/index.php"><img src="../../Resources/images/logo.png" alt="this is the logo"></a>
-
-    <div class="cc1" style="position:relative; right:800px;">
-        <form action ="../../FrontEnd/html/CTable.php" method="post">
-            <label for="employeeShift">Select Doctor :</label> <br>
-            <select class="form-control" id="employeeShift" name="employeeShift">
-                <?php
-                require_once '../../BackEnd/php/db_config.php';
-
-                $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-                // Check the connection
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
-
-                // Fetch doctors data from the doctors table
-                $sql = "SELECT name FROM doctors";
-                $result = $conn->query($sql);
-
-                // Check if query executed successfully
-                if ($result === false) {
-                    die("Error executing query: " . $conn->error);
-                }
-
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<option>".$row['name'] . "</option>";
-                    }
-                } else {
-                    echo "<option value=''>No doctors available</option>";
-                }
-
-                $conn->close();
-                ?>
-            </select><br><br>
-            <button name="submit" type="submit" class="btn" style="margin-top: -25px !important;">Show Schedule </button>
-        </form>
+<header>
+    <div class="header-logo">
+        <a href="../../FrontEnd/html/index.php"><img src="../../Resources/images/logo.png" alt="Logo"></a>
     </div>
-
 </header>
 
+<div class="form-container">
+    <form action="../../FrontEnd/html/CTable.php" method="post">
+        <label for="employeeShift">Select Doctor:</label>
+        <select class="form-control" id="employeeShift" style="           height: 50px !important;" name="employeeShift">
+            <?php
+            $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            $sql = "SELECT name FROM doctors";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<option>" . $row['name'] . "</option>";
+                }
+            } else {
+                echo "<option value=''>No doctors available</option>";
+            }
+
+            $conn->close();
+            ?>
+        </select>
+        <button name="submit" type="submit" class="btn">Show Schedule</button>
+    </form>
+</div>
 
 
 <div class="container">
@@ -315,15 +373,16 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
         cells.forEach((cell, index) => {
             const availability = availabilityData[Math.floor(index / 9)].hours[index % 9];
             if (availability == 1) {
+                cell.textContent = 'Booked';
                 cell.classList.remove('unavailable');
                 cell.classList.add('available');
             } else {
+                cell.textContent = 'Unbooked';
                 cell.classList.remove('available');
                 cell.classList.add('unavailable');
             }
         });
     }
-
     // Initial update
     updateAvailability();
 </script>
