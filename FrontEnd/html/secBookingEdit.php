@@ -1,3 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Doctor Availability</title>
+    <style>
+        .form-group {
+            margin-bottom: 1em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+
+        select, input[type="text"], input[type="submit"] {
+            width: 100%;
+            padding: 0.5em;
+        }
+
+        .message {
+            padding: 1em;
+            margin-bottom: 1em;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+<!--/***********************************************************************-->
 <?php
 session_start();
 require_once '../../BackEnd/php/db_config.php';
@@ -34,14 +76,24 @@ function getRowIndexForDay($day)
     }
 }
 
-if (isset( $_POST['doctor'], $_POST['date'], $_POST['status'])) {
+if (isset($_POST['doctor'], $_POST['date'], $_POST['status'])) {
     $doctorName = $_POST['doctor'];
     switch ($doctorName) {
-        case 'Sarah': $doctorId = 2; break;
-        case 'Taima': $doctorId = 1; break;
-        case 'Lama': $doctorId = 3; break;
-        case 'Ali': $doctorId = 4; break;
-        case 'Mahmoud': $doctorId = 5; break;
+        case 'Sarah':
+            $doctorId = 2;
+            break;
+        case 'Taima':
+            $doctorId = 1;
+            break;
+        case 'Lama':
+            $doctorId = 3;
+            break;
+        case 'Ali':
+            $doctorId = 4;
+            break;
+        case 'Mahmoud':
+            $doctorId = 5;
+            break;
     }
 
     $dateString = $_POST['date'];
@@ -53,8 +105,8 @@ if (isset( $_POST['doctor'], $_POST['date'], $_POST['status'])) {
 
     $finalIndex = getRowIndexForDay($day) + (($doctorId - 1) * 45) + getRowIndexForHour($hour);
     $status = ($_POST['status'] == '0') ? 1 : 3;
-//*****
-// Check if isAvailable is 2
+
+    // Check if isAvailable is 2
     $sqlCheckAvailability = "SELECT isAvailable FROM doctor_dates WHERE id = ?";
     $stmtCheckAvailability = $conn->prepare($sqlCheckAvailability);
     $stmtCheckAvailability->bind_param("i", $finalIndex);
@@ -71,30 +123,28 @@ if (isset( $_POST['doctor'], $_POST['date'], $_POST['status'])) {
             $stmtDeleteAppointment->execute();
 
             if ($stmtDeleteAppointment->affected_rows > 0) {
-                echo "Appointment deleted successfully.";
+                echo "<div class='message success'>Appointment deleted successfully.</div>";
             } else {
-                echo "No matching appointment found to delete.";
+                echo "<div class='message error'>No matching appointment found to delete.</div>";
             }
         } else {
-            echo "The value of isAvailable is not 2.";
+            echo "<div class='message error'>There is no appointment at this time </div>";
         }
     } else {
-        echo "No matching record found in doctor_date.";
+        echo "<div class='message error'>No matching record found in doctor_date.</div>";
     }
 
     $stmtCheckAvailability->close();
 
-
-
-    //**********
+    // Update availability status
     $sqlUpdate = "UPDATE doctor_dates SET isAvailable = ? WHERE id = ?";
     $stmtUpdate = $conn->prepare($sqlUpdate);
     $stmtUpdate->bind_param("ii", $status, $finalIndex);
 
     if ($stmtUpdate->execute()) {
-        echo "Availability updated successfully.";
+        echo "<div class='message success'>Availability updated successfully.</div>";
     } else {
-        echo "Error updating availability: " . $stmtUpdate->error;
+        echo "<div class='message error'>Error updating availability: " . $stmtUpdate->error . "</div>";
     }
 
     $stmtUpdate->close();
@@ -102,26 +152,6 @@ if (isset( $_POST['doctor'], $_POST['date'], $_POST['status'])) {
 $conn->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Update Doctor Availability</title>
-    <style>
-        .form-group {
-            margin-bottom: 1em;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.5em;
-        }
-        select, input[type="text"], input[type="submit"] {
-            width: 100%;
-            padding: 0.5em;
-        }
-    </style>
-</head>
-<body>
 <h2>Update Doctor Availability</h2>
 <form action="../../FrontEnd/html/secBookingEdit.php" method="post">
     <div class="form-group">
