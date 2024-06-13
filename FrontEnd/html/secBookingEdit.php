@@ -52,7 +52,7 @@ if (isset( $_POST['doctor'], $_POST['date'], $_POST['status'])) {
     $hour = $matches[1];
 
     $finalIndex = getRowIndexForDay($day) + (($doctorId - 1) * 45) + getRowIndexForHour($hour);
-    $status= $_POST['status'];
+    $status = ($_POST['status'] == '0') ? 1 : 3;
 //*****
 // Check if isAvailable is 2
     $sqlCheckAvailability = "SELECT isAvailable FROM doctor_dates WHERE id = ?";
@@ -152,8 +152,11 @@ $conn->close();
         <input type="text" id="date" name='date' required>
     </div>
     <div class="form-group">
-        <label for="status">Status (e.g., '0' for not available):</label>
-        <input type="text" id="status" name="status" required>
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="0">Unbooked</option>
+            <option value="1">Unavailable</option>
+        </select>
     </div>
     <input type="submit" value="Update Availability" name="submit">
 </form>
