@@ -17,7 +17,7 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-
+    <script src="../js/auto-email-sender.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <!-- Nice Select CSS -->
@@ -46,6 +46,11 @@
 <body>
 <?php
 session_start();
+
+
+$_SESSION['contact'] = 'no';
+
+
 // Check if the user is logged in
 if (!isset($_SESSION['USER']) || !isset($_SESSION['ROLE']) || $_SESSION['ROLE'] !== '2'){
 
@@ -91,8 +96,8 @@ else {
                         <li><a href="#about">About</a></li>
                         <li><a href="../../FrontEnd/html/CTable.php">Schedules</a></li>
                         <li><a href="../../FrontEnd/html/booking.php">Booking Details</a></li>
-                        <li><a href="../../FrontEnd/html/addchildren.php">Add children</a></li>
-                        <li><a href="../../BackEnd/php/tosignout.php">Sign OUT</a></li>
+                        <li><a href="../../FrontEnd/html/addchildren.php">Add Children</a></li>
+                        <li><a href="../../BackEnd/php/tosignout.php" style="color:mediumblue">Sign Out</a></li>
 
                     </ul>
                     <!-- End Contact -->
@@ -101,9 +106,25 @@ else {
                     <!-- Top Contact -->
                     <ul class="top-contact" style="font-size:14px;  ">
                         <?php
+                        require_once "../../BackEnd/php/db_connect.php";
+
+                        global $conn;
+
+
+
+
                         if (isset($_SESSION['USER'])) {
-                            $var =$_SESSION['USER'];
-                            echo "                        <li><i >Hi, $var</i></li>";
+
+                            $userEmail = $_SESSION['USER'];
+
+                            $query = "SELECT user_name FROM users WHERE users.email = ?";
+                            $stmt = $conn ->prepare($query);
+                            $stmt->bind_param("s", $userEmail);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            $row = $result->fetch_assoc();
+                            $userName = $row['user_name'];
+                            echo "                        <li><i style='text-transform: capitalize'>Hi, $userName!</i></li>";
                         } else {
                             echo "                        <li><i>Hi, Guest</i></li>";
                         }
@@ -141,8 +162,8 @@ else {
                                 <ul class="nav menu">
                                     <li><a href="#header">Home </a></li>
                                     <li><a href="#service">Services </a></li>
-                                    <li><a href="../html/feedback.php">Feedback </a></li>
-                                    <li><a href="../html/contact.html">Contact Us</a></li>
+                                    <li><a href="../html/feedback.php">Profile</a></li>
+                                    <li><a href="contact_page.php">Contact Us</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -207,7 +228,7 @@ else {
                             <h1>See What Other <span>People</span> Think!</h1>
                             <p>Scroll through the reviews and feedback of previous experiences. </p>
                             <div class="button">
-                                <a href="../html/feedback.html" class="btn">Feedback and Reviews</a>
+                                <a href="../html/feedback.php" class="btn">Feedback and Reviews</a>
                             </div>
                         </div>
                     </div>
@@ -235,8 +256,8 @@ else {
                             <div class="single-content">
                                 <h4>Opening Hours</h4>
                                 <ul class="time-sidual">
-                                    <li class="day">Sunday - Friday <span>8.00 am - 4:00 pm</span></li>
-                                    <li class="day">Saturday <span>10.00 am 2 :00 pm</span></li>
+                                    <li class="day">Sunday - Thursday <span>8:00 am - 4:00 pm</span></li><br>
+
                                     <li class="day"><span><br><br></span></li>
                                 </ul>
                             </div>
@@ -290,7 +311,7 @@ else {
                 <div class="single-fun">
                     <i class="icofont icofont-home"></i>
                     <div class="content">
-                        <span class="counter">40</span>
+                        <span class="counter">30</span>
                         <p>Rooms</p>
                     </div>
                 </div>
@@ -301,7 +322,7 @@ else {
                 <div class="single-fun">
                     <i class="icofont icofont-user-alt-3"></i>
                     <div class="content">
-                        <span class="counter">10</span>
+                        <span class="counter">6</span>
                         <p>Specialist Doctors</p>
                     </div>
                 </div>
@@ -312,7 +333,7 @@ else {
                 <div class="single-fun">
                     <i class="icofont-simple-smile"></i>
                     <div class="content">
-                        <span class="counter">1000</span>
+                        <span class="counter">600</span>
                         <p>Happy Patients</p>
                     </div>
                 </div>
@@ -400,10 +421,10 @@ else {
         <div class="row">
             <div class="col-lg-12 col-md-12 col-12">
                 <div class="content">
-                    <h2>Do you need Emergency Medical Care? Contact us. <br> -Put (EMERGENCY) in the message.</h2>
+                    <h2>Do you need Emergency Medical Care? Contact us. </h2>
                     <p>If your baby needs immediate medical care, reach us!</p>
                     <div class="button">
-                        <a href="../html/contact.html" class="btn">Contact Now</a>
+                        <a href="contact_page.php" class="btn">Contact Now</a>
                     </div>
                 </div>
             </div>
@@ -439,7 +460,6 @@ else {
                         </div>
                         <h4 class="title">Get Vaccinated</h4>
                         <div class="price">
-                            <p class="amount">$50<span>/ Per Visit</span></p>
                         </div>
                     </div>
                     <!-- Table List -->
@@ -465,14 +485,12 @@ else {
                         </div>
                         <h4 class="title"> Consultation</h4>
                         <div class="price">
-                            <p class="amount">$70<span>/ Per Visit</span></p>
                         </div>
                     </div>
                     <!-- Table List -->
                     <ul class="table-list">
-                        <li><i class="icofont icofont-ui-check"></i>Get advise from the best doctors</li>
-                        <li><i class="icofont icofont-ui-check"></i>discount on the second visit</li>
-                        <li><i class="icofont icofont-ui-check"></i>Growth and Development Monitoring</li><br>
+                        <li><i class="icofont icofont-ui-check"></i> sever complications</li>
+                        <li><i class="icofont icofont-ui-check"></i>Growth and Development Monitoring</li><br><br><br>
                     </ul>
                         <div class="table-bottom">
                             <a class="btn" href="../html/appointment.php">Book Now</a>
@@ -491,12 +509,12 @@ else {
                         </div>
                         <h4 class="title">Community Support</h4>
                         <div class="price">
-                            <p class="amount">Free</p>
+
                         </div>
                     </div>
                     <!-- Table List -->
                     <ul class="table-list">
-                        <li><i class="icofont icofont-ui-check"></i>Parent Forums</li>
+                        <li><i class="icofont icofont-ui-check"></i>Share your thoughts and ideas.</li>
                         <li><i class="icofont icofont-ui-check"></i>Reviews and Feedback</li><br><br><br><br>
                     </ul>
                     <div class="table-bottom">
@@ -620,7 +638,7 @@ else {
 <!-- Start Newsletter Area -->
 <section class="newsletter section">
     <div class="container">
-        <div class="row ">
+        <div class="row " id="newsletter">
             <div class="col-lg-6  col-12">
                 <!-- Start Newsletter Form -->
                 <div class="subscribe-text ">
@@ -631,13 +649,35 @@ else {
             </div>
             <div class="col-lg-6  col-12">
                 <!-- Start Newsletter Form -->
-                <div class="subscribe-form ">
-                    <form action="" method="get" target="_blank" class="newsletter-inner">
-                        <input name="EMAIL" placeholder="Your email address" class="common-input" onfocus="this.placeholder = ''"
-                               onblur="this.placeholder = 'Your email address'" required="" type="email">
-                        <button class="btn">Subscribe</button>
+                <?php
+
+                $userEmail = $_SESSION['USER'];
+
+                $query = "SELECT subscribed FROM users WHERE users.email = ?";
+                $stmt = $conn ->prepare($query);
+                $stmt->bind_param("s", $userEmail);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $row = $result->fetch_assoc();
+                $sub = $row['subscribed'];
+                if ($sub == 1) {
+                    echo '<div class="subscribe-form">
+                    <form action="../../BackEnd/php/subscribe.php" method="post" class="newsletter-inner">
+                        <input name="EMAIL" placeholder="Subscribed ✓"" class="common-input" required="" type="email" ">
+                        <button class="btn" disabled>Subscribe</button>
                     </form>
-                </div>
+                  </div>';
+
+                }
+                else {
+                    echo '<div class="subscribe-form">
+                    <form action="../../BackEnd/php/subscribe.php" method="post" class="newsletter-inner">
+                        <input name="EMAIL" placeholder="your email address"" class="common-input" required="" type="email" ">
+                        <button class="btn" >Subscribe</button>
+                    </form>
+                  </div>';
+                }
+                ?>
                 <!-- End Newsletter Form -->
             </div>
         </div>
@@ -677,7 +717,7 @@ else {
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
                                     <li><a href="#news"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
-                                    <li><a href="../html/contact.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+                                    <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -687,20 +727,15 @@ else {
                     <div class="single-footer">
                         <h2>Open Hours</h2>
                         <ul class="time-sidual">
-                            <li class="day">Sunday - Friday <span>8.00 am - 4.00 pm</span></li>
-                            <li class="day">Friday <span>10.00 am - 2.00 pm</span></li>
+                            <li class="day">Sunday-Thursday: <span>8:00am-4:00 pm</span></li>
+
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
                     <div class="single-footer">
                         <h2>Newsletter</h2>
-                        <p>subscribe to our newsletter to get all our news in your inbox</p>
-                        <form action="" method="get" target="_blank" class="newsletter-inner">
-                            <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = 'Your email address'" required="" type="email">
-                            <button class="button"><i class="icofont icofont-paper-plane"></i></button>
-                        </form>
+                        <a href ="#newsletter" style="color:white;">subscribe to our newsletter to get all our news in your inbox</a>
                     </div>
                 </div>
             </div>

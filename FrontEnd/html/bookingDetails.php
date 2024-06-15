@@ -152,7 +152,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
 
     <!-- Favicon -->
     <link rel="icon" href="../../Resources/images/favicon.png">
-
+    <script src="../js/auto-email-sender.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
@@ -621,7 +621,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
                                     <li><a href="../html/index.php#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
-                                    <li><a href="../html/contact.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+                                    <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>

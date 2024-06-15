@@ -95,7 +95,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
 
     <!-- Title -->
     <title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
-
+    <script src="../js/auto-email-sender.js"></script>
     <!-- Favicon -->
     <link rel="icon" href="../../Resources/images/favicon.png">
 
@@ -348,7 +348,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
                                     <li><a href="../html/index.php#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
-                                    <li><a href="../html/contact.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+                                    <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>

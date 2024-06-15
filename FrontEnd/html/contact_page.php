@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="zxx">
     <head>
+
         <!-- Meta Tags -->
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<!-- Title -->
-        <title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
+        <title>Contact Us</title>
 		
 		<!-- Favicon -->
         <link rel="icon" href="../../Resources/images/favicon.png">
@@ -41,7 +42,7 @@
         <link rel="stylesheet" href="../css/normalize.css">
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="../css/responsive.css">
-		
+		<script src="../js/auto-email-sender.js"></script>
     </head>
     <body>
 	
@@ -60,8 +61,11 @@
             </div>
         </div>
         <!-- End Preloader -->
-		
-		
+
+<?php
+
+session_start();
+?>
 	
 		<!-- Header Area -->
 		<header class="header" >
@@ -79,7 +83,7 @@
 							<!-- Top Contact -->
 							<ul class="top-contact">
 								<li><i class="fa fa-phone"></i>+0593021843</li>
-								<li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">babyvaxtracker-support@gmail.com</a></li>
+								<li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">communicraftt@gmail.com</a></li>
 							</ul>
 							<!-- End Top Contact -->
 						</div>
@@ -93,30 +97,27 @@
 					<div class="inner">
 						<div class="row">
 							<div class="col-lg-3 col-md-3 col-12">
-								<!-- Start Logo -->
-								<div class="logo">
-									<a href="../html/homepage.html"><img src="../../Resources/images/logo.png" alt="#"></a>
-								</div>
-								<!-- End Logo -->
-								<!-- Mobile Nav -->
-								<div class="mobile-nav"></div>
-								<!-- End Mobile Nav -->
-							</div>
-							<div class="col-lg-7 col-md-9 col-12">
 								<!-- Main Menu -->
 								<div class="main-menu">
 									<nav class="navigation">
 										<ul class="nav menu">
-											<li><a href="../html/index.php">Home </a></li>
+											<li><a href="index.php" style="font-style: italic; font-size: larger; color: blue;">Home</a></li>
+
 
 										</ul>
 									</nav>
 								</div>
 								<!--/ End Main Menu -->
+								<!-- Mobile Nav -->
+								<div class="mobile-nav"></div>
+								<!-- End Mobile Nav -->
+							</div>
+							<div class="col-lg-7 col-md-9 col-12">
+
 							</div>
 							<div class="col-lg-2 col-12">
 								<div class="get-quote">
-									<a href="appointment.html" class="btn">Book Appointment</a>
+									<a href="appointment.php" class="btn">Book Appointment</a>
 								</div>
 							</div>
 						</div>
@@ -135,7 +136,7 @@
 						<div class="col-12">
 							<h2>Contact Us</h2>
 							<ul class="bread-list">
-								<li><a href="../html/homepage.html">Home</a></li>
+								<li><a href="index.php">Home</a></li>
 								<li><i class="icofont-simple-right"></i></li>
 								<li class="active">Contact Us</li>
 							</ul>
@@ -163,40 +164,30 @@
 								<h2>Contact With Us</h2>
 								<p>If you have any questions please fell free to contact with us.</p>
 								<!-- Form -->
-								<form class="form" method="post" action="">
-									<div class="row">
+								<form class="form" method="post" action="../../BackEnd/php/contact.php">
+									<div class="row" style="text-transform: none">
+
 										<div class="col-lg-6">
-											<div class="form-group">
-												<input type="text" name="name" placeholder="Name" required="">
+											<div class="form-group" >
+												<input type="email" name="email" placeholder="Email" required="" style="text-transform: none">
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-group">
-												<input type="email" name="email" placeholder="Email" required="">
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<div class="form-group">
-												<input type="text" name="phone" placeholder="Phone" required="">
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<div class="form-group">
-												<input type="text" name="subject" placeholder="Subject" required="">
+												<input type="text" name="subject" placeholder="Subject" required="" style="text-transform: none">
 											</div>
 										</div>
 										<div class="col-lg-12">
 											<div class="form-group">
-												<textarea name="message" placeholder="Your Message" required=""></textarea>
+												<textarea name="message" placeholder="Your Message" required="" style="text-transform: none"></textarea>
 											</div>
 										</div>
 										<div class="col-12">
 											<div class="form-group login-btn">
-												<button class="btn" type="submit">Send</button>
+												<button class="btn" type="submit" >Send</button>
 											</div>
-											<div class="checkbox">
-												<label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">Do you want to subscribe to our Newsletter ?</label>
-											</div>
+											<p id="msg" style="color: green;display: none">thanks for contacting us!</p>
+
 										</div>
 									</div>
 								</form>
@@ -213,7 +204,7 @@
 								<i class="icofont icofont-ui-call"></i>
 								<div class="content">
 									<h3>+(970) 5930 21843</h3>
-									<p>babyvaxtracker-support@gmail.com</p>
+									<p>communicraftt@gmail.com</p>
 								</div>
 							</div>
 						</div>
@@ -234,7 +225,7 @@
 							<div class="single-info">
 								<i class="icofont icofont-wall-clock"></i>
 								<div class="content">
-									<h3>Mon - Fri: 8am - 4pm</h3>
+									<h3>Sunday - Thursday: 8am - 4pm</h3>
 								</div>
 							</div>
 						</div>
@@ -244,85 +235,91 @@
 			</div>
 		</section>
 		<!--/ End Contact Us -->
-		
+
 		<!-- Footer Area -->
-<footer id="footer" class="footer ">
-    <!-- Footer Top -->
-    <div class="footer-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-footer">
-                        <h2>Social Media</h2>
-                        <!-- Social -->
-                        <ul class="social">
-                            <li><a href="#"><i class="icofont-facebook"></i></a></li>
-                            <li><a href="#"><i class="icofont-instagram"></i></a></li>
-                            <li><a href="#"><i class="icofont-twitter"></i></a></li>
-                        </ul>
-                        <!-- End Social -->
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-footer f-link">
-                        <h2>Quick Links</h2>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <ul>
-                                    <li><a href="../html/index.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                                    <li><a href="../html/index.php#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                                    <li><a href="../html/index.php#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <ul>
-                                    <li><a href="../html/index.php#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
-                                    <li><a href="../html/contact.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-footer">
-                        <h2>Open Hours</h2>
-                        <ul class="time-sidual">
-                            <li class="day">Sunday - Friday <span>8.00 am - 4.00 pm</span></li>
-                            <li class="day">Friday <span>10.00 am - 2.00 pm</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-footer">
-                        <h2>Newsletter</h2>
-                        <p>subscribe to our newsletter to get all our news in your inbox</p>
-                        <form action="" method="get" target="_blank" class="newsletter-inner">
-                            <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = 'Your email address'" required="" type="email">
-                            <button class="button"><i class="icofont icofont-paper-plane"></i></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/ End Footer Top -->
-    <!-- Copyright -->
-    <div class="copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-12">
-                    <div class="copyright-content">
-                        <p>© Copyright 2024  |  All Rights Reserved</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/ End Copyright -->
-</footer>
-<!--/ End Footer Area -->
-		
+		<footer id="footer" class="footer ">
+			<!-- Footer Top -->
+			<div class="footer-top">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-3 col-md-6 col-12">
+							<div class="single-footer">
+								<h2>Social Media</h2>
+								<!-- Social -->
+								<ul class="social">
+									<li><a href="#"><i class="icofont-facebook"></i></a></li>
+									<li><a href="#"><i class="icofont-instagram"></i></a></li>
+									<li><a href="#"><i class="icofont-twitter"></i></a></li>
+								</ul>
+								<!-- End Social -->
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 col-12">
+							<div class="single-footer f-link">
+								<h2>Quick Links</h2>
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-12">
+										<ul>
+											<li><a href="#header"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+											<li><a href="#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+											<li><a href="#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+										</ul>
+									</div>
+									<div class="col-lg-6 col-md-6 col-12">
+										<ul>
+											<li><a href="#news"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
+											<li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 col-12">
+							<div class="single-footer">
+								<h2>Open Hours</h2>
+								<ul class="time-sidual">
+									<li class="day">Sunday-Thursday: <span>8:00am-4:00 pm</span></li>
+
+								</ul>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 col-12">
+							<div class="single-footer">
+								<h2>Newsletter</h2>
+								<a href ="#newsletter" style="color:white;">subscribe to our newsletter to get all our news in your inbox</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/ End Footer Top -->
+			<!-- Copyright -->
+			<div class="copyright">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-12">
+							<div class="copyright-content">
+								<p>© Copyright 2024  |  All Rights Reserved</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/ End Copyright -->
+		</footer>
+		<!--/ End Footer Area -->
+		<?php
+		if($_SESSION['contact']=='yes') {
+
+					echo '
+		<script>
+			
+				document.getElementById("msg").style.display = "block";
+			
+		</script>
+		';
+				}
+		?>
 		<!-- jquery Min JS -->
         <script src="../js/jquery.min.js"></script>
 		<!-- jquery Migrate JS -->

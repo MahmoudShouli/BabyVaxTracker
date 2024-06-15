@@ -38,7 +38,7 @@
  <link rel="stylesheet" href="../css/normalize.css">
  <link rel="stylesheet" href="../css/style.css">
  <link rel="stylesheet" href="../css/responsive.css">
-
+    <script src="../js/auto-email-sender.js"></script>
 <style>
 html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
@@ -61,21 +61,13 @@ i.fa {margin-right: 0px !important;}
  <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
   <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
   <a href="index.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i></a>
-  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
-  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
- 
-  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
+
+
   </a>
  </div>
 </div>
 
-<!-- Navbar on small screens -->
-<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
-  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
-  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
-  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
-  <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
-</div>
+
 
 
 
@@ -180,7 +172,7 @@ i.fa {margin-right: 0px !important;}
             </div>
           </div>
         </div>
-      </div>
+      </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
         <?php
             $query_posts = "SELECT *  FROM posts";
@@ -243,26 +235,38 @@ i.fa {margin-right: 0px !important;}
                 $photo = $row_user['photo'];
                 $userName = $row_user['user_name'];
 
-                echo "
-                <script>
-                var post = `
-                    <div class='w3-container w3-card w3-white w3-round w3-margin'><br>
-                        <img src=$photo alt='Avatar' class='w3-left w3-circle w3-margin-right' style='width:60px'>
-                        <span class='w3-right w3-opacity'>$timestamp</span>
-                        <h4>$userName</h4><br>
-                        <hr class='w3-clear'>
-                        <p style='margin-bottom:5px; margin-top:-15px'>$content</p>
-                        <form action = '../../BackEnd/php/like.php' method = 'post'>
-                        <button value = $id name='likeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span>  $likes</span> Like</button>
-                        </form>
-                    </div>
-                `;
-                
-                var postsContainer = document.getElementById('postContainer');
-                postsContainer.insertAdjacentHTML('afterbegin', post);
-                postsContainer.children[1].after(postsContainer.children[0]);
-                </script>
-                ";
+                echo  "
+                    <script>
+                    function changeLike() {
+                        var unsplitted_text = document.getElementById('likeBtn').innerText.trim();
+                        var arr = unsplitted_text.split(' ')
+                        var text = arr[1];
+                        
+                        if (text === 'Like') {
+                            document.getElementById('likeBtn').innerText = ' Unlike';
+                        } else if (text === 'Unlike') {
+                            document.getElementById('likeBtn').innerText = ' Like';
+                        }
+                    }
+                    
+                    var post = `
+                        <div class='w3-container w3-card w3-white w3-round w3-margin'><br>
+                            <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='width:60px'>
+                            <span class='w3-right w3-opacity'>$timestamp</span>
+                            <h4>$userName</h4><br>
+                            <hr class='w3-clear'>
+                            <p style='margin-bottom:5px; margin-top:-15px'>$content</p>
+                            <form action='../../BackEnd/php/like.php' method='post'>
+                                <button id='$id' onclick='changeLike();' value='$id' name='likeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> Like</button>
+                            </form>
+                        </div>
+                    `;
+                    
+                    var postsContainer = document.getElementById('postContainer');
+                    postsContainer.insertAdjacentHTML('afterbegin', post);
+                    postsContainer.children[1].after(postsContainer.children[0]);
+                    </script>
+                    ";
 
 
 
@@ -300,83 +304,77 @@ i.fa {margin-right: 0px !important;}
 
 
 <!-- Footer Area -->
-<footer id="footer" class="footer ">
-  <!-- Footer Top -->
-  <div class="footer-top">
-      <div class="container">
-          <div class="row">
-              <div class="col-lg-3 col-md-6 col-12">
-                  <div class="single-footer">
-                      <h2>Social Media</h2>
-                      <!-- Social -->
-                      <ul class="social">
-                          <li><a href="#"><i class="icofont-facebook"></i></a></li>
-                          <li><a href="#"><i class="icofont-instagram"></i></a></li>
-                          <li><a href="#"><i class="icofont-twitter"></i></a></li>
-                      </ul>
-                      <!-- End Social -->
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-6 col-12">
-                  <div class="single-footer f-link">
-                      <h2>Quick Links</h2>
-                      <div class="row">
-                          <div class="col-lg-6 col-md-6 col-12">
-                            <ul>
-                              <li><a href="../html/index.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                              <li><a href="../html/index.php#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                              <li><a href="../html/index.php#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
-                          </ul>
-                      </div>
-                      <div class="col-lg-6 col-md-6 col-12">
-                          <ul>
-                              <li><a href="../html/index.php#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
-                              <li><a href="../html/contact.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
-                          </ul>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-6 col-12">
-                  <div class="single-footer">
-                      <h2>Open Hours</h2>
-                      <ul class="time-sidual">
-                          <li class="day">Sunday - Friday <span>8.00 am - 4.00 pm</span></li>
-                          <li class="day">Friday <span>10.00 am - 2.00 pm</span></li>
-                      </ul>
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-6 col-12">
-                  <div class="single-footer">
-                      <h2>Newsletter</h2>
-                      <p>subscribe to our newsletter to get all our news in your inbox</p>
-                      <form action="" method="get" target="_blank" class="newsletter-inner">
-                          <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
-                                 onblur="this.placeholder = 'Your email address'" required="" type="email">
-                          <button class="button"><i class="icofont icofont-paper-plane"></i></button>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  <!--/ End Footer Top -->
-  <!-- Copyright -->
-  <div class="copyright">
-      <div class="container">
-          <div class="row">
-              <div class="col-lg-12 col-md-12 col-12">
-                  <div class="copyright-content">
-                      <p>© Copyright 2024  |  All Rights Reserved</p>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  <!--/ End Copyright -->
+<footer id="footer" class="footer" style="margin-bottom: -20px">
+    <!-- Footer Top -->
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="single-footer">
+                        <h2>Social Media</h2>
+                        <!-- Social -->
+                        <ul class="social">
+                            <li><a href="#"><i class="icofont-facebook"></i></a></li>
+                            <li><a href="#"><i class="icofont-instagram"></i></a></li>
+                            <li><a href="#"><i class="icofont-twitter"></i></a></li>
+                        </ul>
+                        <!-- End Social -->
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="single-footer f-link">
+                        <h2>Quick Links</h2>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <ul>
+                                    <li><a href="#header"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+                                    <li><a href="#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+                                    <li><a href="#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <ul>
+                                    <li><a href="#news"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
+                                    <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="single-footer">
+                        <h2>Open Hours</h2>
+                        <ul class="time-sidual">
+                            <li class="day">Sunday-Thursday: <span>8:00am-4:00 pm</span></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="single-footer">
+                        <h2>Newsletter</h2>
+                        <a href ="#newsletter" style="color:white;">subscribe to our newsletter to get all our news in your inbox</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ End Footer Top -->
+    <!-- Copyright -->
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="copyright-content">
+                        <p>© Copyright 2024  |  All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ End Copyright -->
 </footer>
 <!--/ End Footer Area -->
-
 
 <script>
     document.getElementById('fileToUpload').addEventListener('change', function(event) {

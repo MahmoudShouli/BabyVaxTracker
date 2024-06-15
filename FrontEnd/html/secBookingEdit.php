@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <title>Update Doctor Availability</title>
     <style>
@@ -36,6 +37,7 @@
             color: #721c24;
         }
     </style>
+    <script src="../js/auto-email-sender.js"></script>
 </head>
 <body>
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="../js/auto-email-sender.js"></script>
     <?php
     require_once '../../BackEnd/php/db_config.php';
 
@@ -337,12 +338,12 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                     </tr>
                     <tr>
                         <td>Friday</td>
-                        <td colspan="12" style="font-size: 25px;">There is no work today</td>
+                        <td colspan="12" style="font-size: 25px;">CLOSED</td>
 
                     </tr>
                     <tr>
                         <td>Saturday</td>
-                        <td colspan="12" style="font-size: 25px;">There is no work today</td>
+                        <td colspan="12" style="font-size: 25px;">CLOSED</td>
 
                     </tr>
                     </tbody>
@@ -424,7 +425,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
                                     <li><a href="../html/signin.php#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
-                                    <li><a href="../html/contact.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+                                    <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>
