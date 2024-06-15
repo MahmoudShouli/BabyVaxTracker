@@ -126,6 +126,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
     <style>
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -175,10 +176,23 @@ function setSessionMessageAndRedirect($message, $redirectPage)
             outline: none; /* Remove outline */
             box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.3); /* Red focus ring */
         }
+
+
+        th,td {
+            text-align: center;
+            font-weight: bolder;
+            background-color:  #f2f2f2;
+            color: black;
+
+        }
+        th{
+            color:blue;
+        }
     </style>
 
 </head>
-<body>
+<body style="background-image: url('../../Resources/images/adminbg.png');   background-size: cover;
+        background-position: center;">
 
 <!-- Preloader -->
 <div class="preloader">
@@ -201,66 +215,46 @@ function setSessionMessageAndRedirect($message, $redirectPage)
 <!-- Header Area -->
 <header class="header" >
     <!-- Topbar -->
-    <div class="topbar">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-5 col-12">
-                    <!-- Contact -->
-                    <ul class="top-link">
-                    </ul>
-                    <!-- End Contact -->
-                </div>
-                <div class="col-lg-6 col-md-7 col-12">
+    <div class="topbar" style="background-color:  #f2f2f2">
+        <div class="container" >
+            <div class="row" >
+
+                <div class="col-lg-6 col-md-7 col-12"  >
                     <!-- Top Contact -->
-                    <ul class="top-contact">
-                        <li><i class="fa fa-phone"></i>+0593021843</li>
-                        <li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">babyvaxtracker-support@gmail.com</a></li>
-                    </ul>
+
+                    <a style="text-align: left; color:blue; font-style: oblique; font-size: larger" href="admin_index.php"><i class=" fa fa-server"></i> Control Panel </a>
+
+
+                    <!-- End Top Contact -->
+                </div>
+
+                <div class="col-lg-6 col-md-7 col-12"  >
+                    <!-- Top Contact -->
+
+                    <p style="text-align: left; color:black; font-style: normal; font-size: x-large; margin-left: -20%" > Appointments </p>
+
+
                     <!-- End Top Contact -->
                 </div>
             </div>
         </div>
     </div>
     <!-- End Topbar -->
-    <!-- Header Inner -->
-    <div class="header-inner">
-        <div class="container">
-            <div class="inner">
-                <div class="row">
-                    <div class="col-lg-3 col-md-3 col-12">
-                        <!-- Start Logo -->
-                        <div class="logo">
-                            <a href="../html/homepage.html"><img src="../../Resources/images/logo.png" alt="#"></a>
-                        </div>
-                        <!-- End Logo -->
-                        <!-- Mobile Nav -->
-                        <div class="mobile-nav"></div>
-                        <!-- End Mobile Nav -->
-                    </div>
-                    <div class="col-lg-7 col-md-9 col-12">
-                        <!-- Main Menu -->
-                        <div class="main-menu">
-                            <nav class="navigation">
-                                <ul class="nav menu">
-                                    <li><a href="../html/index.php">Home </a></li>
 
-                                </ul>
-                            </nav>
-                        </div>
-                        <!--/ End Main Menu -->
-
-            </div>
-        </div>
-    </div>
-    <!--/ End Header Inner -->
 </header>
 <!-- End Header Area -->
 
-<div class="cc1" style="position:relative;left :45vw;">
+<div class="cc1" style="position:relative;">
 
-    <form id="bookingForm" action="../../FrontEnd/html/booking.php" method="post">
-        <label for="childrenSelect">Select Child and Appointment Day:</label> <br>
-        <select class="form-control" id="childrenSelect" name="childrenSelect">
+
+
+    <table style="margin-top: 10%">
+        <tr>
+            <th>Child Name</th>
+            <th>Appointment Day</th>
+            <th>Appointment Hour</th>
+            <th>Doctor Name</th>
+        </tr>
             <?php
             require_once '../../BackEnd/php/db_config.php';
 
@@ -272,12 +266,24 @@ function setSessionMessageAndRedirect($message, $redirectPage)
 
             // Fetch all appointments
             $sqlAppointments = "
-    SELECT children.name AS childName, appointments.dateID, doctor_dates.day AS appointmentDay, doctor_dates.hour AS appointmentHour
-    FROM appointments
-    LEFT JOIN children ON appointments.childID = children.id
-    LEFT JOIN doctor_dates ON appointments.dateID = doctor_dates.id
-    WHERE appointments.dateID IS NOT NULL
-";
+            SELECT 
+                children.name AS childName, 
+                appointments.dateID, 
+                doctor_dates.day AS appointmentDay, 
+                doctor_dates.hour AS appointmentHour,
+                doctors.name AS doctorName
+            FROM 
+                appointments
+            LEFT JOIN 
+                children ON appointments.childID = children.ID
+            LEFT JOIN 
+                doctor_dates ON appointments.dateID = doctor_dates.id
+            LEFT JOIN 
+                doctors ON appointments.doctorID = doctors.ID
+            WHERE 
+                appointments.dateID IS NOT NULL
+        ";
+
             $stmtAppointments = $conn->prepare($sqlAppointments);
             $stmtAppointments->execute();
             $resultAppointments = $stmtAppointments->get_result();
@@ -286,9 +292,16 @@ function setSessionMessageAndRedirect($message, $redirectPage)
                 while ($row = $resultAppointments->fetch_assoc()) {
                     $childName = $row['childName'];
                     $appointmentDay = $row['appointmentDay'];
-                    $hour = $row['appointmentHour'];
+                    $hour = substr($row['appointmentHour'],0, 5);
+                    $doctor = $row['doctorName'];
 
-                    echo "<option value='{$childName}: {$appointmentDay}: {$hour}'>{$childName} - {$appointmentDay} {$hour}</option>";
+                    echo "<tr>
+                        <td>$childName</td>
+                        <td>$appointmentDay</td>
+                        <td>$hour</td>
+                        <td>$doctor</td>
+                    </tr>
+                    ";
                 }
             } else {
                 echo "<option value=''>No appointments available</option>";
@@ -296,10 +309,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
 
             $conn->close();
             ?>
-        </select><br><br>
-        <br>
-        <br>
-    </form>
+    </table>
 </div>
 
 
@@ -313,86 +323,6 @@ function setSessionMessageAndRedirect($message, $redirectPage)
 
 
 
-<!--*******************************************************************-->
-
-<!--//**********************************************************-->
-<!-- Footer Area -->
-<footer id="footer" class="footer ">
-    <!-- Footer Top -->
-    <div class="footer-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-footer">
-                        <h2>Social Media</h2>
-                        <!-- Social -->
-                        <ul class="social">
-                            <li><a href="#"><i class="icofont-facebook"></i></a></li>
-                            <li><a href="#"><i class="icofont-instagram"></i></a></li>
-                            <li><a href="#"><i class="icofont-twitter"></i></a></li>
-                        </ul>
-                        <!-- End Social -->
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-footer f-link">
-                        <h2>Quick Links</h2>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <ul>
-                                    <li><a href="../html/index.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                                    <li><a href="../html/index.php#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                                    <li><a href="../html/index.php#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <ul>
-                                    <li><a href="../html/index.php#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
-                                    <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-footer">
-                        <h2>Open Hours</h2>
-                        <ul class="time-sidual">
-                            <li class="day">Sunday - Friday <span>8.00 am - 4.00 pm</span></li>
-                            <li class="day">Friday <span>10.00 am - 2.00 pm</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-footer">
-                        <h2>Newsletter</h2>
-                        <p>subscribe to our newsletter to get all our news in your inbox</p>
-                        <form action="" method="get" target="_blank" class="newsletter-inner">
-                            <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = 'Your email address'" required="" type="email">
-                            <button class="button"><i class="icofont icofont-paper-plane"></i></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/ End Footer Top -->
-    <!-- Copyright -->
-    <div class="copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-12">
-                    <div class="copyright-content">
-                        <p>© Copyright 2024  |  All Rights Reserved</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/ End Copyright -->
-</footer>
-<!--/ End Footer Area -->
 
 <!-- jquery Min JS -->
 <script src="../js/jquery.min.js"></script>

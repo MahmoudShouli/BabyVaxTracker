@@ -9,6 +9,10 @@
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
     <!-- Favicon -->
     <link rel="icon" href="../../Resources/images/favicon.png">
 
@@ -40,7 +44,12 @@
     <link rel="stylesheet" href="../css/responsive.css">
     <script src="../js/auto-email-sender.js"></script>
     <style>
-        html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+        html, body, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+        .comic-neue-bold {
+            font-family: "Comic Neue", cursive;
+            font-weight: 700;
+            font-style: normal;
+        }
 
         /* custom-theme.css */
 
@@ -56,11 +65,12 @@
 </head>
 <body class="w3-theme-l5">
 
-<!-- Navbar -->
+
 <div class="w3-top">
     <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
-        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-        <a href="admin_index.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i></a>
+
+        <a href="admin_index.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-server w3-margin-right"></i></a>
+        <H1  class = 'comic-neue-bold' style="color: white; text-align: center; font-style: italic">Posts And Feedback</H1>
 
 
         </a>
@@ -114,7 +124,7 @@ $photo_url = $row['photo'];
             <!-- Profile -->
             <div class="w3-card w3-round w3-white">
                 <div class="w3-container">
-                    <h4 class="w3-center">My Profile</h4>
+                    <h4 class="w3-center comic-neue-bold ">My Profile</h4>
                     <p class="w3-center">
 
                         <?php
@@ -122,12 +132,12 @@ $photo_url = $row['photo'];
                             echo "<form id = 'uploadForm' action='../../BackEnd/php/update_photo.php' method='post' enctype='multipart/form-data'>";
                             echo "<label for='profilePicUpload' class='w3-button w3-theme' style='margin-right: 10px'>Upload Profile Picture</label>";
                             echo "<input type='file' name = 'fileToUpload' id='profilePicUpload' style='display: none;'>";
-                            echo "<img id='profilepic' src='../../Resources/images/profilepicanony.png' class='w3-circle' style='height:100px;width:100px' alt='Avatar'>";
+                            echo "<img id='profilepic' src='../../Resources/images/profilepicanony.png' class='w3-circle' style='height:100px;width:100px;' alt='Avatar'>";
                             echo "<input type='submit' name = 'submit' id='submit' value='Update'>";
                             echo "</form>";
                         }
                         else {
-                            echo "<img id='profilepic' src=$photo_url class='w3-circle' style='height:106px;width:106px' alt='Avatar'>";
+                            echo "<img id='profilepic' src=$photo_url class='w3-circle' style='height:106px;width:106px;margin-top:10px' alt='Avatar'>";
 
 
 
@@ -137,8 +147,8 @@ $photo_url = $row['photo'];
                     </p>
                     <hr>
                     <?php
-                    echo "<p id='username'><i class='fa fa-pencil fa-fw w3-margin-right w3-text-theme'></i>".$user_name."</p>";
-                    echo "<p><i class='fa fa-home fa-fw w3-margin-right w3-text-theme'></i>".$city." , Palestine</p>";
+                    echo "<p style='text-transform: capitalize' id='username'><i class='fa fa-user fa-fw w3-margin-right w3-text-theme'></i>".$user_name."</p>";
+                    echo "<p style='text-transform: capitalize'><i class='fa fa-home fa-fw w3-margin-right w3-text-theme'></i>".$city." , Palestine</p>";
                     echo "<p><i class='fa fa-envelope fa-fw w3-margin-right w3-text-theme'></i> ".$current_user."</p>";
                     ?>
 
@@ -172,7 +182,7 @@ $photo_url = $row['photo'];
                         </div>
                     </div>
                 </div>
-            </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 
             <?php
             $query_posts = "SELECT *  FROM posts";
@@ -251,9 +261,9 @@ $photo_url = $row['photo'];
                     
                     var post = `
                         <div class='w3-container w3-card w3-white w3-round w3-margin'><br>
-                            <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px'>
+                            <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px;margin-top:-8px'>
                             <span class='w3-right w3-opacity'>$timestamp</span>
-                            <h4>$userName</h4><br>
+                            <h4 style='text-transform: capitalize'>$userName</h4><br>
                             <hr class='w3-clear'>
                             <p style='margin-bottom:5px; margin-top:-15px'>$content</p>
                             <form action='../../BackEnd/php/manage_posts.php' method='post'>
@@ -304,78 +314,6 @@ $photo_url = $row['photo'];
 <br>
 
 
-<!-- Footer Area -->
-<footer id="footer" class="footer" style="margin-bottom: -20px">
-    <!-- Footer Top -->
-    <div class="footer-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-footer">
-                        <h2>Social Media</h2>
-                        <!-- Social -->
-                        <ul class="social">
-                            <li><a href="#"><i class="icofont-facebook"></i></a></li>
-                            <li><a href="#"><i class="icofont-instagram"></i></a></li>
-                            <li><a href="#"><i class="icofont-twitter"></i></a></li>
-                        </ul>
-                        <!-- End Social -->
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-footer f-link">
-                        <h2>Quick Links</h2>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <ul>
-                                    <li><a href="#header"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                                    <li><a href="#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                                    <li><a href="#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <ul>
-                                    <li><a href="#news"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
-                                    <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-footer">
-                        <h2>Open Hours</h2>
-                        <ul class="time-sidual">
-                            <li class="day">Sunday-Thursday: <span>8:00am-4:00 pm</span></li>
-
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-footer">
-                        <h2>Newsletter</h2>
-                        <a href ="#newsletter" style="color:white;">subscribe to our newsletter to get all our news in your inbox</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/ End Footer Top -->
-    <!-- Copyright -->
-    <div class="copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-12">
-                    <div class="copyright-content">
-                        <p>© Copyright 2024  |  All Rights Reserved</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/ End Copyright -->
-</footer>
-<!--/ End Footer Area -->
 
 <script>
     document.getElementById('fileToUpload').addEventListener('change', function(event) {

@@ -93,7 +93,7 @@ else {
                 <div class="col-lg-6 col-md-5 col-12">
                     <!-- Contact -->
                     <ul class="top-link">
-                        <li><a href="../../BackEnd/php/tosignout.php" style="color:mediumblue">Sign Out</a></li>
+                        <li><a href="../../BackEnd/php/tosignout.php" style="color:mediumblue; font-weight: bold; font-size: large">Sign Out</a></li>
 
                     </ul>
                     <!-- End Contact -->
@@ -178,7 +178,7 @@ else {
 
                     </ul>
                     <div class="table-bottom">
-                        <a class="btn" href="../html/secBooking.php">Go</a>
+                        <a class="btn" href="admin_booking.php">Go</a>
                     </div>
                     <!-- Table Bottom -->
                 </div>
@@ -202,7 +202,7 @@ else {
 
                     </ul>
                     <div class="table-bottom">
-                        <a class="btn" href="../html/secBookingEdit.php">Go</a>
+                        <a class="btn" href="admin_booking_edit.php">Go</a>
                     </div>
                     <!-- Table Bottom -->
                 </div>

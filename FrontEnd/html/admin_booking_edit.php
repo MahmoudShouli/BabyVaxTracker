@@ -1,11 +1,18 @@
 
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html class="no-js" lang="zxx">
 <head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="Site keywords here">
+    <meta name="description" content="">
+    <meta name='copyright' content=''>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Appointments Management</title>
 
-    <meta charset="UTF-8">
-    <title>Update Doctor Availability</title>
     <style>
+
         .form-group {
             margin-bottom: 1em;
         }
@@ -36,11 +43,69 @@
             border-color: #f5c6cb;
             color: #721c24;
         }
-    </style>
-    <script src="../js/auto-email-sender.js"></script>
-</head>
-<body>
 
+
+    </style>
+    <!-- Favicon -->
+    <link rel="icon" href="../../Resources/images/favicon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="../css/nice-select.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <!-- icofont CSS -->
+    <link rel="stylesheet" href="../css/icofont.css">
+    <!-- Slicknav -->
+    <link rel="stylesheet" href="../css/slicknav.min.css">
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="../css/owl-carousel.css">
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" href="../css/datepicker.css">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="../css/animate.min.css">
+    <!-- Magnific Popup CSS -->
+    <link rel="stylesheet" href="../css/magnific-popup.css">
+
+    <!-- Medipro CSS -->
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+
+</head>
+<body style="background-image: url('../../Resources/images/adminbg.png');   background-size: cover;
+        background-position: center;">
+
+
+
+
+
+<!-- Header Area -->
+<header class="header"  >
+    <!-- Topbar -->
+    <div class="topbar" style="background-color:  #f2f2f2">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6 col-md-7 col-12">
+                    <!-- Top Contact -->
+
+                    <a style="text-align: left; color:blue; font-style: oblique; font-size: larger" href="admin_index.php"><i class=" fa fa-server"></i> Control Panel </a>
+
+                    <!-- End Top Contact -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Topbar -->
+
+</header>
+<!-- End Header Area -->
 <!--/***********************************************************************-->
 <?php
 session_start();
@@ -153,12 +218,17 @@ if (isset($_POST['doctor'], $_POST['date'], $_POST['status'])) {
 }
 $conn->close();
 ?>
+<div class="container" style="margin-top: 10%; color:blue;  ">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
 
-<h2>Update Doctor Availability</h2>
-<form action="../../FrontEnd/html/secBookingEdit.php" method="post">
+            <div class="card"  style="background-color:  #f2f2f2">
+                <div class="card-body">
+                    <h2 class="text-center" style="margin-bottom: 3%">Appointments Management</h2>
+<form action="admin_booking_edit.php" method="post">
     <div class="form-group">
         <label for="doctor">Choose The Doctor:</label>
-        <select id="doctor" name="doctor" required>
+        <select style="" id="doctor" name="doctor" required>
             <?php
             require_once '../../BackEnd/php/db_config.php';
             $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -184,7 +254,7 @@ $conn->close();
         <input type="text" id="date" name='date' required>
     </div>
     <div class="form-group">
-        <label for="status">Status:</label>
+        <label for="status">New Status:</label>
         <select id="status" name="status" required>
             <option value="0">Unbooked</option>
             <option value="1">Unavailable</option>
@@ -192,5 +262,11 @@ $conn->close();
     </div>
     <input type="submit" value="Update Availability" name="submit">
 </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>

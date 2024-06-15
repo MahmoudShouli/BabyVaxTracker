@@ -15,6 +15,10 @@
  <!-- Google Fonts -->
  <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
  <!-- Bootstrap CSS -->
  <link rel="stylesheet" href="../css/bootstrap.min.css">
  <!-- Nice Select CSS -->
@@ -40,7 +44,13 @@
  <link rel="stylesheet" href="../css/responsive.css">
     <script src="../js/auto-email-sender.js"></script>
 <style>
-html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+html, body, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+
+.comic-neue-bold {
+    font-family: "Comic Neue", cursive;
+    font-weight: 700;
+    font-style: normal;
+}
 
 /* custom-theme.css */
 
@@ -61,6 +71,7 @@ i.fa {margin-right: 0px !important;}
  <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
   <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
   <a href="index.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i></a>
+     <H1  class = 'comic-neue-bold' style="color: white; text-align: center; font-style: italic">Posts And Feedback</H1>
 
 
   </a>
@@ -119,7 +130,7 @@ i.fa {margin-right: 0px !important;}
       <!-- Profile -->
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
-         <h4 class="w3-center">My Profile</h4>
+         <h4 class="w3-center comic-neue-bold">My Profile</h4>
          <p class="w3-center">
 
              <?php
@@ -132,7 +143,7 @@ i.fa {margin-right: 0px !important;}
                     echo "</form>";
                 }
                 else {
-                    echo "<img id='profilepic' src=$photo_url class='w3-circle' style='height:150px;width:150px' alt='Avatar'>";
+                    echo "<img id='profilepic' src=$photo_url class='w3-circle' style='height:150px;width:150px;margin-top:10px' alt='Avatar'>";
 
 
 
@@ -142,8 +153,8 @@ i.fa {margin-right: 0px !important;}
          </p>
          <hr>
             <?php
-            echo "<p id='username'><i class='fa fa-pencil fa-fw w3-margin-right w3-text-theme'></i>".$user_name."</p>";
-            echo "<p><i class='fa fa-home fa-fw w3-margin-right w3-text-theme'></i>".$city." , Palestine</p>";
+            echo "<p style='text-transform: capitalize' id='username'><i class='fa fa-user fa-fw w3-margin-right w3-text-theme'></i>".$user_name."</p>";
+            echo "<p style='text-transform: capitalize'><i class='fa fa-home fa-fw w3-margin-right w3-text-theme'></i>".$city." , Palestine</p>";
             echo "<p><i class='fa fa-envelope fa-fw w3-margin-right w3-text-theme'></i> ".$current_user."</p>";
             ?>
 
@@ -256,9 +267,9 @@ i.fa {margin-right: 0px !important;}
                     
                     var post = `
                         <div class='w3-container w3-card w3-white w3-round w3-margin'><br>
-                            <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px'>
+                            <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px;margin-top:-8px'>
                             <span class='w3-right w3-opacity'>$timestamp</span>
-                            <h4>$userName</h4><br>
+                            <h4 style='text-transform: capitalize'>$userName</h4><br>
                             <hr class='w3-clear'>
                             <p style='margin-bottom:5px; margin-top:-15px'>$content</p>
                             <form action='../../BackEnd/php/manage_posts.php' method='post'>

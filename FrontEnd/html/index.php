@@ -97,7 +97,7 @@ else {
                         <li><a href="../../FrontEnd/html/CTable.php">Schedules</a></li>
                         <li><a href="../../FrontEnd/html/booking.php">Booking Details</a></li>
                         <li><a href="../../FrontEnd/html/addchildren.php">Add Children</a></li>
-                        <li><a href="../../BackEnd/php/tosignout.php" style="color:mediumblue">Sign Out</a></li>
+                        <li><a href="../../BackEnd/php/tosignout.php" style="color:mediumblue; font-weight: bold; font-size: large">Sign Out</a></li>
 
                     </ul>
                     <!-- End Contact -->
