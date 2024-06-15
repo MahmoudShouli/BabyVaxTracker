@@ -30,7 +30,10 @@ $_SESSION['ROLE']=$row['roleID'];
 //echo $_SESSION['USER'];
 //echo $_SESSION['ROLE'];
 
-        header("Location: ../../FrontEnd/html/index.php");
+        if($_SESSION['ROLE'] == 1)
+            header("Location: ../../FrontEnd/html/admin_index.php");
+        elseif ($_SESSION['ROLE'] == 2)
+            header("Location: ../../FrontEnd/html/index.php");
        exit();
     } else {
         $conn->close();

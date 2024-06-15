@@ -48,7 +48,7 @@
 session_start();
 
 
-$_SESSION['contact'] = 'no';
+$_SESSION['contact'] = 'nothing';
 
 
 // Check if the user is logged in
@@ -115,11 +115,15 @@ else {
 
                         if (isset($_SESSION['USER'])) {
 
-                            $userEmail = $_SESSION['USER'];
+                            $user_name = $_SESSION['USER'];
+                            if (substr($user_name, 0, 2) === "05") {
+                                $query = "SELECT user_name FROM users WHERE users.phone = ?";
+                            }
+                            else
+                                $query = "SELECT user_name FROM users WHERE users.email = ?";
 
-                            $query = "SELECT user_name FROM users WHERE users.email = ?";
                             $stmt = $conn ->prepare($query);
-                            $stmt->bind_param("s", $userEmail);
+                            $stmt->bind_param("s", $user_name);
                             $stmt->execute();
                             $result = $stmt->get_result();
                             $row = $result->fetch_assoc();
@@ -162,7 +166,12 @@ else {
                                 <ul class="nav menu">
                                     <li><a href="#header">Home </a></li>
                                     <li><a href="#service">Services </a></li>
-                                    <li><a href="../html/feedback.php">Profile</a></li>
+                                    <?php
+                                    if($_SESSION['ROLE']==2)
+                                        echo '<li><a href="../html/feedback.php">Profile</a></li>';
+                                    elseif ($_SESSION['ROLE']==1)
+                                        echo '<li><a href="../html/admin_feedback.php">Profile</a></li>';
+                                    ?>
                                     <li><a href="contact_page.php">Contact Us</a></li>
                                 </ul>
                             </nav>

@@ -186,7 +186,7 @@ session_start();
 											<div class="form-group login-btn">
 												<button class="btn" type="submit" >Send</button>
 											</div>
-											<p id="msg" style="color: green;display: none">thanks for contacting us!</p>
+											<p id="msg" style="display: none"></p>
 
 										</div>
 									</div>
@@ -314,11 +314,28 @@ session_start();
 					echo '
 		<script>
 			
+			    document.getElementById("msg").innerText = "thanks for contacting us!";
+                document.getElementById("msg").style.color = "green";
 				document.getElementById("msg").style.display = "block";
 			
 		</script>
 		';
 				}
+        elseif($_SESSION['contact']=='no') {
+
+            echo '
+		<script>
+			
+			    document.getElementById("msg").innerText = "enter your correct registered email please";
+                document.getElementById("msg").style.color = "red";
+				document.getElementById("msg").style.display = "block";
+			
+		</script>
+		';
+
+
+
+        }
 		?>
 		<!-- jquery Min JS -->
         <script src="../js/jquery.min.js"></script>

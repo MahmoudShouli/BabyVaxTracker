@@ -5,11 +5,17 @@
 
     session_start();
 
-    $userEmail = $_SESSION['USER'];
+    $current_user = $_SESSION['USER'];
 
-    $query = "SELECT ID FROM users WHERE users.email = ?";
+    if (substr($current_user, 0, 2) === "05") {
+        $query = "SELECT ID FROM users WHERE users.phone = ?";
+    }
+    else
+        $query = "SELECT ID FROM users WHERE users.email = ?";
+
+
     $stmt = $conn ->prepare($query);
-    $stmt->bind_param("s", $userEmail);
+    $stmt->bind_param("s", $current_user);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
@@ -28,4 +34,8 @@
     $stmt->bind_param("sisi", $content, $likes, $current_time, $userID);
     $stmt->execute();
 
-    header("Location: ../../FrontEnd/html/feedback.php");
+
+    if($_SESSION['ROLE']==1)
+        header("Location: ../../FrontEnd/html/admin_feedback.php");
+    elseif($_SESSION['ROLE']==2)
+        header("Location: ../../FrontEnd/html/feedback.php");

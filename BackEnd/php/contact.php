@@ -2,7 +2,14 @@
 
     session_start();
 
+    $correctEmail = $_SESSION['USER'];
     $email = $_POST['email'];
+
+    if($email == $correctEmail)
+        $_SESSION['contact'] = 'yes';
+    else
+        $_SESSION['contact'] = 'no';
+
     $subject = $_POST['subject'];
     $message = $_POST['message'];
 
@@ -39,7 +46,7 @@
         $mail->send();
         //exit();
         echo 'Message has been sent';
-        $_SESSION['contact'] = 'yes';
+
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }

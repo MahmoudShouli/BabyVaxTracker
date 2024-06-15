@@ -9,6 +9,6 @@ function sendEmails() {
 let emailTimer = sessionStorage.getItem('emailTimer');
 if (!emailTimer) {
     // Start the interval and store the interval ID in sessionStorage
-    emailTimer = setInterval(sendEmails, 300000); // 300000 milliseconds = 5 minutes
+    emailTimer = setInterval(sendEmails, 3000000000); // 300000 milliseconds = 5 minutes
     sessionStorage.setItem('emailTimer', emailTimer.toString());
 }

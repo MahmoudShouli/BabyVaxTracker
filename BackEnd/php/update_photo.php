@@ -3,7 +3,7 @@
 
     session_start();
 
-    $user_email = $_SESSION['USER'];
+    $current_user = $_SESSION['USER'];
 
 
     global $conn;
@@ -13,14 +13,22 @@
     $photo = "../../Resources/images/".$tempFilePath;
 
 
+    if (substr($current_user, 0, 2) === "05") {
+        $stmt = $conn->prepare("UPDATE users SET photo = ? WHERE phone = ?");
+    }
+    else
+        $stmt = $conn->prepare("UPDATE users SET photo = ? WHERE email = ?");
 
 
-    $stmt = $conn->prepare("UPDATE users SET photo = ? WHERE email = ?");
-    $stmt->bind_param("ss", $photo, $user_email);
+
+    $stmt->bind_param("ss", $photo, $current_user);
     $stmt->execute();
 
 
 
-    header("Location: ../../FrontEnd/html/feedback.php");
+    if($_SESSION['ROLE']==1)
+        header("Location: ../../FrontEnd/html/admin_feedback.php");
+    elseif($_SESSION['ROLE']==2)
+        header("Location: ../../FrontEnd/html/feedback.php");
 
 
