@@ -118,16 +118,20 @@ else {
 
                         if (isset($_SESSION['USER'])) {
 
-                            $userEmail = $_SESSION['USER'];
+                            $user_name = $_SESSION['USER'];
+                            if (substr($user_name, 0, 2) === "05") {
+                                $query = "SELECT user_name FROM users WHERE users.phone = ?";
+                            }
+                            else
+                                $query = "SELECT user_name FROM users WHERE users.email = ?";
 
-                            $query = "SELECT user_name FROM users WHERE users.email = ?";
                             $stmt = $conn ->prepare($query);
-                            $stmt->bind_param("s", $userEmail);
+                            $stmt->bind_param("s", $user_name);
                             $stmt->execute();
                             $result = $stmt->get_result();
                             $row = $result->fetch_assoc();
                             $userName = $row['user_name'];
-                            echo "                        <li><i  class = 'comic-neue-bold' style='text-transform: capitalize;font-size: x-large'>Hi, Admin $userName!</i></li>";
+                            echo "                        <li><i  class = 'comic-neue-bold' style='text-transform: capitalize; font-size: x-large'>Hi,Admin $userName!</i></li>";
                         } else {
                             echo "                        <li><i>Hi, Guest</i></li>";
                         }

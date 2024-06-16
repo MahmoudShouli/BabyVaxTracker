@@ -56,15 +56,16 @@
 <?php
 session_start();
 
+
 $_SESSION['found'] = 'nothing';
 
-if(isset($_SESSION['message']))
+if(isset($_SESSION['message']) )
 
 {
     $var = $_SESSION['message'];
     if($_SESSION['message'] === "Please sign in first") {
     echo "<script>";
-    echo "alert('$var');";
+    //echo "alert('$var');";
     echo "</script>";
    // unset($_SESSION['message']);
 
@@ -78,7 +79,7 @@ if($_SESSION['message'] === "You already sign in "){
 
 }
 }
-
+$_SESSION['first_time'] = 1;
 ?>
 <header>
 
