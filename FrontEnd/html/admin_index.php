@@ -41,6 +41,13 @@
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .comic-neue-bold {
+            font-family: "Comic Neue", cursive;
+            font-weight: 700;
+            font-style: normal;
+        }
+    </style>
 
 </head>
 <body>
@@ -120,7 +127,7 @@ else {
                             $result = $stmt->get_result();
                             $row = $result->fetch_assoc();
                             $userName = $row['user_name'];
-                            echo "                        <li><i style='text-transform: capitalize'>Hi, Admin $userName!</i></li>";
+                            echo "                        <li><i  class = 'comic-neue-bold' style='text-transform: capitalize;font-size: x-large'>Hi, Admin $userName!</i></li>";
                         } else {
                             echo "                        <li><i>Hi, Guest</i></li>";
                         }

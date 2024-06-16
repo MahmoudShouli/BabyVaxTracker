@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    color: #1A76D1;
+
 
 }
 
@@ -238,13 +238,7 @@ td {
     border: #1A76D1 1px solid !important;
 
 }
-footer {
-    width: 100%;
-    color: #1A76D1;
-height: 100px;
-    margin-top: 200px;
-    background-color: rgba(237, 239, 245, 0.44);
-}
+
 th {
     text-align: left !important;
 

@@ -10,6 +10,14 @@
     <meta name='copyright' content=''>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Appointments Management</title>
+    <script>
+        function showPara(displayStyle, color, text) {
+            var para = document.getElementById('para1');
+            para.style.display = displayStyle;
+            para.style.color = color;
+            para.innerText = text;
+        }
+    </script>
 
     <style>
 
@@ -190,15 +198,15 @@ if (isset($_POST['doctor'], $_POST['date'], $_POST['status'])) {
             $stmtDeleteAppointment->execute();
 
             if ($stmtDeleteAppointment->affected_rows > 0) {
-                echo "<div class='message success'>Appointment deleted successfully.</div>";
-            } else {
-                echo "<div class='message error'>No matching appointment found to delete.</div>";
+                echo "<script>showPara('block', 'green', 'Updated successfully')</script>";
             }
         } else {
-            echo "<div class='message error'>There is no appointment at this time </div>";
+            echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            showPara('block', 'red', 'No match found');
+        });
+    </script>";
         }
-    } else {
-        echo "<div class='message error'>No matching record found in doctor_date.</div>";
     }
 
     $stmtCheckAvailability->close();
@@ -209,13 +217,23 @@ if (isset($_POST['doctor'], $_POST['date'], $_POST['status'])) {
     $stmtUpdate->bind_param("ii", $status, $finalIndex);
 
     if ($stmtUpdate->execute()) {
-        echo "<div class='message success'>Availability updated successfully.</div>";
+        echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            showPara('block', 'green', 'Updated successfully');
+        });
+    </script>";
     } else {
-        echo "<div class='message error'>Error updating availability: " . $stmtUpdate->error . "</div>";
+        echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            showPara('block', 'red', 'Failed to update');
+        });
+    </script>";
     }
 
     $stmtUpdate->close();
 }
+
+
 $conn->close();
 ?>
 <div class="container" style="margin-top: 10%; color:blue;  ">
@@ -261,6 +279,12 @@ $conn->close();
         </select>
     </div>
     <input type="submit" value="Update Availability" name="submit">
+    <p id="para1" style="color: green; display:none "></p>
+
+
+
+
+
 </form>
                 </div>
             </div>

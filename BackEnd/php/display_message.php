@@ -29,18 +29,32 @@ unset($_SESSION['redirect_page']);
             margin: 0;
         }
         .message-box {
+            width: 20%;
+            height: 20%;
             padding: 20px;
-            border: 1px solid #ccc;
+            border: 1px solid blue;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             text-align: center;
             max-width: 400px;
             margin: auto;
+            border-radius: 50%;
         }
         .message-box p {
+            text-align: center;
             font-size: 18px;
-            margin: 10px 0;
+            border: blue;
+            color:blue;
+
+
         }
+
+        .comic-neue-bold {
+            font-family: "Comic Neue", cursive;
+            font-weight: 700;
+            font-style: normal;
+        }
+
     </style>
     <script>
         setTimeout(function() {
@@ -49,8 +63,8 @@ unset($_SESSION['redirect_page']);
     </script>
 </head>
 <body>
-<div class="message-box">
-    <p><?php echo htmlspecialchars($message); ?></p>
+<div class="message-box comic-neue-bold" >
+    <p style="padding-top: 10%;"><?php echo htmlspecialchars($message); ?></p>
     <p>You will be redirected shortly...</p>
 </div>
 </body>

@@ -104,7 +104,7 @@ if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message'], 
                     $stmtUpdate->bind_param("i", $finalIndex);
 
                     if ($stmtUpdate->execute()) {
-                        setSessionMessageAndRedirect("New appointment record created successfully.", "../../FrontEnd/html/CTable.php");
+                        setSessionMessageAndRedirect("Appointment booked successfully.", "../../FrontEnd/html/CTable.php");
                     } else {
                         setSessionMessageAndRedirect("Error updating row: " . $stmtUpdate->error, "../../FrontEnd/html/appointment.php");
                     }

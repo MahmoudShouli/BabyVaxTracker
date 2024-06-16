@@ -306,7 +306,7 @@ i.fa {margin-right: 0px !important;}
                         <div class='w3-container w3-card w3-white w3-round w3-margin'><br>
                             <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px'>
                             <span class='w3-right w3-opacity'>$timestamp</span>
-                            <h4>$userName</h4><br>
+                            <h4 style='text-transform: capitalize'>$userName</h4><br>
                             <hr class='w3-clear'>
                             <p style='margin-bottom:5px; margin-top:-15px'>$content</p>
                             <form action='../../BackEnd/php/manage_posts.php' method='post'>
@@ -356,7 +356,7 @@ i.fa {margin-right: 0px !important;}
 
 
 <!-- Footer Area -->
-<footer id="footer" class="footer" style="margin-bottom: -20px">
+<footer id="footer" class="footer ">
     <!-- Footer Top -->
     <div class="footer-top">
         <div class="container">
@@ -379,14 +379,14 @@ i.fa {margin-right: 0px !important;}
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="#header"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                                    <li><a href="#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                                    <li><a href="#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+                                    <li><a href="index.php#header"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+                                    <li><a href="index.php#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+                                    <li><a href="index.php#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
                                 </ul>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="#news"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
+                                    <li><a href="index.php#news"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
                                     <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
                                 </ul>
                             </div>

@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Execute
     if ($stmt->execute()) {
         // Set the success message and redirect
-        setSessionMessageAndRedirect("Children added successfully.", "../../FrontEnd/html/index.php");
+        setSessionMessageAndRedirect("Child added successfully.", "../../FrontEnd/html/index.php");
     }
 
     // Close statement and connection
@@ -148,8 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
-</div>
-
+</div><br><br><br><br><br><br><br><br>
 
 
 
@@ -178,14 +177,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="../html/signin.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                                    <li><a href="../html/signin.php#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                                    <li><a href="../html/signin.php#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+                                    <li><a href="index.php#header"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+                                    <li><a href="index.php#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+                                    <li><a href="index.php#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
                                 </ul>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="../html/signin.php#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
+                                    <li><a href="index.php#news"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
                                     <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
                                 </ul>
                             </div>
@@ -196,20 +195,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="single-footer">
                         <h2>Open Hours</h2>
                         <ul class="time-sidual">
-                            <li class="day">Sunday - Friday <span>8.00 am - 4.00 pm</span></li>
-                            <li class="day">Friday <span>10.00 am - 2.00 pm</span></li>
+                            <li class="day">Sunday-Thursday: <span>8:00am-4:00 pm</span></li>
+
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
                     <div class="single-footer">
                         <h2>Newsletter</h2>
-                        <p>subscribe to our newsletter to get all our news in your inbox</p>
-                        <form action="" method="get" target="_blank" class="newsletter-inner">
-                            <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = 'Your email address'" required="" type="email">
-                            <button class="button"><i class="icofont icofont-paper-plane"></i></button>
-                        </form>
+                        <a href ="#newsletter" style="color:white;">subscribe to our newsletter to get all our news in your inbox</a>
                     </div>
                 </div>
             </div>

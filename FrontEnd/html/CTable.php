@@ -8,6 +8,7 @@
     $doctorID =null;
 
 
+
     // bring the value of id from the selec
     if(isset($_POST['submit'])){
         $doctorName = $_POST['employeeShift'];
@@ -224,7 +225,8 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo "<option>" . $row['name'] . "</option>";
+
+                        echo "<option>" . $row['name'] . "</option>";
                 }
             } else {
                 echo "<option value=''>No doctors available</option>";
@@ -260,7 +262,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
     <div class="row">
         <div class="col-md-12">
             <div class="schedule-table">
-                <table class="table bg-white calendar-table">
+                <table class="table bg-white calendar-table" >
                     <thead>
                     <tr>
                         <th>Day</th>
@@ -277,7 +279,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                     </thead>
                     <tbody>
                     <tr>
-                        <td>Sunday</td>
+                        <td style="color:blue;">Sunday</td>
                         <td class="availability-cell"></td>
                         <td class="availability-cell"></td>
                         <td class="availability-cell"></td>
@@ -289,7 +291,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                         <td class="availability-cell"></td>
                     </tr>
                     <tr>
-                        <td>Monday</td>
+                        <td style="color:blue;">Monday</td>
                         <td class="availability-cell"></td>
                         <td class="availability-cell"></td>
                         <td class="availability-cell"></td>
@@ -301,7 +303,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                         <td class="availability-cell"></td>
                     </tr>
                     <tr>
-                        <td>Tuesday</td>
+                        <td style="color:blue;">Tuesday</td>
                         <td class="availability-cell"></td>
                         <td class="availability-cell"></td>
                         <td class="availability-cell"></td>
@@ -313,7 +315,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                         <td class="availability-cell"></td>
                     </tr>
                     <tr>
-                        <td>Wednesday</td>
+                        <td style="color:blue;">Wednesday</td>
                         <td class="availability-cell"></td>
                         <td class="availability-cell"></td>
                         <td class="availability-cell"></td>
@@ -325,7 +327,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                         <td class="availability-cell"></td>
                     </tr>
                     <tr>
-                        <td>Thursday</td>
+                        <td style="color:blue;">Thursday</td>
                         <td class="availability-cell"></td>
                         <td class="availability-cell"></td>
                         <td class="availability-cell"></td>
@@ -337,13 +339,13 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                         <td class="availability-cell"></td>
                     </tr>
                     <tr>
-                        <td>Friday</td>
-                        <td colspan="12" style="font-size: 25px;">CLOSED</td>
+                        <td style="color:blue;">Friday</td>
+                        <td colspan="12" style="font-size: 25px; color: blue">CLOSED</td>
 
                     </tr>
                     <tr>
-                        <td>Saturday</td>
-                        <td colspan="12" style="font-size: 25px;">CLOSED</td>
+                        <td style="color:blue;">Saturday</td>
+                        <td colspan="12" style="font-size: 25px;color:blue;">CLOSED</td>
 
                     </tr>
                     </tbody>
@@ -356,7 +358,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
     <div class="get-quote" style="position:relative; left:50vw; margin-top: 20px; ">
         <a href="../html/appointment.php" class="btn">Book Appointment</a>
     </div>
-</div>
+</div><br><br><br>
 <script>
     // Availability data fetched by PHP
     const availabilityData = <?php echo json_encode($availabilityData); ?>;
@@ -372,19 +374,22 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                 cell.classList.remove('unavailable');
                 cell.classList.remove('booked');
                 cell.classList.add('available');
+                cell.style.color = 'black'
                 cell.style.backgroundColor = ''; // Reset background color
             } else if (availability == 2) {
                 cell.textContent = 'Booked';
                 cell.classList.remove('available');
                 cell.classList.remove('unavailable');
                 cell.classList.add('booked');
+                cell.style.color = 'black'
                 cell.style.backgroundColor = 'rgba(255, 0, 0, 0.41)';
             } else if (availability == 3) {
                 cell.textContent = 'Unavailable';
                 cell.classList.remove('available');
                 cell.classList.remove('booked');
                 cell.classList.add('unavailable');
-                cell.style.backgroundColor = 'rgba(255, 0, 0, 0.41)';
+                cell.style.color = 'black'
+                cell.style.backgroundColor = 'white';
             }
         });
     }
@@ -404,9 +409,9 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                         <h2>Social Media</h2>
                         <!-- Social -->
                         <ul class="social">
-                            <li><a href="#"><i class="icofont-facebook"></i></a></li>
-                            <li><a href="#"><i class="icofont-instagram"></i></a></li>
-                            <li><a href="#"><i class="icofont-twitter"></i></a></li>
+                            <li><a href="#"><i class="icofont-facebook" style="color: white"></i></a></li>
+                            <li><a href="#"><i class="icofont-instagram" style="color: white"></i></a></li>
+                            <li><a href="#"><i class="icofont-twitter" style="color: white"></i></a></li>
                         </ul>
                         <!-- End Social -->
                     </div>
@@ -417,15 +422,15 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="../html/signin.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                                    <li><a href="../html/signin.php#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                                    <li><a href="../html/signin.php#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+                                    <li><a href="index.php#header"><i class="fa fa-caret-right" aria-hidden="true" style="color: white"></i>Home</a></li>
+                                    <li><a href="index.php#about"><i class="fa fa-caret-right" aria-hidden="true" style="color: white"></i>About Us</a></li>
+                                    <li><a href="index.php#service"><i class="fa fa-caret-right" aria-hidden="true" style="color: white"></i>Services</a></li>
                                 </ul>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="../html/signin.php#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
-                                    <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+                                    <li><a href="index.php#news"><i class="fa fa-caret-right" aria-hidden="true" style="color: white"></i>News</a></li>
+                                    <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true" style="color: white"></i>Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -435,20 +440,15 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                     <div class="single-footer">
                         <h2>Open Hours</h2>
                         <ul class="time-sidual">
-                            <li class="day">Sunday - Friday <span>8.00 am - 4.00 pm</span></li>
-                            <li class="day">Friday <span>10.00 am - 2.00 pm</span></li>
+                            <li class="day">Sunday-Thursday: <span style="color: white">8:00am-4:00 pm</span></li>
+
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
                     <div class="single-footer">
                         <h2>Newsletter</h2>
-                        <p>subscribe to our newsletter to get all our news in your inbox</p>
-                        <form action="" method="get" target="_blank" class="newsletter-inner">
-                            <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = 'Your email address'" required="" type="email">
-                            <button class="button"><i class="icofont icofont-paper-plane"></i></button>
-                        </form>
+                        <a href ="#newsletter" style="color:white;">subscribe to our newsletter to get all our news in your inbox</a>
                     </div>
                 </div>
             </div>
@@ -470,5 +470,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
     <!--/ End Copyright -->
 </footer>
 <!--/ End Footer Area -->
+
+
 </body>
 </html>

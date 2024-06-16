@@ -42,6 +42,14 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
 
+    <style>
+        .comic-neue-bold {
+            font-family: "Comic Neue", cursive;
+            font-weight: 700;
+            font-style: normal;
+        }
+    </style>
+
 </head>
 <body>
 <?php
@@ -88,16 +96,18 @@ else {
 <header  class="header" >
     <!-- Topbar -->
     <div id = "header" class="topbar">
+        <a href="../../BackEnd/php/tosignout.php" style="color:mediumblue; font-weight: bold; font-size: large;text-align: left; padding-left: 5% !important; padding-top:10px !important; ">Sign Out</a>
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-5 col-12">
                     <!-- Contact -->
                     <ul class="top-link">
+
                         <li><a href="#about">About</a></li>
                         <li><a href="../../FrontEnd/html/CTable.php">Schedules</a></li>
                         <li><a href="../../FrontEnd/html/booking.php">Booking Details</a></li>
                         <li><a href="../../FrontEnd/html/addchildren.php">Add Children</a></li>
-                        <li><a href="../../BackEnd/php/tosignout.php" style="color:mediumblue; font-weight: bold; font-size: large">Sign Out</a></li>
+
 
                     </ul>
                     <!-- End Contact -->
@@ -128,7 +138,7 @@ else {
                             $result = $stmt->get_result();
                             $row = $result->fetch_assoc();
                             $userName = $row['user_name'];
-                            echo "                        <li><i style='text-transform: capitalize'>Hi, $userName!</i></li>";
+                            echo "                        <li><i  class = 'comic-neue-bold' style='text-transform: capitalize; font-size: x-large'>Hi, $userName!</i></li>";
                         } else {
                             echo "                        <li><i>Hi, Guest</i></li>";
                         }
@@ -527,7 +537,7 @@ else {
                         <li><i class="icofont icofont-ui-check"></i>Reviews and Feedback</li><br><br><br><br>
                     </ul>
                     <div class="table-bottom">
-                        <a class="btn" href="../html/feedback.html">Visit</a>
+                        <a class="btn" href="../html/feedback.php">Visit</a>
                     </div>
                     <!-- Table Bottom -->
                 </div>

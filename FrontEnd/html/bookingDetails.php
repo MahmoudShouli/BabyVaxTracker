@@ -86,7 +86,7 @@ if (isset($_POST['subdel'])) {
                 }
                 $stmtUpdateAvailability->bind_param("i", $_SESSION['CID']);
                 if ($stmtUpdateAvailability->execute()) {
-                    setSessionMessageAndRedirect("Record deleted successfully.", "../../FrontEnd/html/booking.php");
+                    setSessionMessageAndRedirect("Appointment deleted successfully.", "../../FrontEnd/html/booking.php");
                 } else {
                     setSessionMessageAndRedirect("Error updating doctor availability: " . $stmtUpdateAvailability->error, "../../FrontEnd/html/errorPage.php");
                 }
@@ -148,7 +148,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title -->
-    <title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
+    <title>Booking Details</title>
 
     <!-- Favicon -->
     <link rel="icon" href="../../Resources/images/favicon.png">
@@ -258,62 +258,18 @@ function setSessionMessageAndRedirect($message, $redirectPage)
     <div class="topbar">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-5 col-12">
-                    <!-- Contact -->
-                    <ul class="top-link">
-                    </ul>
-                    <!-- End Contact -->
-                </div>
+
                 <div class="col-lg-6 col-md-7 col-12">
                     <!-- Top Contact -->
-                    <ul class="top-contact">
-                        <li><i class="fa fa-phone"></i>+0593021843</li>
-                        <li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">babyvaxtracker-support@gmail.com</a></li>
-                    </ul>
+                    <a style="text-align: left; color:blue; font-style: oblique; font-size: larger" href="../html/index.php">Home </a>
                     <!-- End Top Contact -->
                 </div>
             </div>
         </div>
     </div>
     <!-- End Topbar -->
-    <!-- Header Inner -->
-    <div class="header-inner">
-        <div class="container">
-            <div class="inner">
-                <div class="row">
-                    <div class="col-lg-3 col-md-3 col-12">
-                        <!-- Start Logo -->
-                        <div class="logo">
-                            <a href="../html/homepage.html"><img src="../../Resources/images/logo.png" alt="#"></a>
-                        </div>
-                        <!-- End Logo -->
-                        <!-- Mobile Nav -->
-                        <div class="mobile-nav"></div>
-                        <!-- End Mobile Nav -->
-                    </div>
-                    <div class="col-lg-7 col-md-9 col-12">
-                        <!-- Main Menu -->
-                        <div class="main-menu">
-                            <nav class="navigation">
-                                <ul class="nav menu">
-                                    <li><a href="../html/index.php">Home </a></li>
 
-                                </ul>
-                            </nav>
-                        </div>
-                        <!--/ End Main Menu -->
-                    </div>
-                    <div class="col-lg-2 col-12">
-                        <div class="get-quote">
-                            <a href="appointment.html" class="btn">Book Appointment</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/ End Header Inner -->
-</header>
+</header><br><br><br>
 <!-- End Header Area -->
 
 
@@ -325,7 +281,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
 
 
 <!--*******************************************************************-->
-<h1>Appointments</h1>
+<h1 style="text-align: center">Appointment</h1><br><br>
 <table>
     <thead>
     <tr>
@@ -366,8 +322,8 @@ function setSessionMessageAndRedirect($message, $redirectPage)
     <?php endif; ?>
     </tbody>
 </table>
-<h1>Doctor Dates</h1>
-<table>
+
+<table style="margin-top: -22px">
     <thead>
     <tr>
         <!--        <th>ID</th>-->
@@ -404,13 +360,13 @@ function setSessionMessageAndRedirect($message, $redirectPage)
         </tr>
     <?php endif; ?>
     </tbody>
-</table>
+</table><br><br><br>
 
 <form method="POST" action="../../FrontEnd/html/bookingDetails.php" >
     <input type="hidden" name="id" value="<?php echo $row['ID']; ?>">
     <button name="subdel" id="db" class="styled-button" type="submit">Delete</button>
 </form>
-    <button onclick="showEditForm()" name="update" id="db" style="background-color: #1a76d1" class="styled-button" type="submit">Update</button>
+
 
 
 <!--//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
@@ -577,12 +533,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
     }
 </script>
 
-<script>
-    function showEditForm() {
-        document.getElementById('editForm').style.display = 'block';
-        // You can add code here to populate the form fields with the appointment data
-    }
-</script>
+
 
 <!--//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
 
@@ -613,14 +564,14 @@ function setSessionMessageAndRedirect($message, $redirectPage)
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="../html/index.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                                    <li><a href="../html/index.php#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                                    <li><a href="../html/index.php#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+                                    <li><a href="index.php#header"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+                                    <li><a href="index.php#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+                                    <li><a href="index.php#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
                                 </ul>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                    <li><a href="../html/index.php#neews"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
+                                    <li><a href="index.php#news"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
                                     <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
                                 </ul>
                             </div>
@@ -631,20 +582,15 @@ function setSessionMessageAndRedirect($message, $redirectPage)
                     <div class="single-footer">
                         <h2>Open Hours</h2>
                         <ul class="time-sidual">
-                            <li class="day">Sunday - Friday <span>8.00 am - 4.00 pm</span></li>
-                            <li class="day">Friday <span>10.00 am - 2.00 pm</span></li>
+                            <li class="day">Sunday-Thursday: <span>8:00am-4:00 pm</span></li>
+
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
                     <div class="single-footer">
                         <h2>Newsletter</h2>
-                        <p>subscribe to our newsletter to get all our news in your inbox</p>
-                        <form action="" method="get" target="_blank" class="newsletter-inner">
-                            <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = 'Your email address'" required="" type="email">
-                            <button class="button"><i class="icofont icofont-paper-plane"></i></button>
-                        </form>
+                        <a href ="#newsletter" style="color:white;">subscribe to our newsletter to get all our news in your inbox</a>
                     </div>
                 </div>
             </div>
