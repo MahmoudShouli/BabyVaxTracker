@@ -1,6 +1,13 @@
 <?php
 session_start();
 
+if (isset($_SESSION['USER'])) {
+    $current_user = $_SESSION['USER']; # now current_user has the email of the current signed-in user
+
+} else {
+    header("Location: signin.php");
+}
+
 function setSessionMessageAndRedirect($message, $redirectPage)
 {
     $_SESSION['message'] = $message;

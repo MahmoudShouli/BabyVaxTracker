@@ -1,6 +1,14 @@
 <?php
 session_start();
 
+
+if (isset($_SESSION['USER'])) {
+    $current_user = $_SESSION['USER']; # now current_user has the email of the current signed-in user
+
+} else {
+    header("Location: signin.php");
+}
+
 require_once '../../BackEnd/php/db_config.php';
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($conn->connect_error) {
@@ -94,7 +102,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title -->
-    <title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
+    <title>BabyVaxTrack</title>
     <script src="../js/auto-email-sender.js"></script>
     <!-- Favicon -->
     <link rel="icon" href="../../Resources/images/favicon.png">

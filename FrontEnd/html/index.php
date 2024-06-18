@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title -->
-    <title>HomePage</title>
+    <title>BabyVaxTrack</title>
 
     <!-- Favicon -->
     <link rel="icon" href="../../Resources/images/favicon.png">

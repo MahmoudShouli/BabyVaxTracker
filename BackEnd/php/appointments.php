@@ -83,6 +83,16 @@ if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message'], 
                     if ($resultChildren->num_rows > 0) {
                         $row = $resultChildren->fetch_assoc();
                         $childid = $row['id'];
+
+                        // Check if the child already has any appointment
+                        $stmtCheckAppointment = $conn->prepare("SELECT * FROM appointments WHERE childID = ?");
+                        $stmtCheckAppointment->bind_param("i", $childid);
+                        $stmtCheckAppointment->execute();
+                        $resultCheckAppointment = $stmtCheckAppointment->get_result();
+                        if ($resultCheckAppointment->num_rows > 0) {
+                            setSessionMessageAndRedirect("The child already has an appointment.", "../../FrontEnd/html/appointment.php");
+                        }
+
                     } else {
                         setSessionMessageAndRedirect("No child found with the specified name.", "errorPage.php");
                     }
@@ -113,8 +123,8 @@ if (isset($_POST['child'], $_POST['doctor'], $_POST['date'], $_POST['message'], 
                 }
             } if ($row['isAvailable'] == '2') {
                 setSessionMessageAndRedirect("The date is already booked.", "../../FrontEnd/html/appointment.php");
-            }else{
-                setSessionMessageAndRedirect("The date is not available.", "../../FrontEnd/html/appointment.php");
+            }if ($row['isAvailable'] == '3'){
+                setSessionMessageAndRedirect("The date is unavailable.", "../../FrontEnd/html/appointment.php");
             }
         } else {
             setSessionMessageAndRedirect("The date is not available.", "../../FrontEnd/html/appointment.php");

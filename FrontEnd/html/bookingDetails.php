@@ -1,6 +1,14 @@
 <?php
 session_start();
 
+if (isset($_SESSION['USER'])) {
+    $current_user = $_SESSION['USER']; # now current_user has the email of the current signed-in user
+
+} else {
+    header("Location: signin.php");
+}
+
+
 // Check if CID is set in the session
 if (!isset($_SESSION['CID'])) {
     die("Error: No CID set in the session.");
@@ -148,7 +156,7 @@ function setSessionMessageAndRedirect($message, $redirectPage)
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title -->
-    <title>Booking Details</title>
+    <title>BabyVaxTrack</title>
 
     <!-- Favicon -->
     <link rel="icon" href="../../Resources/images/favicon.png">

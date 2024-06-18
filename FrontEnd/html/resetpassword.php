@@ -14,6 +14,8 @@
 
 <?php
     session_start();
+
+
     $_SESSION['message'] = 'came from reset';
 ?>
 

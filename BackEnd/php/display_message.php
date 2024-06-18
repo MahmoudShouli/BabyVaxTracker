@@ -59,7 +59,7 @@ unset($_SESSION['redirect_page']);
     <script>
         setTimeout(function() {
             window.location.href = "<?php echo $redirectPage; ?>";
-        }, 5000); // Redirect after 5 seconds
+        }, 1000); // Redirect after 5 seconds
     </script>
 </head>
 <body>

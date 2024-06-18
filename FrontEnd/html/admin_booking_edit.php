@@ -9,7 +9,8 @@
     <meta name="description" content="">
     <meta name='copyright' content=''>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Appointments Management</title>
+    <title>BabyVaxTrack</title>
+    <script src="../js/auto-email-sender.js"></script>
     <script>
         function showPara(displayStyle, color, text) {
             var para = document.getElementById('para1');
@@ -117,6 +118,15 @@
 <!--/***********************************************************************-->
 <?php
 session_start();
+
+if (isset($_SESSION['USER'])) {
+    $current_user = $_SESSION['USER']; # now current_user has the email of the current signed-in user
+
+} else {
+    header("Location: signin.php");
+}
+
+
 require_once '../../BackEnd/php/db_config.php';
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($conn->connect_error) {

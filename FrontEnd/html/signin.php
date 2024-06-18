@@ -59,6 +59,7 @@ session_start();
 
 $_SESSION['found'] = 'nothing';
 
+
 if(isset($_SESSION['message']) )
 
 {

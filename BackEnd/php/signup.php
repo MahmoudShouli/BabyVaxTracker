@@ -23,8 +23,8 @@ if (!empty($_POST['parentName']) && !empty($_POST['parentEmail']) && !empty($_PO
     $childGender = $_POST['childGender'];
 
     // Insert into users table
-    $sql1 = "INSERT INTO users (user_name, password, email, phone, gender, city, roleID,subscribed) 
-            VALUES ('$parentName', '$password', '$parentEmail', '$parentPhone', '$gender', '$city', 2,0)";
+    $sql1 = "INSERT INTO users (user_name, password, email, phone, gender,photo, city, roleID,subscribed) 
+            VALUES ('$parentName', '$password', '$parentEmail', '$parentPhone', '$gender','../../Resources/images/profilepicanony.png', '$city', 2,0)";
 
     // Execute the SQL statement
     if ($conn->query($sql1) === TRUE) {

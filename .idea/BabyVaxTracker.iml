@@ -4,6 +4,50 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/PhpMailer/src" isTestSource="false" packagePrefix="PHPMailer\PHPMailer\" />
       <sourceFolder url="file://$MODULE_DIR$/PhpMailer/test" isTestSource="true" packagePrefix="PHPMailer\Test\" />
+      <sourceFolder url="file://$MODULE_DIR$/PhpMailer/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/PhpMailer/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/dealerdirect/phpcodesniffer-composer-installer" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/doctrine/annotations" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/doctrine/deprecations" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/doctrine/instantiator" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/doctrine/lexer" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/myclabs/deep-copy" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/nikic/php-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/phar-io/manifest" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/phar-io/version" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/php-parallel-lint/php-console-color" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/php-parallel-lint/php-console-highlighter" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/php-parallel-lint/php-parallel-lint" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/phpcompatibility/php-compatibility" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/phpunit/php-code-coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/phpunit/php-file-iterator" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/phpunit/php-invoker" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/phpunit/php-text-template" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/phpunit/php-timer" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/phpunit/phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/cli-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/code-unit" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/code-unit-reverse-lookup" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/comparator" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/complexity" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/diff" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/environment" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/global-state" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/lines-of-code" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/object-enumerator" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/object-reflector" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/recursion-context" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/resource-operations" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/type" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/sebastian/version" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/squizlabs/php_codesniffer" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/theseer/tokenizer" />
+      <excludeFolder url="file://$MODULE_DIR$/PhpMailer/vendor/yoast/phpunit-polyfills" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

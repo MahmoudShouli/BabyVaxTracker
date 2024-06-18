@@ -61,6 +61,15 @@
                                 <?php
                                 require_once '../../BackEnd/php/db_config.php';
                                 session_start();
+
+                                if (isset($_SESSION['USER'])) {
+                                    $current_user = $_SESSION['USER']; # now current_user has the email of the current signed-in user
+
+                                } else {
+                                    header("Location: signin.php");
+                                }
+
+
                                 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
                                 // Check the connection
                                 if ($conn->connect_error) {

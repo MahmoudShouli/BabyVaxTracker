@@ -3,6 +3,14 @@
 <head>
     <script src="../js/auto-email-sender.js"></script>
     <?php
+    session_start();
+
+    if (isset($_SESSION['USER'])) {
+        $current_user = $_SESSION['USER']; # now current_user has the email of the current signed-in user
+
+    } else {
+        header("Location: signin.php");
+    }
     require_once '../../BackEnd/php/db_config.php';
 
     $doctorID =null;
@@ -102,6 +110,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
     <meta http-equiv="Content-Language" content="ar">
     <title>BabyVaxTrack</title>
     <link rel="icon" type="image/x-icon" href="../../Resources/images/logo.png">
+    <script src="../js/auto-email-sender.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/table.css">
 
     <!-- Favicon -->

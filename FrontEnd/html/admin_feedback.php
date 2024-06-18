@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Posts</title>
+    <title>BabyVaxTrack</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -93,11 +93,14 @@ if (isset($_SESSION['USER'])) {
     $current_user = $_SESSION['USER']; # now current_user has the email of the current signed-in user
 
 } else {
-    echo "No user is currently signed in.";
+    header("Location: signin.php");
 }
 
-
-$query = " SELECT u.user_name, u.city, u.photo FROM users u  WHERE u.email = ?";
+if (substr($current_user, 0, 2) === "05") {
+    $query = " SELECT u.user_name, u.city, u.photo, u.ID FROM users u  WHERE u.phone = ?";
+}
+else
+    $query = " SELECT u.user_name, u.city, u.photo, u.ID FROM users u  WHERE u.email = ?";
 
 
 $stmt = $conn->prepare($query);
@@ -109,8 +112,9 @@ $row = $result->fetch_assoc();
 $user_name = $row['user_name'];
 $city = $row['city'];
 $photo_url = $row['photo'];
+$current_user_ID = $row['ID'];
 
-
+$_SESSION['ID'] = $current_user_ID;
 
 ?>
 
@@ -128,10 +132,10 @@ $photo_url = $row['photo'];
                     <p class="w3-center">
 
                         <?php
-                        if(empty($photo_url)) {
+                        if($photo_url=='../../Resources/images/profilepicanony.png') {
                             echo "<form id = 'uploadForm' action='../../BackEnd/php/update_photo.php' method='post' enctype='multipart/form-data'>";
                             echo "<label for='profilePicUpload' class='w3-button w3-theme' style='margin-right: 10px'>Upload Profile Picture</label>";
-                            echo "<input type='file' name = 'fileToUpload' id='profilePicUpload' style='display: none;'>";
+                            echo "<input type='file' name = 'profilePicUpload' id='profilePicUpload' style='display: none;'>";
                             echo "<img id='profilepic' src='../../Resources/images/profilepicanony.png' class='w3-circle' style='height:100px;width:100px;' alt='Avatar'>";
                             echo "<input type='submit' name = 'submit' id='submit' value='Update'>";
                             echo "</form>";
@@ -199,7 +203,20 @@ $photo_url = $row['photo'];
                 $time_posted = $row_posts['time_posted_at'];
                 $userID = $row_posts['userID'];
 
+                $query_interaction = "SELECT isLiked  FROM liked_unliked_posts p WHERE p.postID = ? AND p.userID = ?";
 
+                $stmt_interaction = $conn->prepare($query_interaction);
+                $stmt_interaction->bind_param("ii", $id, $_SESSION['ID']);
+                $stmt_interaction->execute();
+                $result_interaction = $stmt_interaction->get_result();
+                $row_interaction = $result_interaction->fetch_assoc();
+
+                if($result_interaction->num_rows>0){
+                $isLiked = $row_interaction['isLiked'];
+                }
+                else{
+                 $isLiked=0;
+                }
                 $current_time = date('H:i:s');
 
                 // Create DateTime objects
@@ -245,45 +262,143 @@ $photo_url = $row['photo'];
                 $photo = $row_user['photo'];
                 $userName = $row_user['user_name'];
 
-                echo  "
-                    <script>
-                    function changeLike() {
-                        var unsplitted_text = document.getElementById('likeBtn').innerText.trim();
-                        var arr = unsplitted_text.split(' ')
-                        var text = arr[1];
+
+                $query_role = "SELECT u.roleID
+                FROM posts p
+                JOIN users u ON p.userID = u.ID
+                WHERE p.ID = ?;
+                ";
+
+                $stmt_role = $conn->prepare($query_role);
+                $stmt_role->bind_param("i", $id);
+                $stmt_role->execute();
+                $result_role = $stmt_role->get_result();
+                $row_role = $result_role->fetch_assoc();
+
+                $roleID = $row_role['roleID'];
+
+
+                if($roleID==1) {
+
+                    if ($isLiked == 0) {
+                        echo "
+                        <script>
+                       
                         
-                        if (text === 'Like') {
-                            document.getElementById('likeBtn').innerText = ' Unlike';
-                        } else if (text === 'Unlike') {
-                            document.getElementById('likeBtn').innerText = ' Like';
-                        }
+                        var post = `
+                            <div class='w3-container w3-card w3-white w3-round w3-margin'><br>
+                                <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px;margin-top:-8px'>
+                                <span class='w3-right w3-opacity'>$timestamp</span>
+                                <h4  class = 'comic-neue-bold' style='text-transform: capitalize'>$userName&nbsp&nbsp&nbsp&nbsp<span style='color:red;'>(ADMIN)</span></h4><br>
+                                <hr class='w3-clear'>
+                                <p style='margin-bottom:30px; margin-top:15px; font-weight:bold'>$content</p>
+                                <form action='../../BackEnd/php/manage_posts.php' method='post'>
+                                    <button  value='$id' name='likeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> Like</button>
+                                    <button  value='$id' name='deleteBtn' class='w3-button w3-theme-d1 w3-margin-bottom' style='background-color:red; !important'><i class='fa fa-remove'></i> Delete</button>
+                                </form>
+                            </div>
+                        `;
+                        
+                        var postsContainer = document.getElementById('postContainer');
+                        postsContainer.insertAdjacentHTML('afterbegin', post);
+                        postsContainer.children[1].after(postsContainer.children[0]);
+                        </script>
+                        ";
+
+                    } elseif ($isLiked == 1) {
+                        echo "
+                        <script>
+                       
+                        
+                        var post = `
+                            <div class='w3-container w3-card w3-white w3-round w3-margin'><br>
+                                <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px;margin-top:-8px'>
+                                <span class='w3-right w3-opacity'>$timestamp</span>
+                                <h4  class = 'comic-neue-bold' style='text-transform: capitalize'>$userName&nbsp&nbsp&nbsp&nbsp<span style='color:red;'>(ADMIN)</span></h4><br>
+                                <hr class='w3-clear'>
+                                <p style='margin-bottom:30px; margin-top:15px; font-weight:bold'>$content</p>
+                                <form action='../../BackEnd/php/manage_posts.php' method='post'>
+                                   <button id='$id' value='$id' name='unlikeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> unlike</button>
+                                    <button  value='$id' name='deleteBtn' class='w3-button w3-theme-d1 w3-margin-bottom' style='background-color:red; !important'><i class='fa fa-remove'></i> Delete</button>
+                                </form>
+                            </div>
+                        `;
+                        
+                        var postsContainer = document.getElementById('postContainer');
+                        postsContainer.insertAdjacentHTML('afterbegin', post);
+                        postsContainer.children[1].after(postsContainer.children[0]);
+                        </script>
+                        ";
+
+
                     }
-                    
-                    var post = `
-                        <div class='w3-container w3-card w3-white w3-round w3-margin'><br>
-                            <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px;margin-top:-8px'>
-                            <span class='w3-right w3-opacity'>$timestamp</span>
-                            <h4 style='text-transform: capitalize'>$userName</h4><br>
-                            <hr class='w3-clear'>
-                            <p style='margin-bottom:5px; margin-top:-15px'>$content</p>
-                            <form action='../../BackEnd/php/manage_posts.php' method='post'>
-                                <button  value='$id' name='likeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> Like</button>
-                                <button  value='$id' name='deleteBtn' class='w3-button w3-theme-d1 w3-margin-bottom' style='background-color:red; !important'><i class='fa fa-remove'></i> Delete</button>
-                            </form>
-                        </div>
-                    `;
-                    
-                    var postsContainer = document.getElementById('postContainer');
-                    postsContainer.insertAdjacentHTML('afterbegin', post);
-                    postsContainer.children[1].after(postsContainer.children[0]);
-                    </script>
-                    ";
+                }
+                elseif ($roleID==2){
+
+                    if ($isLiked == 0) {
+                        echo "
+                        <script>
+                       
+                        
+                        var post = `
+                            <div class='w3-container w3-card w3-white w3-round w3-margin'><br>
+                                <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px;margin-top:-8px'>
+                                <span class='w3-right w3-opacity'>$timestamp</span>
+                                <h4  class = 'comic-neue-bold' style='text-transform: capitalize'>$userName</span></h4><br>
+                                <hr class='w3-clear'>
+                                <p style='margin-bottom:30px; margin-top:15px; font-weight:bold'>$content</p>
+                                <form action='../../BackEnd/php/manage_posts.php' method='post'>
+                                    <button  value='$id' name='likeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> Like</button>
+                                    <button  value='$id' name='deleteBtn' class='w3-button w3-theme-d1 w3-margin-bottom' style='background-color:red; !important'><i class='fa fa-remove'></i> Delete</button>
+                                </form>
+                            </div>
+                        `;
+                        
+                        var postsContainer = document.getElementById('postContainer');
+                        postsContainer.insertAdjacentHTML('afterbegin', post);
+                        postsContainer.children[1].after(postsContainer.children[0]);
+                        </script>
+                        ";
+
+                    } elseif ($isLiked == 1) {
+                        echo "
+                        <script>
+                       
+                        
+                        var post = `
+                            <div class='w3-container w3-card w3-white w3-round w3-margin'><br>
+                                <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px;margin-top:-8px'>
+                                <span class='w3-right w3-opacity'>$timestamp</span>
+                                <h4  class = 'comic-neue-bold' style='text-transform: capitalize'>$userName</h4><br>
+                                <hr class='w3-clear'>
+                                <p style='margin-bottom:30px; margin-top:15px; font-weight:bold'>$content</p>
+                                <form action='../../BackEnd/php/manage_posts.php' method='post'>
+                                   <button id='$id' value='$id' name='unlikeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> unlike</button>
+                                    <button  value='$id' name='deleteBtn' class='w3-button w3-theme-d1 w3-margin-bottom' style='background-color:red; !important'><i class='fa fa-remove'></i> Delete</button>
+                                </form>
+                            </div>
+                        `;
+                        
+                        var postsContainer = document.getElementById('postContainer');
+                        postsContainer.insertAdjacentHTML('afterbegin', post);
+                        postsContainer.children[1].after(postsContainer.children[0]);
+                        </script>
+                        ";
+
+
+                    }
 
 
 
 
 
 
+
+
+
+
+
+                }
             }
             ?>
 
