@@ -1,13 +1,61 @@
+
+<?php
+
+require_once "../../BackEnd/php/db_connect.php";
+
+global $conn;
+
+session_start();
+
+
+
+if (isset($_SESSION['USER'])) {
+    $current_user = $_SESSION['USER']; # now current_user has the email of the current signed-in user
+
+} else {
+    header("Location: signin.php");
+}
+
+if (substr($current_user, 0, 2) === "05") {
+    $query = " SELECT u.user_name, u.city, u.photo, u.ID, u.theme FROM users u  WHERE u.phone = ?";
+}
+else
+    $query = " SELECT u.user_name, u.city, u.photo, u.ID, u.theme FROM users u  WHERE u.email = ?";
+
+
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $current_user);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+
+$user_name = $row['user_name'];
+$city = $row['city'];
+$photo_url = $row['photo'];
+$current_user_ID = $row['ID'];
+$theme = $row['theme'];
+
+    echo "<input id='x' value='$theme' type='hidden'>";
+$_SESSION['thm'] = $theme;
+
+$_SESSION['ID'] = $current_user_ID;
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
 <title>BabyVaxTrack</title>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <script src="../js/auto-email-sender.js"></script>
 
  <!-- Favicon -->
  <link rel="icon" href="../../Resources/images/favicon.png">
@@ -42,7 +90,8 @@
  <link rel="stylesheet" href="../css/normalize.css">
  <link rel="stylesheet" href="../css/style.css">
  <link rel="stylesheet" href="../css/responsive.css">
-    <script src="../js/auto-email-sender.js"></script>
+
+
 <style>
 html, body, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
@@ -64,63 +113,27 @@ i.fa {margin-right: 0px !important;}
 
 </style>
 </head>
-<body class="w3-theme-l5">
+<body class="w3-theme-l5" onload = "initialize();"  >
 
 <!-- Navbar -->
-<div class="w3-top">
- <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
-  <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-  <a href="index.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i></a>
+<header class="w3-top">
+ <div id="header" class="w3-bar w3-theme-d2 w3-left-align w3-large">
+     <?php
+     if($_SESSION['ROLE']==1)
+         echo "<a href='admin_index.php' class='w3-bar-item w3-button w3-padding-large w3-theme-d4'><i class='fa fa-home w3-margin-right'></i></a>";
+     else
+         echo "<a href='index.php' class='w3-bar-item w3-button w3-padding-large w3-theme-d4'><i class='fa fa-home w3-margin-right'></i></a>";
+
+     if($_SESSION['thm']=='light')
+         echo '<a  id="theme-switcher" onclick="changeTheme()"  class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-moon-o w3-margin-right"></i></a>';
+     else
+         echo '<a  id="theme-switcher" onclick="changeTheme()" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-sun-o w3-margin-right"></i></a>';
+
+     ?>
      <H1  class = 'comic-neue-bold' style="color: white; text-align: center; font-style: italic">Posts And Feedback</H1>
-
-
-  </a>
  </div>
-</div>
+</header>
 
-
-
-
-
-<?php
-
-    require_once "../../BackEnd/php/db_connect.php";
-
-    global $conn;
-
-    session_start();
-
-
-
-    if (isset($_SESSION['USER'])) {
-        $current_user = $_SESSION['USER']; # now current_user has the email of the current signed-in user
-
-    } else {
-        header("Location: signin.php");
-    }
-
-    if (substr($current_user, 0, 2) === "05") {
-        $query = " SELECT u.user_name, u.city, u.photo, u.ID FROM users u  WHERE u.phone = ?";
-    }
-    else
-        $query = " SELECT u.user_name, u.city, u.photo, u.ID FROM users u  WHERE u.email = ?";
-
-
-
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("s", $current_user);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-
-        $user_name = $row['user_name'];
-        $city = $row['city'];
-        $photo_url = $row['photo'];
-        $current_user_ID = $row['ID'];
-
-        $_SESSION['ID'] = $current_user_ID;
-
-?>
 
 
 <!-- Page Container -->
@@ -131,17 +144,16 @@ i.fa {margin-right: 0px !important;}
     <div class="w3-col m3">
       <!-- Profile -->
       <div class="w3-card w3-round w3-white">
-        <div class="w3-container">
+        <section id = "profile" class="w3-container">
          <h4 class="w3-center comic-neue-bold">My Profile</h4>
          <p class="w3-center">
 
              <?php
                 if($photo_url=='../../Resources/images/profilepicanony.png') {
-                    echo "<form id = 'uploadForm' action='../../BackEnd/php/update_photo.php' method='post' enctype='multipart/form-data'>";
-                    echo "<label for='profilePicUpload' class='w3-button w3-theme' style='margin-right: 10px'>Upload Profile Picture</label>";
-                    echo "<input type='file' name = 'profilePicUpload' id='profilePicUpload' style='display: none;'>";
+                    echo "<form id='uploadForm' action='../../BackEnd/php/update_photo.php' method='post' enctype='multipart/form-data'>";
+                    echo "<button type='button' onclick='openFileInput()' class='w3-button w3-theme' style='margin-right: 10px'>Upload Profile Picture</button>";
+                    echo "<input type='file' name='profilePicUpload' id='profilePicUpload' style='display: none;' onchange='uploadProfilePic()'>";
                     echo "<img id='profilepic' src='../../Resources/images/profilepicanony.png' class='w3-circle' style='height:100px;width:100px' alt='Avatar'>";
-                    echo "<input type='submit' name = 'submit' id='submit' value='Update'>";
                     echo "</form>";
                 }
                 else {
@@ -160,7 +172,7 @@ i.fa {margin-right: 0px !important;}
             echo "<p><i class='fa fa-envelope fa-fw w3-margin-right w3-text-theme'></i> ".$current_user."</p>";
             ?>
 
-        </div>
+        </section>
       </div>
       <br>
 
@@ -181,363 +193,16 @@ i.fa {margin-right: 0px !important;}
       <div class="w3-row-padding">
         <div class="w3-col m12">
           <div class="w3-card w3-round w3-white">
-            <div class="w3-container w3-padding">
-              <form action ="../../BackEnd/php/publish_posts.php" method="post">
+            <section class="w3-container w3-padding">
+
               <h6 class="w3-opacity">Share your thoughts...</h6><br>
                <textarea name="postContent" class="w3-border w3-padding" id="postarea"></textarea><br>
-               <button  class="w3-button w3-theme"><i class="fa fa-pencil"></i> Post</button>
-              </form>
-            </div>
+               <button id = 'postBtn' onclick="publish();" class="w3-button w3-theme" style="margin-top:5px"><i class="fa fa-pencil"></i> Post</button>
+
+            </section>
           </div>
         </div>
       </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-        <?php
-            $query_posts = "SELECT *  FROM posts";
-
-            $stmt_posts = $conn->prepare($query_posts);
-            $stmt_posts->execute();
-            $result_posts = $stmt_posts->get_result();
-
-            for($i=0; $i < $result_posts->num_rows; $i++) {
-                $row_posts = $result_posts->fetch_assoc();
-                $id = $row_posts['ID'];
-                $content = $row_posts['content'];
-                $likes = $row_posts['likes_count'];
-                $time_posted = $row_posts['time_posted_at'];
-                $userID = $row_posts['userID'];
-
-                $query_interaction = "SELECT isLiked  FROM liked_unliked_posts p WHERE p.postID = ? AND p.userID = ?";
-
-                $stmt_interaction = $conn->prepare($query_interaction);
-                $stmt_interaction->bind_param("ii", $id, $_SESSION['ID']);
-                $stmt_interaction->execute();
-                $result_interaction = $stmt_interaction->get_result();
-                $row_interaction = $result_interaction->fetch_assoc();
-
-
-                if($result_interaction->num_rows>0){
-                    $isLiked = $row_interaction['isLiked'];
-                }
-                else{
-                    $isLiked=0;
-                }
-
-
-
-                $current_time = date('H:i:s');
-
-                // Create DateTime objects
-                $time_posted_dt = new DateTime($time_posted);
-                $current_time_dt = new DateTime($current_time);
-
-                // Calculate the difference
-                $interval = $current_time_dt->diff($time_posted_dt);
-
-                // Get differences
-                $year_difference = $interval->y;
-                $month_difference = $interval->m;
-                $day_difference = $interval->d;
-                $hour_difference = $interval->h;
-                $minute_difference = $interval->i;
-                $second_difference = $interval->s;
-
-                // Format the difference
-                if ($year_difference == 0 && $month_difference == 0 && $day_difference == 0 && $hour_difference == 0 && $minute_difference == 0) {
-                    $timestamp = "just now!";
-                } elseif ($year_difference == 0 && $month_difference == 0 && $day_difference == 0 && $hour_difference == 0) {
-                    $timestamp = "$minute_difference minutes ago";
-                } elseif ($year_difference == 0 && $month_difference == 0 && $day_difference == 0) {
-                    $timestamp = "$hour_difference hours ago";
-                } elseif ($year_difference == 0 && $month_difference == 0) {
-                    $timestamp = "$day_difference days ago";
-                } elseif ($year_difference == 0) {
-                    $timestamp = "$month_difference ago";
-                } else {
-                    $timestamp = "$year_difference years  ago";
-                }
-
-
-                $query_user = "SELECT u.photo, u.user_name  FROM users u 
-                          WHERE u.ID = ?";
-
-                $stmt_user = $conn->prepare($query_user);
-                $stmt_user->bind_param("i", $userID);
-                $stmt_user->execute();
-                $result_user = $stmt_user->get_result();
-                $row_user = $result_user->fetch_assoc();
-
-                $photo = $row_user['photo'];
-                $userName = $row_user['user_name'];
-
-                $query_role = "SELECT u.roleID
-                FROM posts p
-                JOIN users u ON p.userID = u.ID
-                WHERE p.ID = ?;
-                ";
-
-                $stmt_role = $conn->prepare($query_role);
-                $stmt_role->bind_param("i", $id);
-                $stmt_role->execute();
-                $result_role = $stmt_role->get_result();
-                $row_role = $result_role->fetch_assoc();
-
-                $roleID = $row_role['roleID'];
-
-                if($roleID==1) {
-
-                    if ($isLiked == 0) {
-                        if ($current_user_ID == $userID) {
-                            echo "
-                        <script>
-                        
-                        
-                        var post = `
-                             
-                            <div  class='w3-container w3-card w3-white w3-round w3-margin'><br>
-                                <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px;margin-top:-8px'>
-                                <span class='w3-right w3-opacity'>$timestamp</span>
-                                <h4 class = 'comic-neue-bold' style='text-transform: capitalize'>$userName&nbsp&nbsp&nbsp&nbsp<span style='color:red;'>(ADMIN)</span></h4><br>
-                                <hr class='w3-clear'>
-                                <p style='margin-bottom:30px; margin-top:15px; font-weight:bold'>$content</p>
-                                <form action='../../BackEnd/php/manage_posts.php' method='post'>
-                                    
-                                    <button id='$id' value='$id' name='likeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> Like</button>
-                                    <button value='$id' name='deleteBtn' class='w3-button w3-theme-d1 w3-margin-bottom ' style='background-color:red; !important'><i class='fa fa-remove'></i> Delete</button>
-                                </form>
-                            </div>
-                        `;
-                        
-                        var postsContainer = document.getElementById('postContainer');
-                        postsContainer.insertAdjacentHTML('afterbegin', post);
-                        postsContainer.children[1].after(postsContainer.children[0]);
-                        </script>
-                        ";
-
-                        } else {
-                            echo "
-                        <script>
-                       
-                        
-                        var post = `
-                            
-                            <div  class='w3-container w3-card w3-white w3-round w3-margin'><br>
-                                <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px'>
-                                <span class='w3-right w3-opacity'>$timestamp</span>
-                                <h4  class = 'comic-neue-bold' class = 'comic-neue-bold' style='text-transform: capitalize'>$userName&nbsp&nbsp&nbsp&nbsp<span style='color:red;'>(ADMIN)</span></h4><br>
-                                <hr class='w3-clear'>
-                                <p style='margin-bottom:30px; margin-top:15px; font-weight:bold'>$content</p>
-                                <form action='../../BackEnd/php/manage_posts.php' method='post'>
-                                   
-                                    <button id='$id'  value='$id' name='likeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> Like</button>                               
-                                </form>
-                            </div>
-                        `;
-                        
-                        var postsContainer = document.getElementById('postContainer');
-                        postsContainer.insertAdjacentHTML('afterbegin', post);
-                        postsContainer.children[1].after(postsContainer.children[0]);
-                        </script>
-                        ";
-                        }
-
-                    } elseif ($isLiked == 1) {
-
-
-                        if ($current_user_ID == $userID) {
-                            echo "
-                        <script>
-                        
-                        
-                        var post = `
-                            
-                            <div  class='w3-container w3-card w3-white w3-round w3-margin'><br>
-                                <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px;margin-top:-8px'>
-                                <span class='w3-right w3-opacity'>$timestamp</span>
-                                <h4  class = 'comic-neue-bold' style='text-transform: capitalize'>$userName&nbsp&nbsp&nbsp&nbsp<span style='color:red;'>(ADMIN)</span></h4><br>
-                                <hr class='w3-clear'>
-                                <p style='margin-bottom:30px; margin-top:15px; font-weight:bold'>$content</p>
-                                <form action='../../BackEnd/php/manage_posts.php' method='post'>
-                                   
-                                    <button id='$id' value='$id' name='unlikeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> unlike</button>
-                                    <button  value='$id' name='deleteBtn' class='w3-button w3-theme-d1 w3-margin-bottom' style='background-color:red; !important'><i class='fa fa-remove'></i> Delete</button>
-                                </form>
-                            </div>
-                        `;
-                        
-                        var postsContainer = document.getElementById('postContainer');
-                        postsContainer.insertAdjacentHTML('afterbegin', post);
-                        postsContainer.children[1].after(postsContainer.children[0]);
-                        </script>
-                        ";
-
-                        } else {
-                            echo "
-                        <script>
-                      
-                        
-                        var post = `
-                            
-                            <div  class='w3-container w3-card w3-white w3-round w3-margin'><br>
-                                <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px'>
-                                <span class='w3-right w3-opacity'>$timestamp</span>
-                                <h4  class = 'comic-neue-bold' style='text-transform: capitalize'>$userName&nbsp&nbsp&nbsp&nbsp<span style='color:red;'>(ADMIN)</span></h4><br>
-                                <hr class='w3-clear'>
-                                <p style='margin-bottom:30px; margin-top:15px; font-weight:bold'>$content</p>
-                                <form action='../../BackEnd/php/manage_posts.php' method='post'>
-                                    
-                                    <button id='$id'  value='$id' name='unlikeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> unlike</button>                               
-                                </form>
-                            </div>
-                        `;
-                        
-                        var postsContainer = document.getElementById('postContainer');
-                        postsContainer.insertAdjacentHTML('afterbegin', post);
-                        postsContainer.children[1].after(postsContainer.children[0]);
-                        </script>
-                        ";
-                        }
-
-
-                    }
-
-                }
-                elseif ($roleID==2){
-
-                    if ($isLiked == 0) {
-                        if ($current_user_ID == $userID) {
-                            echo "
-                        <script>
-                        
-                        
-                        var post = `
-                             
-                            <div  class='w3-container w3-card w3-white w3-round w3-margin'><br>
-                                <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px;margin-top:-8px'>
-                                <span class='w3-right w3-opacity'>$timestamp</span>
-                                <h4  class = 'comic-neue-bold' style='text-transform: capitalize'>$userName</h4><br>
-                                <hr class='w3-clear'>
-                                <p style='margin-bottom:30px; margin-top:15px; font-weight:bold'>$content</p>
-                                <form action='../../BackEnd/php/manage_posts.php' method='post'>
-                                    
-                                    <button id='$id' value='$id' name='likeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> Like</button>
-                                    <button  value='$id' name='deleteBtn' class='w3-button w3-theme-d1 w3-margin-bottom' style='background-color:red; !important'><i class='fa fa-remove'></i> Delete</button>
-                                </form>
-                            </div>
-                        `;
-                        
-                        var postsContainer = document.getElementById('postContainer');
-                        postsContainer.insertAdjacentHTML('afterbegin', post);
-                        postsContainer.children[1].after(postsContainer.children[0]);
-                        </script>
-                        ";
-
-                        } else {
-                            echo "
-                        <script>
-                       
-                        
-                        var post = `
-                            
-                            <div  class='w3-container w3-card w3-white w3-round w3-margin'><br>
-                                <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px'>
-                                <span class='w3-right w3-opacity'>$timestamp</span>
-                                <h4  class = 'comic-neue-bold' style='text-transform: capitalize'>$userName</h4><br>
-                                <hr class='w3-clear'>
-                                <p style='margin-bottom:30px; margin-top:15px; font-weight:bold'>$content</p>
-                                <form action='../../BackEnd/php/manage_posts.php' method='post'>
-                                   
-                                    <button id='$id'  value='$id' name='likeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> Like</button>                               
-                                </form>
-                            </div>
-                        `;
-                        
-                        var postsContainer = document.getElementById('postContainer');
-                        postsContainer.insertAdjacentHTML('afterbegin', post);
-                        postsContainer.children[1].after(postsContainer.children[0]);
-                        </script>
-                        ";
-                        }
-
-                    } elseif ($isLiked == 1) {
-
-
-                        if ($current_user_ID == $userID) {
-                            echo "
-                        <script>
-                        
-                        
-                        var post = `
-                            
-                            <div  class='w3-container w3-card w3-white w3-round w3-margin'><br>
-                                <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px;margin-top:-8px'>
-                                <span class='w3-right w3-opacity'>$timestamp</span>
-                                <h4  class = 'comic-neue-bold' style='text-transform: capitalize'>$userName</h4><br>
-                                <hr class='w3-clear'>
-                                <p style='margin-bottom:30px; margin-top:15px; font-weight:bold'>$content</p>
-                                <form action='../../BackEnd/php/manage_posts.php' method='post'>
-                                   
-                                    <button id='$id' value='$id' name='unlikeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> unlike</button>
-                                    <button  value='$id' name='deleteBtn' class='w3-button w3-theme-d1 w3-margin-bottom' style='background-color:red; !important'><i class='fa fa-remove'></i> Delete</button>
-                                </form>
-                            </div>
-                        `;
-                        
-                        var postsContainer = document.getElementById('postContainer');
-                        postsContainer.insertAdjacentHTML('afterbegin', post);
-                        postsContainer.children[1].after(postsContainer.children[0]);
-                        </script>
-                        ";
-
-                        } else {
-                            echo "
-                        <script>
-                      
-                        
-                        var post = `
-                            
-                            <div  class='w3-container w3-card w3-white w3-round w3-margin'><br>
-                                <img src='$photo' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='height:60px;width:60px'>
-                                <span class='w3-right w3-opacity'>$timestamp</span>
-                                <h4  class = 'comic-neue-bold' style='text-transform: capitalize'>$userName</h4><br>
-                                <hr class='w3-clear'>
-                                <p style='margin-bottom:30px; margin-top:15px; font-weight:bold'>$content</p>
-                                <form action='../../BackEnd/php/manage_posts.php' method='post'>
-                                    
-                                    <button id='$id'  value='$id' name='unlikeBtn' class='w3-button w3-theme-d1 w3-margin-bottom'><i class='fa fa-thumbs-up'></i><span> $likes</span> unlike</button>                               
-                                </form>
-                            </div>
-                        `;
-                        
-                        var postsContainer = document.getElementById('postContainer');
-                        postsContainer.insertAdjacentHTML('afterbegin', post);
-                        postsContainer.children[1].after(postsContainer.children[0]);
-                        </script>
-                        ";
-                        }
-
-
-                    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                }
-            }
-        ?>
-      
-
 
       
     <!-- End Middle Column -->
@@ -564,10 +229,11 @@ i.fa {margin-right: 0px !important;}
 <br>
 
 
+
 <!-- Footer Area -->
 <footer id="footer" class="footer ">
     <!-- Footer Top -->
-    <div class="footer-top">
+    <div id="foot" class="footer-top">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-12">
@@ -622,7 +288,7 @@ i.fa {margin-right: 0px !important;}
     </div>
     <!--/ End Footer Top -->
     <!-- Copyright -->
-    <div class="copyright">
+    <div id="copy" class="copyright">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-12">
@@ -637,25 +303,7 @@ i.fa {margin-right: 0px !important;}
 </footer>
 <!--/ End Footer Area -->
 
-<script>
 
-        document.querySelector('form').addEventListener('submit', function() {
-        // Save the current scroll position to sessionStorage
-        sessionStorage.setItem('scrollPosition', window.scrollY);
-    });
-
-        document.addEventListener('DOMContentLoaded', function() {
-        // Retrieve the scroll position from sessionStorage
-        const scrollPosition = sessionStorage.getItem('scrollPosition');
-
-        // If a scroll position is found, scroll to that position
-        if (scrollPosition !== null) {
-        window.scrollTo(0, parseInt(scrollPosition, 10));
-        // Clear the scroll position from sessionStorage
-        sessionStorage.removeItem('scrollPosition');
-    }
-    });
-</script>
 
 
 <script>
@@ -664,33 +312,248 @@ i.fa {margin-right: 0px !important;}
     });
 </script>
 
+
+
+
+
 <script>
-    // Function to reload the page without scrolling to top
-    function reloadPageWithoutScrolling() {
-        // Get the current scroll position
-        var scrollPos = window.scrollY || window.scrollTop || document.getElementsByTagName("html")[0].scrollTop;
 
-        // Reload the page
-        window.location.href = window.location.href.split('?')[0] + "?scrollPos=" + scrollPos;
-    }
 
-    // Call the reload function every 1 minute
-    setInterval(reloadPageWithoutScrolling, 60000); // 60000 milliseconds = 1 minute
 
-    // Restore scroll position after page reload
-    window.onload = function() {
-        var urlParams = new URLSearchParams(window.location.search);
-        var scrollPos = urlParams.get('scrollPos');
-        if (scrollPos !== null) {
-            window.scrollTo(0, parseInt(scrollPos));
-        }
-    };
+
+
+
+            setTimeout('showCont()',100);
+
+
+
+            function showCont() {
+
+                let switcher = document.getElementById('theme-switcher');
+
+                let text = document.getElementById('x').value;
+
+
+                if (text == "dark") {
+
+
+                    switcher.innerHTML = "<i class='fa fa-sun-o w3-margin-right'></i>";
+
+
+                    document.body.style.setProperty('background-color', '#191a1c', 'important');
+
+
+                    const sections = document.querySelectorAll('section');
+
+                    // Apply styles to each paragraph
+                    sections.forEach(section => {
+                        section.style.setProperty('background-color', '#242527', 'important');
+                        // Add more styles as needed
+                    });
+
+
+                    const paragraphs = document.querySelectorAll('p');
+
+                    // Apply styles to each paragraph
+                    paragraphs.forEach(paragraph => {
+                        paragraph.style.setProperty('color', '#ffffff', 'important');
+                        // Add more styles as needed
+                    });
+
+
+                    const h4Elements = document.querySelectorAll('h4');
+
+                    // Apply styles to each <h4> element
+                    h4Elements.forEach(h4 => {
+                        h4.style.setProperty('color', '#ffffff', 'important');
+                    });
+
+                    // Select all <span> elements
+                    const spanElements = document.querySelectorAll('span');
+
+                    // Apply styles to each <span> element
+                    spanElements.forEach(span => {
+                        span.style.setProperty('color', '#ffffff', 'important');
+                    });
+
+
+                    const h1Elements = document.querySelectorAll('h1');
+
+                    // Apply styles to each <h1> element
+                    h1Elements.forEach(h1 => {
+                        h1.style.setProperty('color', '#ffffff', 'important');
+                    });
+
+
+                    const h6Elements = document.querySelectorAll('h6');
+
+                    // Apply styles to each <h1> element
+                    h6Elements.forEach(h6 => {
+                        h6.style.setProperty('color', '#ffffff', 'important');
+                    });
+
+
+                    const t = document.querySelectorAll('textarea');
+
+                    // Apply styles to each <h1> element
+                    t.forEach(tx => {
+                        tx.style.setProperty('background-color', 'rgba(40,36,36,0.07)', 'important');
+                        tx.style.setProperty('color', 'rgb(255,255,255)', 'important');
+                    });
+
+
+                    document.getElementById('admin').style.color = 'red';
+                    document.getElementById('admin').style.fontWeight = 'normal';
+
+
+                    document.getElementById('header').style.setProperty('background-color', '#1b3c71', 'important');
+
+
+                    const anchors = document.querySelectorAll('a');
+
+                    // Apply styles to each <h1> element
+                    anchors.forEach(a => {
+                        a.style.setProperty('background-color', '#1b3c71', 'important');
+
+                    });
+
+
+                    const buttons = document.querySelectorAll('button');
+
+                    // Apply styles to each <h1> element
+                    buttons.forEach(b => {
+                        b.style.setProperty('background-color', '#1b3c71', 'important');
+
+                    });
+
+
+                    document.getElementById('copy').style.setProperty('background-color', '#1b3c71', 'important');
+
+                    document.getElementById('foot').style.setProperty('background-color', '#1b3c71', 'important');
+
+
+                } // end of dark
+
+                else if (text == "light") {
+
+
+                    switcher.innerHTML = "<i class='fa fa-moon-o w3-margin-right'></i>";
+
+
+                    document.body.style.setProperty('background-color', '#f5f7f8', 'important');
+
+
+                    const sections = document.querySelectorAll('section');
+
+                    // Apply styles to each paragraph
+                    sections.forEach(section => {
+                        section.style.setProperty('background-color', '#ffffff', 'important');
+                        // Add more styles as needed
+                    });
+
+
+                    const paragraphs = document.querySelectorAll('p');
+
+                    // Apply styles to each paragraph
+                    paragraphs.forEach(paragraph => {
+                        paragraph.style.setProperty('color', '#090909', 'important');
+                        // Add more styles as needed
+                    });
+
+
+                    const h4Elements = document.querySelectorAll('h4');
+
+                    // Apply styles to each <h4> element
+                    h4Elements.forEach(h4 => {
+                        h4.style.setProperty('color', '#090909', 'important');
+                    });
+
+                    // Select all <span> elements
+                    const spanElements = document.querySelectorAll('span');
+
+                    // Apply styles to each <span> element
+                    spanElements.forEach(span => {
+                        span.style.setProperty('color', '#090909', 'important');
+                    });
+
+
+                    const h1Elements = document.querySelectorAll('h1');
+
+                    // Apply styles to each <h1> element
+                    h1Elements.forEach(h1 => {
+                        h1.style.setProperty('color', '#ffffff', 'important');
+                    });
+
+
+                    const h6Elements = document.querySelectorAll('h6');
+
+                    // Apply styles to each <h1> element
+                    h6Elements.forEach(h6 => {
+                        h6.style.setProperty('color', '#090909', 'important');
+                    });
+
+
+                    const t = document.querySelectorAll('textarea');
+
+                    // Apply styles to each <h1> element
+                    t.forEach(tx => {
+                        tx.style.setProperty('background-color', 'white', 'important');
+                        tx.style.setProperty('color', 'black', 'important');
+                    });
+
+
+                    document.getElementById('admin').style.color = 'red';
+                    document.getElementById('admin').style.fontWeight = 'normal';
+
+
+                    document.getElementById('header').style.setProperty('background-color', '#1a76d1', 'important');
+
+
+                    const anchors = document.querySelectorAll('a');
+
+                    // Apply styles to each <h1> element
+                    anchors.forEach(a => {
+                        a.style.setProperty('background-color', '#1a76d1', 'important');
+
+                    });
+
+
+                    const buttons = document.querySelectorAll('button');
+
+                    // Apply styles to each <h1> element
+                    buttons.forEach(b => {
+                        b.style.setProperty('background-color', '#1a76d1', 'important');
+
+                    });
+
+
+                    document.getElementById('copy').style.setProperty('background-color', '#1a76d1', 'important');
+
+                    document.getElementById('foot').style.setProperty('background-color', '#1a76d1', 'important');
+
+
+                }
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
- 
-<script src = "../js/feedback.js">
 
-</script>
+
+
+<script src = "../js/feedback.js"></script>
+<script src = "../js/themes.js"></script>
 
 </body>
 </html> 

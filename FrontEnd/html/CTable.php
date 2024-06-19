@@ -142,7 +142,9 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
-    <style>
+        <style type="text/css" id="GFG">
+
+        <style>
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f4f7f6;
@@ -235,7 +237,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
 
-                        echo "<option>" . $row['name'] . "</option>";
+                    echo "<option>" . $row['name'] . "</option>";
                 }
             } else {
                 echo "<option value=''>No doctors available</option>";
@@ -271,7 +273,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
     <div class="row">
         <div class="col-md-12">
             <div class="schedule-table">
-                <table class="table bg-white calendar-table" >
+                <table class="table bg-white calendar-table" style="margin-left: -100px;" >
                     <thead>
                     <tr>
                         <th>Day</th>
@@ -349,12 +351,12 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
                     </tr>
                     <tr>
                         <td style="color:blue;">Friday</td>
-                        <td colspan="12" style="font-size: 25px; color: blue">CLOSED</td>
+                        <td colspan="12" style=" padding-right: 150px; font-size: 25px; color: blue">CLOSED</td>
 
                     </tr>
                     <tr>
                         <td style="color:blue;">Saturday</td>
-                        <td colspan="12" style="font-size: 25px;color:blue;">CLOSED</td>
+                        <td colspan="12" style="padding-right: 150px; font-size: 25px;color:blue;">CLOSED</td>
 
                     </tr>
                     </tbody>
@@ -365,7 +367,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 </div>
 <div class="col-lg-2 col-12">
     <div class="get-quote" style="position:relative; left:50vw; margin-top: 20px; ">
-        <a href="../html/appointment.php" class="btn">Book Appointment</a>
+        <a href="../html/appointment.php" class="btn" style="margin-left: -100px;">Book Appointment</a>
     </div>
 </div><br><br><br>
 <script>

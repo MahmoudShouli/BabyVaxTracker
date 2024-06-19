@@ -16,6 +16,7 @@
 session_start();
 $_SESSION['found'] = 'nothing';
 $_SESSION['message'] = 'came from reset';
+
 ?>
 
 <!-- Favicon -->
@@ -157,6 +158,10 @@ $_SESSION['message'] = 'came from reset';
 
 
 <script>
+
+    sessionStorage.setItem('theme','light');
+
+
     document.getElementById("form").addEventListener("submit", function(event) {
         var parentName = document.getElementById("parentName");
         var parentEmail = document.getElementById("parentEmail");

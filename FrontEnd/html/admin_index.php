@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <meta name='copyright' content=''>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="../js/auto-email-sender.js"></script>
 
     <!-- Title -->
     <title>BabyVaxTrack</title>
@@ -71,6 +72,8 @@ else {
 
 
 }
+
+
 
 ?>
 <!-- Preloader -->
@@ -238,7 +241,7 @@ else {
 
                     </ul>
                     <div class="table-bottom">
-                        <a class="btn" href="../html/admin_feedback.php">Go</a>
+                        <a class="btn" href="../html/feedback.php">Go</a>
                     </div>
                     <!-- Table Bottom -->
                 </div>

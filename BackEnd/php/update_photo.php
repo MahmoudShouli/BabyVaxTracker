@@ -53,10 +53,16 @@
     echo 'File uploaded successfully<br><br>';
 
 
+    $fetch_query = "SELECT user_name, city, email FROM users WHERE ID = ?";
+    $fetch_stmt = $conn->prepare($fetch_query);
+    $fetch_stmt->bind_param("i", $userID);
+    $fetch_stmt->execute();
+    $fetch_stmt->bind_result($uName, $city, $email);
+    $fetch_stmt->fetch();
+    $fetch_stmt->close();
 
-
-//    $tempFilePath = $_FILES["fileToUpload"]["name"];
-//    $photo = "../../Resources/images/".$tempFilePath;
+    //    $tempFilePath = $_FILES["fileToUpload"]["name"];
+    //    $photo = "../../Resources/images/".$tempFilePath;
 
 
     if (substr($current_user, 0, 2) === "05") {
@@ -71,10 +77,15 @@
     $stmt->execute();
 
 
+//    $response = array(
+//        'namee' => $uName,
+//        'city' => $city,
+//        'email' => $email,
+//        'photoURL' => $photo
+//    );
+//
+//    echo json_encode($response);
 
-    if($_SESSION['ROLE']==1)
-        header("Location: ../../FrontEnd/html/admin_feedback.php");
-    elseif($_SESSION['ROLE']==2)
-        header("Location: ../../FrontEnd/html/feedback.php");
+    //header("Location: ../../FrontEnd/html/feedback.php");
 
 
