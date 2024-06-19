@@ -180,7 +180,7 @@
 
             $userID = $_SESSION['ID'];
 
-            $query = "SELECT user_name,photo,roleID FROM users WHERE ID = ?";
+            $query = "SELECT user_name,photo,roleID,theme FROM users WHERE ID = ?";
             $stmt = $conn ->prepare($query);
             $stmt->bind_param("i",  $userID);
             $stmt->execute();
@@ -189,6 +189,7 @@
             $user_name = $row['user_name'];
             $photo = $row['photo'];
             $roleID = $row['roleID'];
+            $theme = $row['theme'];
 
             if($roleID==1){
                 $isAdmin = true;
@@ -215,7 +216,8 @@
                 'user_name' => $user_name,
                 'photo' => $photo,
                 'isAdmin' => $isAdmin,
-                'postID' => $postID
+                'postID' => $postID,
+                'theme' => $theme
             );
 
             echo json_encode($response);

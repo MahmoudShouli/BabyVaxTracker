@@ -193,7 +193,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7 col-md-8 col-12">
-                            <p style="margin-bottom: 10px">( We will confirm by an email )</p>
+
                         </div>
                     </div>
                 </form>

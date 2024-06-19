@@ -321,20 +321,19 @@ i.fa {margin-right: 0px !important;}
 
 
 
+            let text = document.getElementById('x').value;
+
+            setTimeout('showCont(text)',100);
 
 
-            setTimeout('showCont()',100);
 
-
-
-            function showCont() {
+            function showCont(theme) {
 
                 let switcher = document.getElementById('theme-switcher');
 
-                let text = document.getElementById('x').value;
 
 
-                if (text == "dark") {
+                if (theme == "dark") {
 
 
                     switcher.innerHTML = "<i class='fa fa-sun-o w3-margin-right'></i>";
@@ -434,7 +433,7 @@ i.fa {margin-right: 0px !important;}
 
                 } // end of dark
 
-                else if (text == "light") {
+                else if (theme == "light") {
 
 
                     switcher.innerHTML = "<i class='fa fa-moon-o w3-margin-right'></i>";

@@ -65,13 +65,13 @@ function publish() {
       let userName = response.user_name;
       let isAdmin = response.isAdmin;
       let postID = response.postID;
+      let theme = response.theme;
 
 
 
       displayPost(postID,'just now!', content, userName, photo, 0, true,isAdmin,0,isAdmin)
 
-
-      showCont();
+      showCont(theme);
 
     }
 

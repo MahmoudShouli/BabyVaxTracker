@@ -217,7 +217,9 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 <body>
 <header>
     <div class="header-logo">
-        <a href="../../FrontEnd/html/index.php"><img src="../../Resources/images/logo.png" alt="Logo"></a>
+        <a  href="../../FrontEnd/html/index.php"><img src="../../Resources/images/logo.png" alt="Logo"></a>
+        <H1   style="color: white; text-align: center; font-style: italic">Schedules</H1>
+
     </div>
 </header>
 
@@ -260,7 +262,7 @@ ORDER BY FIELD(day, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 
 
             }else {
-                echo "<br>".'Employee'."</br>";
+                echo "<br> ".'Employee'."</br>";
 
 
             }

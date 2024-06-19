@@ -25,12 +25,12 @@
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username= $email;
+    $mail->Username= $correctEmail;
     $mail->Password = 'tglzeigpalmanspa';
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
-    $mail->setFrom($email);
+    $mail->setFrom($correctEmail);
 
 
 
