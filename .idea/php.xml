@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/composer" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/dealerdirect/phpcodesniffer-composer-installer" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/phpcompatibility/php-compatibility" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/php-parallel-lint/php-parallel-lint" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/php-parallel-lint/php-console-highlighter" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/php-parallel-lint/php-console-color" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/squizlabs/php_codesniffer" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/yoast/phpunit-polyfills" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/PhpMailer/vendor/doctrine/instantiator" />
+    </include_path>
+  </component>
+</project>

@@ -1,0 +1,671 @@
+<?php
+session_start();
+
+if (isset($_SESSION['USER'])) {
+    $current_user = $_SESSION['USER']; # now current_user has the email of the current signed-in user
+
+} else {
+    header("Location: signin.php");
+}
+
+
+// Check if CID is set in the session
+if (!isset($_SESSION['CID'])) {
+    die("Error: No CID set in the session.");
+}
+
+require_once '../../BackEnd/php/db_config.php';
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$cid = $_SESSION['CID'];
+
+// Fetch doctor names
+$sqlDoctors = "SELECT ID, name FROM doctors";
+$resultDoctors = $conn->query($sqlDoctors);
+$doctorNames = [];
+if ($resultDoctors === false) {
+    setSessionMessageAndRedirect("Error fetching doctors: " . $conn->error, "../../FrontEnd/html/errorPage.php");
+}
+while ($row = $resultDoctors->fetch_assoc()) {
+    $doctorNames[$row['ID']] = $row['name'];
+}
+
+// Fetch child names
+$sqlChildren = "SELECT id, name FROM children";
+$resultChildren = $conn->query($sqlChildren);
+$childNames = [];
+if ($resultChildren === false) {
+    setSessionMessageAndRedirect("Error fetching children: " . $conn->error, "../../FrontEnd/html/errorPage.php");
+}
+while ($row = $resultChildren->fetch_assoc()) {
+    $childNames[$row['id']] = $row['name'];
+}
+
+// Fetch data from the doctor_dates table where id equals $_SESSION['CID']
+$sqlDoctorDates = "SELECT * FROM doctor_dates WHERE id = ?";
+$stmtDoctorDates = $conn->prepare($sqlDoctorDates);
+if ($stmtDoctorDates === false) {
+    setSessionMessageAndRedirect("Error preparing statement: " . $conn->error, "../../FrontEnd/html/errorPage.php");
+}
+$stmtDoctorDates->bind_param("i", $cid);
+$stmtDoctorDates->execute();
+$resultDoctorDates = $stmtDoctorDates->get_result();
+if ($resultDoctorDates === false) {
+    setSessionMessageAndRedirect("Error executing statement: " . $stmtDoctorDates->error, "../../FrontEnd/html/errorPage.php");
+}
+
+// Fetch data from the appointments table where dateID equals $_SESSION['CID']
+$sqlAppointments = "SELECT * FROM appointments WHERE dateID = ?";
+$stmtAppointments = $conn->prepare($sqlAppointments);
+if ($stmtAppointments === false) {
+    setSessionMessageAndRedirect("Error preparing statement: " . $conn->error, "../../FrontEnd/html/errorPage.php");
+}
+$stmtAppointments->bind_param("i", $cid);
+$stmtAppointments->execute();
+$resultAppointments = $stmtAppointments->get_result();
+
+if ($resultAppointments === false) {
+    setSessionMessageAndRedirect("Error executing statement: " . $stmtAppointments->error, "../../FrontEnd/html/errorPage.php");
+}
+
+if (isset($_POST['subdel'])) {
+    if ($resultAppointments->num_rows > 0) {
+        while ($row = $resultAppointments->fetch_assoc()) {
+            $idToDelete = $row['ID'];  // Get the ID to delete
+
+            // Prepare the SQL DELETE statement
+            $sqlDeleteAppointment = "DELETE FROM appointments WHERE ID = ?";
+            $stmtDeleteAppointment = $conn->prepare($sqlDeleteAppointment);
+            if ($stmtDeleteAppointment === false) {
+                setSessionMessageAndRedirect("Error preparing statement: " . $conn->error, "../../FrontEnd/html/errorPage.php");
+            }
+            $stmtDeleteAppointment->bind_param("i", $idToDelete);
+
+            // Execute the statement
+            if ($stmtDeleteAppointment->execute()) {
+                // Update isAvailable to 1 in the doctor_dates table
+                $sqlUpdateAvailability = "UPDATE doctor_dates SET isAvailable = 1 WHERE id = ?";
+                $stmtUpdateAvailability = $conn->prepare($sqlUpdateAvailability);
+                if ($stmtUpdateAvailability === false) {
+                    setSessionMessageAndRedirect("Error preparing update statement: " . $conn->error, "../../FrontEnd/html/errorPage.php");
+                }
+                $stmtUpdateAvailability->bind_param("i", $_SESSION['CID']);
+                if ($stmtUpdateAvailability->execute()) {
+                    setSessionMessageAndRedirect("Appointment deleted successfully.", "../../FrontEnd/html/booking.php");
+                } else {
+                    setSessionMessageAndRedirect("Error updating doctor availability: " . $stmtUpdateAvailability->error, "../../FrontEnd/html/errorPage.php");
+                }
+                $stmtUpdateAvailability->close();
+            } else {
+                setSessionMessageAndRedirect("Error deleting record: " . $stmtDeleteAppointment->error, "../../FrontEnd/html/errorPage.php");
+            }
+
+            // Close the statement
+            $stmtDeleteAppointment->close();
+        }
+    } else {
+        setSessionMessageAndRedirect("No appointments found to delete.", "../../FrontEnd/html/booking.php");
+    }
+
+    if (isset($stmtDeleteAppointment) && $stmtDeleteAppointment instanceof mysqli_stmt) {
+        $stmtDeleteAppointment->close();
+    }
+
+    $conn->close();
+}
+
+
+function setSessionMessageAndRedirect($message, $redirectPage)
+{
+    $_SESSION['message'] = $message;
+    $_SESSION['redirect_page'] = $redirectPage;
+    header("Location: ../../BackEnd/php/display_message.php");
+    exit();
+}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="Site keywords here">
+    <meta name="description" content="">
+    <meta name='copyright' content=''>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title -->
+    <title>BabyVaxTrack</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../Resources/images/favicon.png">
+    <script src="../js/auto-email-sender.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="../css/nice-select.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <!-- icofont CSS -->
+    <link rel="stylesheet" href="../css/icofont.css">
+    <!-- Slicknav -->
+    <link rel="stylesheet" href="../css/slicknav.min.css">
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="../css/owl-carousel.css">
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" href="../css/datepicker.css">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="../css/animate.min.css">
+    <!-- Magnific Popup CSS -->
+    <link rel="stylesheet" href="../css/magnific-popup.css">
+
+    <!-- Medipro CSS -->
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .actions button {
+            padding: 5px 10px;
+        }
+    </style>
+    <style>
+        .styled-button {
+            display: block;
+            margin: 0 auto;
+            font-size: 20px;
+            width: 200px;
+            height: 50px;
+            margin-bottom: 25px;
+            background-color: #f44336; /* Red background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition effects */
+        }
+
+        .styled-button:hover {
+            background-color: #d32f2f; /* Darker red on hover */
+            transform: translateY(-2px); /* Slightly lift the button */
+        }
+
+        .styled-button:active {
+            background-color: #c62828; /* Even darker red when pressed */
+            transform: translateY(0); /* Return to original position when pressed */
+        }
+
+        .styled-button:focus {
+            outline: none; /* Remove outline */
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.3); /* Red focus ring */
+        }
+    </style>
+
+</head>
+<body>
+
+<!-- Preloader -->
+<div class="preloader">
+    <div class="loader">
+        <div class="loader-outter"></div>
+        <div class="loader-inner"></div>
+
+        <div class="indicator">
+            <svg width="16px" height="12px">
+                <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+            </svg>
+        </div>
+    </div>
+</div>
+<!-- End Preloader -->
+
+
+
+<!-- Header Area -->
+<header class="header" >
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6 col-md-7 col-12">
+                    <!-- Top Contact -->
+                    <a style="text-align: left; color:blue; font-style: oblique; font-size: larger" href="../html/index.php">Home </a>
+                    <!-- End Top Contact -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Topbar -->
+
+</header><br><br><br>
+<!-- End Header Area -->
+
+
+
+
+
+
+
+
+
+<!--*******************************************************************-->
+<h1 style="text-align: center">Appointment</h1><br><br>
+<table>
+    <thead>
+    <tr>
+        <!--        <th>ID</th>-->
+        <!--        <th>Date ID</th>-->
+        <th>Doctor Name</th>
+        <th>Child Name</th>
+        <th>Type</th>
+        <th>Description</th>
+<!--        <th>Actions</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <?php if ($resultAppointments->num_rows > 0): ?>
+        <?php while ($row = $resultAppointments->fetch_assoc()): ?>
+            <tr>
+
+<!--                <td>   --><?php //echo $row['ID']; ?><!--</td>-->
+                <?php     $_SESSION['appID'] =  $row['ID']; ?>
+                <td><?php echo isset($doctorNames[$row['doctorID']]) ? $doctorNames[$row['doctorID']] : 'Unknown'; ?></td>
+                <td><?php echo isset($childNames[$row['childID']]) ? $childNames[$row['childID']] : 'Unknown'; ?></td>
+                <td><?php echo $row['type']; ?></td>
+                <td><?php echo $row['description']; ?></td>
+<!--                <td class="actions">-->
+<!--                    <form method="POST" action="edit_appointment.php" style="display:inline;">-->
+<!--                        <input type="hidden" name="id" value="--><?php //echo $row['ID']; ?><!--">-->
+<!--                        <button type="submit">Edit</button>-->
+<!--                    </form>-->
+<!---->
+<!--                    </form>-->
+<!--                </td>-->
+            </tr>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="7">No appointments found</td>
+        </tr>
+    <?php endif; ?>
+    </tbody>
+</table>
+
+<table style="margin-top: -22px">
+    <thead>
+    <tr>
+        <!--        <th>ID</th>-->
+        <th>Day</th>
+        <th>Hour</th>
+        <th>AM/PM</th>
+        <!--        <th>Is Available</th>-->
+<!--        <th>Doctor Name</th>-->
+<!--        <th>Actions</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <?php if ($resultDoctorDates->num_rows > 0): ?>
+        <?php while ($row = $resultDoctorDates->fetch_assoc()): ?>
+            <tr>
+                <!--                <td>--><?php //echo $row['id']; ?><!--</td>-->
+                <td><?php echo $row['day']; ?></td>
+                <td><?php echo $row['hour']; ?></td>
+                <td><?php echo $row['am_or_pm']; ?></td>
+                <!--                <td>--><?php //echo $row['isAvailable']; ?><!--</td>-->
+<!--                <td>--><?php //echo isset($doctorNames[$row['doctorID']]) ? $doctorNames[$row['doctorID']] : 'Unknown'; ?><!--</td>-->
+<!--                <td class="actions">-->
+<!--                    <form method="POST" action="edit_doctor_date.php" style="display:inline;">-->
+<!--                        <input type="hidden" name="id" value="--><?php //echo $row['id']; ?><!--">-->
+<!--                        <button type="submit">Edit</button>-->
+<!--                    </form>-->
+<!---->
+<!--                </td>-->
+            </tr>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="7">No doctor dates found</td>
+        </tr>
+    <?php endif; ?>
+    </tbody>
+</table><br><br><br>
+
+<form method="POST" action="../../FrontEnd/html/bookingDetails.php" >
+    <input type="hidden" name="id" value="<?php echo $row['ID']; ?>">
+    <button name="subdel" id="db" class="styled-button" type="submit">Delete</button>
+</form>
+
+
+
+<!--//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+<!-- Edit Appointment Form -->
+<div id="editForm"  style="display: none;margin-left: 45vw;" class="row" >
+    <div class="col-lg-6 col-md-12 col-12">
+        <form id='form' class="form" action="../../BackEnd/php/updateAppointment.php" method="post" onsubmit="return validateForm()">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <p style="font-size: 22px;">Choose The Child:</p>
+                    <select style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="child" name="child" required>
+                        <option value="" selected disabled>Select a child</option>
+                        <?php
+                        require_once '../../BackEnd/php/db_config.php';
+                        session_start();
+                        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
+
+                        $userIdentifier = $_SESSION['USER'];
+                        $sqlUser = "SELECT ID FROM users WHERE email = ? OR phone = ?";
+                        $stmt = $conn->prepare($sqlUser);
+                        $stmt->bind_param("ss", $userIdentifier, $userIdentifier);
+                        $stmt->execute();
+                        $resultUser = $stmt->get_result();
+
+                        if ($resultUser === false) {
+                            die("Error executing query: " . $conn->error);
+                        }
+
+                        if ($resultUser->num_rows > 0) {
+                            $rowUser = $resultUser->fetch_assoc();
+                            $userID = $rowUser['ID'];
+
+                            $sqlChildren = "SELECT name FROM children WHERE userID = ?";
+                            $stmt = $conn->prepare($sqlChildren);
+                            $stmt->bind_param("i", $userID);
+                            $stmt->execute();
+                            $resultChildren = $stmt->get_result();
+
+                            if ($resultChildren === false) {
+                                die("Error executing query: " . $conn->error);
+                            }
+
+                            if ($resultChildren->num_rows > 0) {
+                                while ($rowChildren = $resultChildren->fetch_assoc()) {
+                                    echo "<option>".$rowChildren['name'] . "</option>";
+                                }
+                            } else {
+                                echo "<option value=''>No children found</option>";
+                            }
+                        } else {
+                            echo "<option value=''>User not found</option>";
+                        }
+
+                        $conn->close();
+                        ?>
+                    </select>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-12">
+                    <p style="font-size: 22px;">Choose The Doctor:</p>
+                    <select style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="employeeShift" name="doctor" required>
+                        <option value="" selected disabled>Select a doctor</option>
+                        <?php
+                        require_once '../../BackEnd/php/db_config.php';
+
+                        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
+
+                        $sql = "SELECT name FROM doctors";
+                        $result = $conn->query($sql);
+
+                        if ($result === false) {
+                            die("Error executing query: " . $conn->error);
+                        }
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<option>".$row['name'] . "</option>";
+                            }
+                        } else {
+                            echo "<option value=''>No doctors available</option>";
+                        }
+
+                        $conn->close();
+                        ?>
+                    </select>
+                </div>
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="form-group">
+                        <p style="font-size: 22px;">Choose The Date:</p>
+                        <input id="datepicker" name='date' style="margin-bottom: 19px;margin-top: 12px;" type="text" placeholder="Day:Hour am/pm"  required>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="form-group">
+                        <p style="font-size: 22px;margin-bottom: 10px;">Select Appointment Type:</p>
+                        <select style="margin-bottom: 19px;margin-top: 12px;" class="form-control" id="appointmentType" name="type">
+                            <option value="vaccine">Vaccine</option>
+                            <option value="severe_complication">Severe Complication</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="form-group">
+                        <textarea name="message" placeholder="More information....."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 col-md-4 col-12">
+                    <div class="form-group">
+                        <div class="button">
+                            <button name="subupd" type="submit" class="btn">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-8 col-12">
+                    <p>( We will confirm by a Text Message )</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function validateForm() {
+        var child = document.getElementById('child').value;
+        var doctor = document.getElementById('employeeShift').value;
+        var date = document.getElementById('datepicker').value; // Changed to 'datepicker'
+        var message = document.getElementsByName('message')[0].value;
+
+        if (child.trim() == '') {
+            alert('Please select a child.');
+            return false;
+        }
+
+        if (doctor.trim() == '') {
+            alert('Please select a doctor.');
+            return false;
+        }
+
+        if (date.trim() == '') {
+            alert('Please enter a date.');
+            return false;
+        }
+
+        // Validate date format
+        var dateRegex = /^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday):((8|9|10|11) Am|12 Pm|1 Pm|2 Pm|3 Pm|4 Pm)$/i;
+        if (!dateRegex.test(date)) {
+            alert('Please enter a date in the format "Day:Hour Am/Pm" and the hour should be from 8 Am to 4 Pm for Am and from 12 Pm to 4 Pm for Pm.');
+            return false;
+        }
+
+        if (message.trim() == '') {
+            alert('Please enter a description.');
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+
+
+<!--//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+
+
+
+<!--//**********************************************************-->
+<!-- Footer Area -->
+<footer id="footer" class="footer ">
+    <!-- Footer Top -->
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="single-footer">
+                        <h2>Social Media</h2>
+                        <!-- Social -->
+                        <ul class="social">
+                            <li><a href="#"><i class="icofont-facebook"></i></a></li>
+                            <li><a href="#"><i class="icofont-instagram"></i></a></li>
+                            <li><a href="#"><i class="icofont-twitter"></i></a></li>
+                        </ul>
+                        <!-- End Social -->
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="single-footer f-link">
+                        <h2>Quick Links</h2>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <ul>
+                                    <li><a href="index.php#header"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+                                    <li><a href="index.php#about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+                                    <li><a href="index.php#service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <ul>
+                                    <li><a href="index.php#news"><i class="fa fa-caret-right" aria-hidden="true"></i>News</a></li>
+                                    <li><a href="contact_page.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="single-footer">
+                        <h2>Open Hours</h2>
+                        <ul class="time-sidual">
+                            <li class="day">Sunday-Thursday: <span>8:00am-4:00 pm</span></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="single-footer">
+                        <h2>Newsletter</h2>
+                        <a href ="#newsletter" style="color:white;">subscribe to our newsletter to get all our news in your inbox</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ End Footer Top -->
+    <!-- Copyright -->
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="copyright-content">
+                        <p>© Copyright 2024  |  All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ End Copyright -->
+</footer>
+<!--/ End Footer Area -->
+
+<!-- jquery Min JS -->
+<script src="../js/jquery.min.js"></script>
+<!-- jquery Migrate JS -->
+<script src="../js/jquery-migrate-3.0.0.js"></script>
+<!-- jquery Ui JS -->
+<script src="../js/jquery-ui.min.js"></script>
+<!-- Easing JS -->
+<script src="../js/easing.js"></script>
+<!-- Color JS -->
+<script src="../js/colors.js"></script>
+<!-- Popper JS -->
+<script src="../js/popper.min.js"></script>
+<!-- Bootstrap Datepicker JS -->
+<script src="../js/bootstrap-datepicker.js"></script>
+<!-- Jquery Nav JS -->
+<script src="../js/jquery.nav.js"></script>
+<!-- Slicknav JS -->
+<script src="../js/slicknav.min.js"></script>
+<!-- ScrollUp JS -->
+<script src="../js/jquery.scrollUp.min.js"></script>
+<!-- Niceselect JS -->
+<script src="../js/niceselect.js"></script>
+<!-- Tilt Jquery JS -->
+<script src="../js/tilt.jquery.min.js"></script>
+<!-- Owl Carousel JS -->
+<script src="../js/owl-carousel.js"></script>
+<!-- counterup JS -->
+<script src="../js/jquery.counterup.min.js"></script>
+<!-- Steller JS -->
+<script src="../js/steller.js"></script>
+<!-- Wow JS -->
+<script src="../js/wow.min.js"></script>
+<!-- Magnific Popup JS -->
+<script src="../js/jquery.magnific-popup.min.js"></script>
+<!-- Counter Up CDN JS -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<!-- Google Map API Key JS -->
+<script src="https://maps.google.com/maps/api/js?key=AIzaSyDGqTyqoPIvYxhn_Sa7ZrK5bENUWhpCo0w"></script>
+<!-- Gmaps JS -->
+<script src="../js/gmaps.min.js"></script>
+<!-- Map Active JS -->
+<script src="../js/map-active.js"></script>
+<!-- Bootstrap JS -->
+<script src="../js/bootstrap.min.js"></script>
+<!-- Main JS -->
+<script src="../js/main.js"></script>
+</body>
+</html>
