@@ -49,6 +49,8 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 
 
+
+
 <a name="page4"></a>**Requirements & Features**
 
 - <a name="registration"></a>**Registration:**
@@ -58,6 +60,8 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 - Once they sign up successfully, a profile is created for them and stored in our database.
 
 ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.001.png)
+
+
 
 
 - <a name="validation"></a>**Form Validation:**
@@ -71,6 +75,9 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 ![C:\Users\mahmo\OneDrive\Pictures\Screenshots\Screenshot 2024-06-20 000327.png](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.005.png)
 
+
+
+
 - <a name="sessions"></a>**Sessions:**
 
 ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.006.png)
@@ -80,6 +87,7 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 
 ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.007.png)
+
 
 
 
@@ -149,6 +157,7 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 
 
+
 - **Booking Appointments**
 
 - You will have a list of all your child’s to choose from.
@@ -174,6 +183,9 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - We can clearly see that this date is now booked.
 
+
+
+
 - **Booking Details:**
 
 - You can observe your children appointments by going to the ‘Booking Details’ page from the homepage.
@@ -189,6 +201,8 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - As shown, the appointment details appeared.
 - You can delete your appointment by pressing ‘Delete’.
+
+
 
 
 
@@ -208,6 +222,8 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 
 ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.025.png)
+
+
 
 
 
@@ -241,11 +257,15 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 - **Note: the system saves your theme preference (light/dark) to provide it when you come back to the page.**
 
 
+
+
 - **Contact Us:**
 
 - ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.028.png)You can contact the support by going to the ‘Contact Us’ page.
 
 ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.029.png)
+
+
 
 
 
@@ -272,6 +292,9 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 
 
+
+
+
 - <a name="adminfeatures"></a>**Admin Features**
 
 ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.033.png)
@@ -285,13 +308,21 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - Admins can delete any post.
 
+
+
 - **See Appointments**
 
 ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.034.png)
 
+
+
+
 - **Manage Appointments**
 
 ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.035.png)
+
+
+
 
 - **Manage Posts**
 
@@ -301,6 +332,7 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 
 - Same features for this page with an addition that the admin has the ability to delete **any** post they want, not just their own.
+
 
 
 
@@ -342,6 +374,7 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 This bar shows on small screens 
 
 ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.040.png)
+
 
 
 
