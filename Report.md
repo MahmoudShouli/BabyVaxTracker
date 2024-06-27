@@ -1,41 +1,4 @@
-﻿BabyVaxTrack
 
-
-
-Web programming class project, academic year 2024   /2025  
-
-
-
-
-|Student Name in English|Student Name in Arabic|Student ID|Section time as shown in zajel|Work percentage|
-| :- | :- | :- | :- | :- |
-|Mahmoud Shouli|محمود شولي|12027925|9\.5 - 11|` `50%|
-|Ali Turabi|علي ترابي|12111965|8 – 9.5|50%|
-||||||
-
-
-
-Thursday  6/20/2024 
-
----------------------------------------------This section is intended for the Instructor---------------------------------------
-
-|**Topic**|**Mark**|
-| :-: | :-: |
-|Project Idea||
-|Project Complexity||
-|Project Tools||
-|Project Requirements and Modeling||
-|Project Discussion||
-|Project Completeness ||
-|Project Output Results or reporting ||
-|Project Administration and Management||
-|Project Report||
-|Team work||
-|||
-|||
-|||
-|||
-|||
 **Abstract**
 
 This paper aims to provide a brief overview of our project. BabyVaxTrack is a website for a vaccination center that enables you to make your own profile, book appointments for you children with the time that suits you, and communicate with other clients using our social page. We aim to provide a reliable, time-saving and user-friendly platform for our clients. We learned a lot of valuable skills from this project.
