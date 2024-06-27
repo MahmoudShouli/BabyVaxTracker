@@ -59,34 +59,34 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - Once they sign up successfully, a profile is created for them and stored in our database.
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.001.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.001.png)
 
 
 
 
 - <a name="validation"></a>**Form Validation:**
 
-- ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.002.png)When the user registers to our system, a form validation is performed, meaning there are certain criteria for some input fields, for example the full name cannot be one name only, emails and phone numbers must be unique and cannot match other user’s info, the emails and phone number must be formatted a specific way, the password and confirm password field must match, the child date must be a current date or a future date, meaning the parents must book these appointment before their child is born.
+- ![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.002.png)When the user registers to our system, a form validation is performed, meaning there are certain criteria for some input fields, for example the full name cannot be one name only, emails and phone numbers must be unique and cannot match other user’s info, the emails and phone number must be formatted a specific way, the password and confirm password field must match, the child date must be a current date or a future date, meaning the parents must book these appointment before their child is born.
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.003.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.003.png)
 
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.004.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.004.png)
 
-![C:\Users\mahmo\OneDrive\Pictures\Screenshots\Screenshot 2024-06-20 000327.png](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.005.png)
+![C:\Users\mahmo\OneDrive\Pictures\Screenshots\Screenshot 2024-06-20 000327.png](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.005.png)
 
 
 
 
 - <a name="sessions"></a>**Sessions:**
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.006.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.006.png)
 
 - Once the users sign in, their session start, meaning they can close the tab and come back and they will still be signed in. 
 - The session ends when they sign out by pressing on the Sign Out button on the top left corner of the home page.
 
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.007.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.007.png)
 
 
 
@@ -97,9 +97,9 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - In case the users forget their password, they can receive a new one using their registered email.
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.008.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.008.png)
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.009.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.009.png)
 
 - <a name="roles"></a>**Roles:**
 
@@ -130,9 +130,9 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 1) Subscribe to the newsletter 
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.010.png)![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.011.png)![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.012.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.010.png)![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.011.png)![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.012.png)
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.013.png)![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.014.png)![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.015.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.013.png)![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.014.png)![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.015.png)
 
 - <a name="userfeatures"></a>**Schedules:**
 
@@ -140,12 +140,12 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - When you visit the page, you will have a list of all the doctors that you can choose from and display their schedules
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.016.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.016.png)
 
 
 - Let’s for example choose Dr. Mahmoud
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.017.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.017.png)
 
 
 - The center is open from Sunday to Thursday from 8 am to 4 pm, meaning you can book any time you like in that duration.
@@ -166,7 +166,7 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 - Appointment type which is a vaccine or a severe complication.
 - Any additional info (optional).
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.018.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.018.png)
 
 
 - Some things to keep in mind:
@@ -178,7 +178,7 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - If the booking was successful, the new updated schedule will look like this:
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.019.png)![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.020.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.019.png)![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.020.png)
 
 
 - We can clearly see that this date is now booked.
@@ -190,12 +190,12 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - You can observe your children appointments by going to the ‘Booking Details’ page from the homepage.
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.021.png)![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.022.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.021.png)![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.022.png)
 
 
 - Here this user has 3 children and has an appointment for each one of them, let’s try to look at the details for Ahmad appointment which we just booked!
 
-  ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.023.png)
+  ![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.023.png)
 
 
 
@@ -210,7 +210,7 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - You can add a child by going to ‘Add Children’ from the homepage.
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.024.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.024.png)
 
 
 
@@ -233,7 +233,7 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 - We have a page dedicated for socializing with clients! 😊
 - Click ‘Profile’ from page.
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.026.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.026.png)
 
 - You can upload a profile picture.
 - You can post and share your ideas!
@@ -244,7 +244,7 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 - You can change to dark theme by clicking on the moon top left corner.
 - The page in dark theme.
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.027.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.027.png)
 
 
 
@@ -261,9 +261,9 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - **Contact Us:**
 
-- ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.028.png)You can contact the support by going to the ‘Contact Us’ page.
+- ![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.028.png)You can contact the support by going to the ‘Contact Us’ page.
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.029.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.029.png)
 
 
 
@@ -275,19 +275,19 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - You can subscribe to our newsletter from the homepage, scroll all the way to the bottom and you will find this: 
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.030.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.030.png)
 
 - If you subscribe, you will receive some news about vaccines every day.
 
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.031.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.031.png)
 
 
 
 
 
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.032.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.032.png)
 
 
 
@@ -297,7 +297,7 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - <a name="adminfeatures"></a>**Admin Features**
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.033.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.033.png)
 
 
 - Admins can see all appointments.
@@ -312,21 +312,21 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - **See Appointments**
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.034.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.034.png)
 
 
 
 
 - **Manage Appointments**
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.035.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.035.png)
 
 
 
 
 - **Manage Posts**
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.036.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.036.png)
 
 
 
@@ -344,13 +344,10 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 - Our page is fully responsive for all screens.
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.037.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.037.png)
 
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.038.png)
-
-
-
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.038.png)
 
 
 
@@ -363,7 +360,10 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.039.png)
+
+
+
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.039.png)
 
 
 
@@ -373,7 +373,7 @@ Our website is reliable, secure, responsive, user-friendly, attractive and full 
 
 This bar shows on small screens 
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.040.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.040.png)
 
 
 
@@ -400,7 +400,7 @@ This bar shows on small screens
 
 - For fonts we used **google fonts.**
 
-![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.041.png)
+![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.041.png)
 
 
 
@@ -416,7 +416,7 @@ This bar shows on small screens
 `                        `**<a name="database"></a>Project Database**
 
 
-- ![](Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.042.png)We have 8 tables.
+- ![](readmeImages/Aspose.Words.e806b02a-a198-44c2-9385-fe9aa214e327.042.png)We have 8 tables.
 
 <a name="conclusion"></a>**Conclusion**
 
